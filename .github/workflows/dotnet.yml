@@ -25,3 +25,19 @@ jobs:
       uses: nijel/rabbitmq-action@v1.0.0
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+  deployment:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Setup RabbitMQ
+      uses: nijel/rabbitmq-action@v1.0.0
+    - name: Test
