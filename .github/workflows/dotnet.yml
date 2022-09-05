@@ -42,4 +42,4 @@ jobs:
     - name: Setup RabbitMQ
       uses: nijel/rabbitmq-action@v1.0.0
     - name: Run
-      run: tye run
+      run: cd tools/mssql && docker-compose up -d
