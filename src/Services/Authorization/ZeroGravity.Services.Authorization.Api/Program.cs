@@ -6,7 +6,6 @@ using ZeroGravity.Infrastructure.MessageBrokers;
 using ZeroGravity.Services.Authorization.Data.Entities;
 using ZeroGravity.Services.Authorization.Data.Persistence;
 
-
 var factory = new ConnectionFactory() {HostName = "localhost"};
 
 var builder = WebApplication.CreateBuilder(args);

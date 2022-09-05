@@ -49,8 +49,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
 
         if (identityResult.Succeeded)
         {
-            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, user.UserName));
-            
+            await _userManager.AddClaimsAsync(user, new []
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Role, "User")
+            });
+
             var @event = _mapper.Map<UserCreatedEvent>(user);
             await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
             

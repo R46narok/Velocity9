@@ -53,7 +53,7 @@ public class TokenControllerTests : IClassFixture<AuthorizationWebApplicationFac
       var response = await _client.PostAsJsonAsync("/api/User", command);
       response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-      var credentials = new UserCredentialsDto {UserName = command.UserName, Password = "wrong"};
+      var credentials = new UserCredentialsDto {UserName = command.UserName, Password = ""};
 
       response = await _client.PostAsJsonAsync("/api/Token", credentials);
       response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);

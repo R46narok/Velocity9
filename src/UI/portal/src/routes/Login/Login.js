@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {userActions} from "../actions/userActions";
-import "../bootstrap.min.css"
+import {userActions} from "../../actions/userActions";
+import "../../bootstrap.min.css"
 import { useNavigate } from 'react-router-dom';
 import LoginImage from './LoginImage.svg';
 
@@ -12,9 +12,12 @@ export const Login = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const authStatus = useSelector((state) => state.authentication);
+
     const handleButtonClick = async (e) => {
         e.preventDefault()
         dispatch(userActions.login(userName, password));
+
         navigate("/");
     }
 
@@ -45,20 +48,20 @@ export const Login = () => {
                                 </div>
 
                                 <div className="d-flex mb-5 align-items-center">
-                                    <span className="ml-auto"><a href="#" className="forgot-pass">Forgot Password</a></span>
+                                    <span className="ml-auto"><a href="src/routes/Login/Login#" className="forgot-pass">Forgot Password</a></span>
                                 </div>
 
                                 <input type="submit" value="Log In" className="btn btn-block btn-primary"/>
                                 <span className="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
 
                                 <div className="social-login">
-                                    <a href="#" className="facebook">
+                                    <a href="src/routes/Login/Login#" className="facebook">
                                         <span className="icon-facebook mr-3"></span>
                                     </a>
-                                    <a href="#" className="twitter">
+                                    <a href="src/routes/Login/Login#" className="twitter">
                                         <span className="icon-twitter mr-3"></span>
                                     </a>
-                                    <a href="#" className="google">
+                                    <a href="src/routes/Login/Login#" className="google">
                                         <span className="icon-google mr-3"></span>
                                     </a>
                                 </div>

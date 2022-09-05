@@ -18,10 +18,7 @@ public class UserMappingProfile : Profile
         // CreateMap<User, UserView>();
         CreateMap<CreateUserCommand, User>();
 
-        CreateMap<User, UserCreatedEvent>()
-            .ForMember(x => x.Data,
-                d => d.MapFrom(x => x));
-
+        CreateMap<User, UserCreatedEvent>();
         CreateMap<User, UserDeletedEvent>();
         // CreateMap<UpdateUserDto, UpdateUserCommand>();
         // CreateMap<UpdateUserCommand, User>();

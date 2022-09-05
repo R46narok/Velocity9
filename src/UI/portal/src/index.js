@@ -9,8 +9,11 @@ import {
     Route
 } from "react-router-dom"
 import {store} from "./helpers/store";
-import {Login} from "./routes/Login";
+import {Login} from "./routes/Login/Login";
 import NavigationBar from "./components/NavigationBar";
+import {Register} from "./routes/Register/Register";
+import {Home} from "./routes/Home/Home";
+import {Exercises, Muscles} from "./routes/Exercises/Muscles";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,7 +23,10 @@ root.render(
           <BrowserRouter>
               <NavigationBar active="Home"/>
               <Routes>
+                <Route path="/" element={<Home/>}/>
                 <Route path="profile/login" element={<Login/>}/>
+                <Route path="profile/register" element={<Register/>}/>
+                <Route path="muscles" element={<Muscles/>}/>
               </Routes>
           </BrowserRouter>
 

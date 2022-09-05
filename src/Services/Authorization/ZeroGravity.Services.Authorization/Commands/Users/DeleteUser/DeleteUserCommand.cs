@@ -40,6 +40,8 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ApiRe
 
         if (identityResult.Succeeded)
         {
+            var @event = _mapper.Map<UserDeletedEvent>(user);
+            await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
             return new("Successfully deleted a user");
         }
 

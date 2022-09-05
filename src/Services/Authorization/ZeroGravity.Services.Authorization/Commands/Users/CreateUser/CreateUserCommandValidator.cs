@@ -15,8 +15,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
             .WithMessage("User already exists");
 
         RuleFor(u => u.Email)
-            .NotNull()
-            .NotEmpty()
+            .EmailAddress()
             .WithErrorCode(StatusCode.BadRequest)
             .WithMessage("Email cannot be empty");
     }

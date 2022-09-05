@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ZeroGravity.Services.Authorization.Commands.Users.CreateUser;
 using ZeroGravity.Services.Authorization.Commands.Users.DeleteUser;
+using ZeroGravity.Services.Authorization.Commands.Users.ElevateUser;
 using ZeroGravity.Services.Authorization.Queries.Users.GetUser;
 
 namespace ZeroGravity.Services.Authorization.Api.Controllers;
@@ -46,6 +47,14 @@ public class UserController : ControllerBase
         var query = new GetUserQuery(username);
         var response = await _mediator.Send(query);
         
+        return Application.StatusCode.ToObjectResult(response);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> ElevateAsync([FromQuery] string? id, [FromQuery] string? username)
+    {
+        var command = new ElevateUserCommand(id, username);
+        var response = await _mediator.Send(command);
         return Application.StatusCode.ToObjectResult(response);
     }
 }

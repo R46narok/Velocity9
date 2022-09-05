@@ -1,0 +1,13 @@
+Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
+Start-Service Docker
+
+Write-Host "[+] Starting all containers..." -ForegroundColor DarkBlue
+
+cd rabbitmq
+docker compose up -d
+cd ..
+
+cd mssqlserver
+docker compose up -d
+cd ..
+

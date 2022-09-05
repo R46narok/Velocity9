@@ -1,0 +1,26 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: zerogravity
+services:
+- name: zerogravity-services-authorization-api
+  project: src/Services/Authorization/ZeroGravity.Services.Authorization.Api/ZeroGravity.Services.Authorization.Api.csproj
+  bindings:
+    - port: 6000
+
+- name: zerogravity-services-exercises-api
+  project: src/Services/Excersises/ZeroGravity.Services.Exercises.Api/ZeroGravity.Services.Exercises.Api.csproj
+  bindings:
+    - port: 6001
+
+- name: mssql
+  image: "mcr.microsoft.com/mssql/server:2022-latest"
+  env:
+    - name: ACCEPT_EULA
+      value: Y
+    - name: SA_PASSWORD
+      value: sqladmin123!@#
+

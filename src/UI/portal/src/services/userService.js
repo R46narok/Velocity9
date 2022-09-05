@@ -1,5 +1,5 @@
 export const userService = {
-    login, logout
+    login, register, logout
 }
 
 function parseJwt(token) {
@@ -21,7 +21,7 @@ function login(userName, password) {
         body: JSON.stringify({userName, password})
     }
 
-    return fetch("http://localhost:6001/api/Token", requestOptions)
+    return fetch("http://localhost:6000/api/Token", requestOptions)
         .then(handleResponse)
         .then(token => {
             localStorage.setItem("jwt", token);
@@ -35,6 +35,19 @@ function login(userName, password) {
         });
 }
 
+function register(userName, email, password) {
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({userName, email, password})
+    }
+
+    return fetch("http://localhost:6000/api/User", requestOptions)
+        .then(handleResponse);
+}
+
 function logout() {
 
 }
@@ -43,7 +56,9 @@ function handleResponse(response) {
     return response.text().then(text => {
        const data = text && JSON.parse(text);
        if (!response.ok) {
-           console.log("not ok")
+
+           const error = (data && data.message) || response.statusText;
+           return Promise.reject(error);
        }
 
        return data.result;
