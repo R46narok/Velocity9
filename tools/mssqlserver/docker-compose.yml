@@ -8,3 +8,8 @@ services:
       SA_PASSWORD: "sqladmin123!@#"
       MSSQL_PID: "Developer"
       ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-volume:/var/opt/mssql
+
+volumes:
+  mssql-volume:
