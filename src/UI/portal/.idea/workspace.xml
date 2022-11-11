@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="001ad295-a060-4f48-90a0-07011435c1cc" name="Changes" comment="Added portal UI">
+      <change afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Application/DetailsMessage.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Application/Infrastructure/MessageBrokers/IMessageReceiver.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Application/Interfaces/IRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Infrastructure/Extensions/MessageBrokerExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Infrastructure/MessageBrokers/RabbitMQ/RabbitReceiver.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/ElevateUser/ElevateUserCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/ElevateUser/ElevateUserCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises.Api/Controllers/ExerciseController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises.Api/Controllers/MuscleController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises.Api/ZeroGravity.Services.Exercises.Api.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Authors/CreateAuthor/CreateAuthorCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Authors/CreateAuthor/CreateAuthorCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Authors/DeleteAuthor/DeleteAuthorCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Authors/DeleteAuthor/DeleteAuthorCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Exercises/CreateExercise/CreateExerciseCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Exercises/CreateExercise/CreateExerciseCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Exercises/CreateExercise/ExerciseCreatedEvent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Exercises/DeleteExercise/DeleteExerciseCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Exercises/DeleteExercise/DeleteExerciseCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Exercises/DeleteExercise/ExerciseDeletedEvent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Muscles/CreateMuscle/CreateMuscleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Muscles/CreateMuscle/CreateMuscleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Muscles/CreateMuscle/MuscleCreatedEvent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Muscles/DeleteMuscle/DeleteMuscleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Muscles/DeleteMuscle/DeleteMuscleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Commands/Muscles/DeleteMuscle/MuscleDeletedEvent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Data/Entities/Author.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Data/Entities/Exercise.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Data/Entities/Muscle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Data/Persistence/ExercisesDbContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Data/Repositories/AuthorRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Data/Repositories/ExerciseRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Data/Repositories/MuscleRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Dto/ExerciseDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Dto/MuscleDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/EventHandlers/UserCreatedEventHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/EventHandlers/UserDeletedEventHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Mapping/AuthorMappingProfile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Mapping/ExerciseMappingProfile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Mapping/MuscleMappingProfile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Queries/Exercises/GetExercise/GetExerciseQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Queries/Exercises/GetExercise/GetExerciseQueryValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Queries/Muscles/GetAllMuscles/GetAllMusclesQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Queries/Muscles/GetMuscle/GetMuscleQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/Queries/Muscles/GetMuscle/GetMuscleQueryValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/Excersises/ZeroGravity.Services.Exercises/ZeroGravity.Services.Exercises.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/Exercises/Muscles.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/Home/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/Register/Register.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/muscleService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ZeroGravity.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ZeroGravity.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ZeroGravity.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ZeroGravity.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Common/ZeroGravity.Application/Infrastructure/MessageBrokers/Message.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Common/ZeroGravity.Application/StatusCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Application/StatusCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Common/ZeroGravity.Domain/Entities/EntityBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Domain/Entities/EntityBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Common/ZeroGravity.Domain/Entities/IEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Domain/Entities/IEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Common/ZeroGravity.Infrastructure/ZeroGravity.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Infrastructure/ZeroGravity.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization.Api/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization.Api/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization.Api/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization.Api/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/CreateUser/CreateUserCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/CreateUser/CreateUserCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/CreateUser/CreateUserCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/CreateUser/CreateUserCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/CreateUser/UserCreatedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/CreateUser/UserCreatedEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/DeleteUser/DeleteUserCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/DeleteUser/DeleteUserCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/DeleteUser/DeleteUserCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/DeleteUser/DeleteUserCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/DeleteUser/UserDeletedEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Commands/Users/DeleteUser/UserDeletedEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Mapping/UserMappingProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/Authorization/ZeroGravity.Services.Authorization/Mapping/UserMappingProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/userActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/userActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavigationBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavigationBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/LoginImage.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Login/LoginImage.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/userService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../tye.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../tye.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2EFOdFGWSDZJmzBr0inKYEANHMk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Dev/Projects/ZeroGravity/src/UI/portal&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Dev\Projects\ZeroGravity\src\UI\portal\src\routes\Login" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.npm start">
+    <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
+      <method v="2" />
+    </configuration>
+    <configuration name="npm start" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="001ad295-a060-4f48-90a0-07011435c1cc" name="Changes" comment="" />
+      <created>1662187951026</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1662187951026</updated>
+      <workItem from="1662187952425" duration="160000" />
+      <workItem from="1662188118428" duration="7787000" />
+      <workItem from="1662367603028" duration="3233000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added portal UI">
+      <created>1662192025894</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1662192025894</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added portal UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added portal UI" />
+  </component>
+</project>

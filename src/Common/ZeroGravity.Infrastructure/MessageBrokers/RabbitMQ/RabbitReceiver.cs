@@ -38,6 +38,6 @@ public class RabbitReceiver<T> : IMessageReceiver where T : IDomainEvent
 
         using var scope = _provider.CreateScope();
         var handler = scope.ServiceProvider.GetService<IDomainEventHandler<T>>();
-        handler!.HandleAsync(@event).Wait();
+        handler!.HandleAsync(@event!).Wait();
     }
 }

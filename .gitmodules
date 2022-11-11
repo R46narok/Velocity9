@@ -1,0 +1,3 @@
+[submodule "dependencies/submodules"]
+	path = dependencies/submodules
+	url = https://github.com/R46narok/Axon
