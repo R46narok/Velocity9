@@ -1,1 +1,0 @@
-Some dependencies text here
