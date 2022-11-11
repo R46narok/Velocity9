@@ -5,6 +5,7 @@ using ZeroGravity.Application.Infrastructure.MessageBrokers;
 using ZeroGravity.Infrastructure.MessageBrokers;
 using ZeroGravity.Services.Muscles.Data;
 using ZeroGravity.Services.Muscles.Data.Entities;
+using ZeroGravity.Services.Muscles.Data.Extensions;
 using ZeroGravity.Services.Muscles.Data.Persistence;
 using ZeroGravity.Services.Muscles.Data.Repositories;
 
@@ -19,6 +20,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IConnection>(_ => factory.CreateConnection());
 builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
 builder.Services.AddTransient<IFiberRepository, FiberRepository>();
+builder.Services.AddTransient<IMuscleRepository, MuscleRepository>();
+builder.Services.AddTransient<IMuscleGroupRepository, MuscleGroupRepository>();
+
 // Data layer
 builder.AddPersistence<MuscleDbContext>();
 
@@ -36,7 +40,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UsePersistence<MuscleDbContext>();
-await app.InitializeDb();
+await app.InitializeDatabase();
 
 app.UseHttpsRedirection();
 

@@ -3,19 +3,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using ZeroGravity.Services.Muscles.Commands;
 using ZeroGravity.Services.Muscles.Data.Entities;
-using ZeroGravity.Services.Muscles.Data.Persistence;
 using ZeroGravity.Services.Muscles.Data.Repositories;
 
-namespace ZeroGravity.Services.Muscles.Data;
+namespace ZeroGravity.Services.Muscles.Data.Extensions;
 
-public static class InitializationExtensions 
+public static class FiberInitializationExtensions 
 {
-    public static async Task InitializeDb(this WebApplication app)
+    public static async Task InitializeFibers(this WebApplication app, IServiceProvider provider)
     {
-        using var scope = app.Services.CreateScope();
-        var provider = scope.ServiceProvider;
-
-        var db = provider.GetService<MuscleDbContext>()!;
         var mediator = provider.GetService<IMediator>()!;
         var repository = provider.GetService<IFiberRepository>()!;
 
