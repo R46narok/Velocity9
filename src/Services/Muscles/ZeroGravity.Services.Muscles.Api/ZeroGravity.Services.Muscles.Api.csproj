@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="11.0.1" />
+        <PackageReference Include="MediatR" Version="10.0.1" />
+        <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\ZeroGravity.Application\ZeroGravity.Application.csproj" />
+    <ProjectReference Include="..\..\..\Common\ZeroGravity.Infrastructure\ZeroGravity.Infrastructure.csproj" />
+    <ProjectReference Include="..\ZeroGravity.Services.Muscles\ZeroGravity.Services.Muscles.csproj" />
+    </ItemGroup>
+
+</Project>
