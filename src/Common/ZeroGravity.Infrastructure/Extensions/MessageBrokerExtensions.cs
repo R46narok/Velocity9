@@ -51,7 +51,7 @@ public static class MessageBrokerExtensions
     {
         collection.AddSingleton<RabbitReceiver<T>>(provider =>
         {
-            var connection = provider.GetService<IConnection>();
+            var connection = provider.GetService<IConnection>()!;
             return new RabbitReceiver<T>(connection, provider, exchange);
         });
     }

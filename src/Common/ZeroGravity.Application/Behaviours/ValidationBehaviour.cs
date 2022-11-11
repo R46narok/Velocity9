@@ -42,7 +42,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
  
                 return invalidResponse!;
             }
-            return Activator.CreateInstance(typeof(ApiResponse), errorMessages, code) as TResponse;
+            return (Activator.CreateInstance(typeof(ApiResponse), errorMessages, code) as TResponse)!;
         }
 
         return await next();
