@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using ZeroGravity.Services.Muscles.Commands;
-using ZeroGravity.Services.Muscles.Data.Repositories;
 
 namespace ZeroGravity.Services.Muscles.Data.Extensions;
 
