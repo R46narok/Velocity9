@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ZeroGravity.Services.Muscles.Queries;
+using ZeroGravity.Services.Muscles.Queries.GetAllFibers;
 
 namespace ZeroGravity.Services.Muscles.Api.Controllers;
 
@@ -12,6 +13,15 @@ public class FiberController : ControllerBase
     public FiberController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllFibersAsync()
+    {
+        var query = new GetAllFibersQuery();
+        var result = await _mediator.Send(query);
+
+        return Application.StatusCode.ToObjectResult(result);
     }
 
     [HttpGet("{name}")]

@@ -33,4 +33,13 @@ public class MuscleGroupRepository : RepositoryBase<MuscleGroup, int, MuscleDbCo
             .Include(m => m.Muscles)
             .SingleOrDefaultAsync(x => x.Name == name);
     }
+
+    public override List<MuscleGroup> GetAll()
+    {
+        return Context
+            .Set<MuscleGroup>()
+            .AsQueryable()
+            .Include(x => x.Muscles)
+            .ToList();
+    }
 }

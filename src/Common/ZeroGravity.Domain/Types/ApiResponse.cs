@@ -16,10 +16,6 @@ public class ApiResponse
         StatusCode = statusCode;
     }
     
-    public ApiResponse()
-    {
-        
-    }
 }
 
 public class ApiResponse<TModel> : ApiResponse
@@ -38,14 +34,14 @@ public class ApiResponse<TModel> : ApiResponse
         Result = model;
     }
     
-    public ApiResponse(TModel model)
+    public ApiResponse(TModel model) : base()
     {
         Result = model;
         StatusCode = "Ok";
         Details = null;
     }
 
-    public ApiResponse()
+    public ApiResponse() : base()
     {
     }
 }
