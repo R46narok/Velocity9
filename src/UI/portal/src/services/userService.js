@@ -21,7 +21,7 @@ function login(userName, password) {
         body: JSON.stringify({userName, password})
     }
 
-    return fetch("http://localhost:6000/api/Token", requestOptions)
+    return fetch("http://localhost:5000/api/Token", requestOptions)
         .then(handleResponse)
         .then(token => {
             localStorage.setItem("jwt", token);

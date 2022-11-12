@@ -2,12 +2,60 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="001ad295-a060-4f48-90a0-07011435c1cc" name="Changes" comment="Added portal UI">
-      <change afterPath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Entities/Fiber.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Entities/Muscle.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Entities/MuscleGroup.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Footer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../ZeroGravity.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ZeroGravity.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Common/ZeroGravity.Infrastructure/ZeroGravity.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Common/ZeroGravity.Infrastructure/ZeroGravity.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles.Api/Controllers/FiberController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles.Api/Controllers/MuscleGroupController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles.Api/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles.Api/Properties/launchSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles.Api/ZeroGravity.Services.Muscles.Api.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles.Api/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles.Api/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Commands/Fiber/CreateFiber/CreateFiberCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Commands/Fiber/CreateFiber/CreateFiberCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Commands/Muscle/CreateMuscle/CreateMuscleCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Commands/Muscle/CreateMuscle/CreateMuscleCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Commands/MuscleGroup/CreateMuscleGroup/CreateMuscleGroupCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Commands/MuscleGroup/CreateMuscleGroup/CreateMuscleGroupCommandValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Entities/Fiber.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Entities/Muscle.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Entities/MuscleGroup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Extensions/FiberInitializationExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Extensions/InitializationExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Extensions/MuscleGroupInitializationExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Extensions/MuscleInitializationExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Persistence/MuscleDbContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Repositories/FiberRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Repositories/MuscleGroupRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Data/Repositories/MuscleRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Dto/FiberDto.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Dto/MuscleGroupDto.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Mapping/FiberProfile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Mapping/MuscleGroupProfile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Mapping/MuscleProfile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Queries/Fiber/GetAllFibers/GetAllFibersQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Queries/Fiber/GetFiber/GetFiberQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Queries/Fiber/GetFiber/GetFiberQueryValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Queries/MuscleGroup/GetAllMuscleGroups/GetAllMuscleGroupsQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Queries/MuscleGroup/GetMuscleGroup/GetMuscleGroupQuery.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/Queries/MuscleGroup/GetMuscleGroup/GetMuscleGroupQueryValidator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/ZeroGravity.Services.Muscles.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/Muscles/ZeroGravity.Services.Muscles/ZeroGravity.Services.Muscles.csproj.DotSettings" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavigationBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavigationBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Home/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Home/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Login/LoginImage.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Register/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Register/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Register/RegisterImage.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/userService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,22 +84,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Dev/Projects/ZeroGravity/src/UI/portal&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Dev/Projects/ZeroGravity/src/UI/portal/src",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Dev\Projects\ZeroGravity\src\UI\portal\src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Dev\Projects\ZeroGravity\src\UI\portal\src\routes\Home" />
+      <recent name="D:\Dev\Projects\ZeroGravity\src\UI\portal\src\routes\Home\js" />
+      <recent name="D:\Dev\Projects\ZeroGravity\src\UI\portal\src\routes\Home\img" />
       <recent name="D:\Dev\Projects\ZeroGravity\src\UI\portal\src\routes\Login" />
     </key>
   </component>
@@ -82,6 +136,7 @@
       <workItem from="1662188118428" duration="7787000" />
       <workItem from="1662367603028" duration="3233000" />
       <workItem from="1668154114362" duration="952000" />
+      <workItem from="1668276271669" duration="8039000" />
     </task>
     <task id="LOCAL-00001" summary="Added portal UI">
       <created>1662192025894</created>

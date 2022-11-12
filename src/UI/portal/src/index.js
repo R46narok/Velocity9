@@ -11,9 +11,11 @@ import {
 import {store} from "./helpers/store";
 import {Login} from "./routes/Login/Login";
 import NavigationBar from "./components/NavigationBar";
+import Footer from "./components/Footer";
 import {Register} from "./routes/Register/Register";
 import {Home} from "./routes/Home/Home";
 import {Exercises, Muscles} from "./routes/Exercises/Muscles";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,6 +30,7 @@ root.render(
                 <Route path="profile/register" element={<Register/>}/>
                 <Route path="muscles" element={<Muscles/>}/>
               </Routes>
+              <Footer/>
           </BrowserRouter>
 
       </Provider>

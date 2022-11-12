@@ -59,13 +59,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{54D0350C-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Tests.Integration.Excersises", "tests\Integration\ZeroGravity.Tests.Integration.Excersises\ZeroGravity.Tests.Integration.Excersises.csproj", "{5B8209E5-2BF5-4F15-92BA-F48EDA621726}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Muscles", "Muscles", "{06D68D73-1743-4A78-90CE-31DA6C27569A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Muscles", "src\Services\Muscles\ZeroGravity.Services.Muscles\ZeroGravity.Services.Muscles.csproj", "{8E896EB4-25E2-46DF-9A73-D237C3F2653E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Muscles.Api", "src\Services\Muscles\ZeroGravity.Services.Muscles.Api\ZeroGravity.Services.Muscles.Api.csproj", "{4759446E-AB47-4CC6-A330-989798E5291E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Skeletal", "Skeletal", "{06D68D73-1743-4A78-90CE-31DA6C27569A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "public", "public", "{454550F1-9AF1-4800-9D4C-475AC6566353}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Skeletal", "src\Services\Skeletal\ZeroGravity.Services.Skeletal\ZeroGravity.Services.Skeletal.csproj", "{44C201AC-A019-4698-9D94-66724472B8CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Skeletal.Api", "src\Services\Skeletal\ZeroGravity.Services.Skeletal.Api\ZeroGravity.Services.Skeletal.Api.csproj", "{3B18B1F8-FE3C-482A-AB52-E8F34ED42A03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,9 +90,9 @@ Global
 		{54D0350C-6EFE-4A58-B731-F45B9F63902A} = {CBCCDCB4-38C0-474F-9F0B-90EB5522BAF4}
 		{5B8209E5-2BF5-4F15-92BA-F48EDA621726} = {30C2A8C9-972E-41CD-995D-64366D6C31CA}
 		{06D68D73-1743-4A78-90CE-31DA6C27569A} = {24110637-5C78-48E8-986A-1CBA03474AC3}
-		{8E896EB4-25E2-46DF-9A73-D237C3F2653E} = {06D68D73-1743-4A78-90CE-31DA6C27569A}
-		{4759446E-AB47-4CC6-A330-989798E5291E} = {06D68D73-1743-4A78-90CE-31DA6C27569A}
 		{454550F1-9AF1-4800-9D4C-475AC6566353} = {AA0C3D57-CB1A-4F4D-87A7-E8F094A6EC3D}
+		{44C201AC-A019-4698-9D94-66724472B8CD} = {06D68D73-1743-4A78-90CE-31DA6C27569A}
+		{3B18B1F8-FE3C-482A-AB52-E8F34ED42A03} = {06D68D73-1743-4A78-90CE-31DA6C27569A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{81D7CAC9-50FE-40AF-A42D-C18F9881A85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -123,13 +123,13 @@ Global
 		{5B8209E5-2BF5-4F15-92BA-F48EDA621726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B8209E5-2BF5-4F15-92BA-F48EDA621726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B8209E5-2BF5-4F15-92BA-F48EDA621726}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E896EB4-25E2-46DF-9A73-D237C3F2653E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E896EB4-25E2-46DF-9A73-D237C3F2653E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E896EB4-25E2-46DF-9A73-D237C3F2653E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E896EB4-25E2-46DF-9A73-D237C3F2653E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4759446E-AB47-4CC6-A330-989798E5291E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4759446E-AB47-4CC6-A330-989798E5291E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4759446E-AB47-4CC6-A330-989798E5291E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4759446E-AB47-4CC6-A330-989798E5291E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44C201AC-A019-4698-9D94-66724472B8CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44C201AC-A019-4698-9D94-66724472B8CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44C201AC-A019-4698-9D94-66724472B8CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44C201AC-A019-4698-9D94-66724472B8CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B18B1F8-FE3C-482A-AB52-E8F34ED42A03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B18B1F8-FE3C-482A-AB52-E8F34ED42A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B18B1F8-FE3C-482A-AB52-E8F34ED42A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B18B1F8-FE3C-482A-AB52-E8F34ED42A03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

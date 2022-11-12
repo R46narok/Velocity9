@@ -1,9 +1,8 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {userActions} from "../../actions/userActions";
-import "../../bootstrap.min.css"
 import { useNavigate } from 'react-router-dom';
-import RegisterImage from './RegisterImage.svg';
+import "../../bootstrap.min.css"
 
 export const Register = () => {
     const [userName, setUserName] = useState("");
@@ -21,59 +20,57 @@ export const Register = () => {
     }
 
     return (
-        <div className="content" style={{paddingTop: 50}}>
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6">
-                        <img src={RegisterImage} className="img-fluid" alt="Image"/>
+
+        <section className="py-5">
+            <div className="container py-5">
+                <div className="row mb-5">
+                    <div className="col-md-8 col-xl-6 text-center mx-auto">
+                        <p className="fw-bold text-success mb-2">Sign up</p>
+                        <h2 className="fw-bold">Join the trend</h2>
                     </div>
-                    <div className="col-md-6 contents">
-                        <div className="row justify-content-center">
-                            <div className="col-md-8">
-                                <div className="mb-4">
-                                    <h3>Sign In</h3>
-                                    <p className="mb-4">Sign into your account to harden your system's security.</p>
+                </div>
+                <div className="row d-flex justify-content-center">
+                    <div className="col-md-6 col-xl-4">
+                        <div>
+                            <form className="p-3 p-xl-4" onSubmit={handleButtonClick}>
+                                <div className="mb-3">
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        placeholder="Username"
+                                        onChange={e => setUserName(e.target.value)}
+                                    />
                                 </div>
-                                <form onSubmit={handleButtonClick}>
-                                    <div className="form-group first">
-                                        <label htmlFor="username">Username</label>
-                                        <input type="text" className="form-control" id="username" onChange={(e) => setUserName(e.target.value)}/>
-
-                                    </div>
-                                    <div className="form-group last mb-4">
-                                        <label htmlFor="username">Email</label>
-                                        <input type="email" className="form-control" id="email" onChange={(e) => setEmail(e.target.value)}/>
-
-                                    </div>
-                                    <div className="form-group last mb-4">
-                                        <label htmlFor="password">Password</label>
-                                        <input type="password" className="form-control" id="password" onChange={(e) => setPassword(e.target.value)}/>
-
-                                    </div>
-                                    <div className="d-flex mb-5 align-items-center">
-                                        <span className="ml-auto"><a href="src/routes/Register/Register#" className="forgot-pass">Forgot Password</a></span>
-                                    </div>
-
-                                    <input type="submit" value="Log In" className="btn btn-block btn-primary"/>
-                                    <span className="d-block text-left my-4 text-muted">&mdash; or register with &mdash;</span>
-
-                                    <div className="social-register">
-                                        <a href="src/routes/Register/Register#" className="facebook">
-                                            <span className="icon-facebook mr-3"></span>
-                                        </a>
-                                        <a href="src/routes/Register/Register#" className="twitter">
-                                            <span className="icon-twitter mr-3"></span>
-                                        </a>
-                                        <a href="src/routes/Register/Register#" className="google">
-                                            <span className="icon-google mr-3"></span>
-                                        </a>
-                                    </div>
-                                </form>
-                            </div>
+                                <div className="mb-3">
+                                    <input
+                                        className="form-control"
+                                        type="email"
+                                        placeholder="Email"
+                                        onChange={e => setEmail(e.target.value)}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <input
+                                        className="form-control"
+                                        type="password"
+                                        placeholder="Password"
+                                        onChange={e => setPassword(e.target.value)}
+                                    />
+                                </div>
+                                <div className="mb-3" />
+                                <div>
+                                    <button
+                                        className="btn btn-primary shadow d-block w-100"
+                                        type="submit">
+                                        Sign up{" "}
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
     );
 };
