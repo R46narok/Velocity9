@@ -4,18 +4,20 @@ using ZeroGravity.Services.Skeletal.Data.Entities;
 
 namespace ZeroGravity.Services.Skeletal.Data.Persistence;
 
-public class MuscleDbContext : DbContext
+public class SkeletalDbContext : DbContext
 {
+    public DbSet<Author> Authors { get; set; } = null!;
+    public DbSet<Exercise> Exercises { get; set; } = null!;
     public DbSet<Fiber> Fibers { get; set; } = null!;
     public DbSet<Muscle> Muscles { get; set; } = null!;
     public DbSet<MuscleGroup> MuscleGroups { get; set; } = null!;
 
-    public MuscleDbContext()
+    public SkeletalDbContext()
     {
         
     }
 
-    public MuscleDbContext(DbContextOptions<MuscleDbContext> options) : base(options)
+    public SkeletalDbContext(DbContextOptions<SkeletalDbContext> options) : base(options)
     {
         
     }

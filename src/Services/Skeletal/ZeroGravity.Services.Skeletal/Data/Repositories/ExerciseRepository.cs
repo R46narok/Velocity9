@@ -5,30 +5,29 @@ using ZeroGravity.Services.Skeletal.Data.Persistence;
 
 namespace ZeroGravity.Services.Skeletal.Data.Repositories;
 
-public interface IFiberRepository : IRepository<Fiber, int>
+public interface IExerciseRepository : IRepository<Exercise, int>
 {
-    public Task<Fiber?> GetByNameAsync(string name, bool track = true);
+    public Task<Exercise?> GetByNameAsync(string name, bool track = true);
 }
 
-public class FiberRepository : RepositoryBase<Fiber, int, SkeletalDbContext>, IFiberRepository
+public class ExerciseRepository : RepositoryBase<Exercise, int, SkeletalDbContext>, IExerciseRepository
 {
-    public FiberRepository(SkeletalDbContext context) : base(context)
+    public ExerciseRepository(SkeletalDbContext context) : base(context)
     {
-        
     }
 
-    public async Task<Fiber?> GetByNameAsync(string name, bool track = true)
+    public async Task<Exercise?> GetByNameAsync(string name, bool track = true)
     {
         if (track)
         {
             return await Context
-                .Set<Fiber>()
+                .Set<Exercise>()
                 .AsTracking()
                 .SingleOrDefaultAsync(x => x.Name == name);
         }
         
         return await Context
-            .Set<Fiber>()
+            .Set<Exercise>()
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Name == name);
     }

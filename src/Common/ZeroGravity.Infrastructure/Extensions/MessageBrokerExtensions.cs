@@ -49,7 +49,7 @@ public static class MessageBrokerExtensions
 
     private static void AddRabbitReceiver<T>(IServiceCollection collection, string exchange) where T : IDomainEvent
     {
-        collection.AddSingleton<RabbitReceiver<T>>(provider =>
+        collection.AddSingleton(provider =>
         {
             var connection = provider.GetService<IConnection>()!;
             return new RabbitReceiver<T>(connection, provider, exchange);

@@ -12,4 +12,5 @@ public class Muscle : EntityBase<int>
     public float TypeThreeFiberPercentage { get; set; }
     
     public MuscleGroup Group { get; set; }
+    public List<Exercise> Exercises { get; set; }
 }

@@ -10,9 +10,9 @@ public interface IMuscleGroupRepository : IRepository<MuscleGroup, int>
     public Task<MuscleGroup?> GetByNameAsync(string name, bool track = true);
 }
 
-public class MuscleGroupRepository : RepositoryBase<MuscleGroup, int, MuscleDbContext>, IMuscleGroupRepository
+public class MuscleGroupRepository : RepositoryBase<MuscleGroup, int, SkeletalDbContext>, IMuscleGroupRepository
 {
-    public MuscleGroupRepository(MuscleDbContext context) : base(context)
+    public MuscleGroupRepository(SkeletalDbContext context) : base(context)
     {
     }
 

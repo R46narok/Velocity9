@@ -14,7 +14,8 @@ import NavigationBar from "./components/NavigationBar";
 import Footer from "./components/Footer";
 import {Register} from "./routes/Register/Register";
 import {Home} from "./routes/Home/Home";
-import {Exercises, Muscles} from "./routes/Exercises/Muscles";
+import {Muscle } from "./routes/Muscles/Muscle";
+import {MuscleGroup} from "./routes/Muscles/Group/MuscleGroup";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -28,7 +29,8 @@ root.render(
                 <Route path="/" element={<Home/>}/>
                 <Route path="profile/login" element={<Login/>}/>
                 <Route path="profile/register" element={<Register/>}/>
-                <Route path="muscles" element={<Muscles/>}/>
+                <Route path="muscle" element={<Muscle/>}/>
+                  <Route path="muscle/group" element={<MuscleGroup/>}/>
               </Routes>
               <Footer/>
           </BrowserRouter>

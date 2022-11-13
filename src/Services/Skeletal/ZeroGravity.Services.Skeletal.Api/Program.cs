@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using RabbitMQ.Client;
 using ZeroGravity.Application.Extensions;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
+using ZeroGravity.Infrastructure.Extensions;
 using ZeroGravity.Infrastructure.MessageBrokers;
 using ZeroGravity.Services.Skeletal.Data;
 using ZeroGravity.Services.Skeletal.Data.Entities;
@@ -23,15 +24,19 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IConnection>(_ => factory.CreateConnection());
 builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
+
 builder.Services.AddTransient<IFiberRepository, FiberRepository>();
+builder.Services.AddTransient<IAuthorRepository, AuthorRepository>();
 builder.Services.AddTransient<IMuscleRepository, MuscleRepository>();
 builder.Services.AddTransient<IMuscleGroupRepository, MuscleGroupRepository>();
+builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
 
 // Data layer
-builder.AddPersistence<MuscleDbContext>();
+builder.AddPersistence<SkeletalDbContext>();
 
 // Mediator 
 builder.Services.AddMediatorAndVluentValidation(new[] {typeof(Muscle).Assembly});
+builder.Services.AddEventHandlers(typeof(SkeletalDbContext).Assembly);
 
 builder.AddJwtAuthentication();
 
@@ -43,13 +48,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UsePersistence<MuscleDbContext>();
+app.UsePersistence<SkeletalDbContext>();
 await app.InitializeDatabase();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseEventHandlers();
 app.MapControllers();
 
 app.Run();
