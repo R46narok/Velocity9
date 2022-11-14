@@ -25,7 +25,7 @@ public class RepositoryBase<T, K, C> : IRepository<T, K>
     }
 
 
-    public List<T> GetAll()
+    public virtual List<T> GetAll()
     {
         return Context
             .Set<T>()
