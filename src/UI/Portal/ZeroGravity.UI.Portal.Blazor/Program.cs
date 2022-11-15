@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Refit;
 using ZeroGravity.UI.Core.Providers;
-using ZeroGravity.UI.Portal.Blazor.Pages.User.Clients;
+using ZeroGravity.UI.Portal.Blazor.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -12,12 +12,15 @@ builder.Services.AddScoped<TokenAuthenticationStateProvider, TokenAuthentication
 builder.Services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
 
 builder.Services.AddAuthenticationCore();
+
 builder.Services.AddRefitClient<IAuthenticationApi>()
     .ConfigureHttpClient(x => x.BaseAddress = new Uri("http://localhost:5000"));
 
-
 builder.Services.AddRefitClient<IAuthorizationApi>()
     .ConfigureHttpClient(x => x.BaseAddress = new Uri("http://localhost:5000"));
+
+builder.Services.AddRefitClient<ISkeletalApi>()
+    .ConfigureHttpClient(x => x.BaseAddress = new Uri("http://localhost:5001"));
 
 var app = builder.Build();
 

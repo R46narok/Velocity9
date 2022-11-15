@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using ZeroGravity.Application.Infrastructure.MessageBrokers;
 using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Skeletal.Data.Entities;
 using ZeroGravity.Services.Skeletal.Data.Repositories;
@@ -14,17 +15,20 @@ public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseComman
     private readonly IExerciseRepository _exerciseRepository;
     private readonly IMuscleRepository _muscleRepository;
     private readonly IAuthorRepository _authorRepository;
+    private readonly IMessagePublisher _publisher;
 
     public CreateExerciseCommandHandler(
         IMapper mapper, 
         IExerciseRepository exerciseRepository,
         IMuscleRepository muscleRepository,
-        IAuthorRepository authorRepository)
+        IAuthorRepository authorRepository,
+        IMessagePublisher publisher)
     {
         _mapper = mapper;
         _exerciseRepository = exerciseRepository;
         _muscleRepository = muscleRepository;
         _authorRepository = authorRepository;
+        _publisher = publisher;
     }
 
     public async Task<ApiResponse> Handle(CreateExerciseCommand request, CancellationToken cancellationToken)
@@ -46,6 +50,11 @@ public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseComman
 
 
         await _exerciseRepository.CreateAsync(entity);
+
+        entity = await _exerciseRepository.GetByNameAsync(request.Name, false);
+        
+        var @event = _mapper.Map<ExerciseCreatedEvent>(entity);
+        await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
         
         return new();
     }

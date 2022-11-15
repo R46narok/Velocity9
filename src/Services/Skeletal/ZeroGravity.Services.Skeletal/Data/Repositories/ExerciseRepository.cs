@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ZeroGravity.Application.Interfaces;
 using ZeroGravity.Services.Skeletal.Data.Entities;
 using ZeroGravity.Services.Skeletal.Data.Persistence;
@@ -30,5 +31,14 @@ public class ExerciseRepository : RepositoryBase<Exercise, int, SkeletalDbContex
             .Set<Exercise>()
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Name == name);
+    }
+
+    public override List<Exercise> GetAll()
+    {
+        return Context
+            .Exercises
+            .Include(x => x.Targets)
+            .Include(x => x.Author)
+            .ToList();
     }
 }

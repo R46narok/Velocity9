@@ -1,8 +1,7 @@
 ﻿using Refit;
-using ZeroGravity.Domain.Types;
-using ZeroGravity.UI.Portal.Blazor.Pages.User.Models;
+using ZeroGravity.UI.Portal.Blazor.Models;
 
-namespace ZeroGravity.UI.Portal.Blazor.Pages.User.Clients;
+namespace ZeroGravity.UI.Portal.Blazor.Contracts;
 
 public interface IAuthorizationApi
 {

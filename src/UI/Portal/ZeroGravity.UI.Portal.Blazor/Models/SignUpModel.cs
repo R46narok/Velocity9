@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ZeroGravity.UI.Portal.Blazor.Pages.User.Models;
+namespace ZeroGravity.UI.Portal.Blazor.Models;
 
 public class SignUpModel
 { 
