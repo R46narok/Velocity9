@@ -39,7 +39,7 @@ public class UserControllerTests : IClassFixture<AuthorizationWebApplicationFact
         var command = _faker.Generate();
         
         var response = await _client.PostAsJsonAsync("/api/User", command);
-        var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse>();
+        var apiResponse = await response.Content.ReadFromJsonAsync<PipelineResult>();
         response.StatusCode.Should().Be(HttpStatusCode.OK, string.Join('\n', apiResponse.Details));
     }
 
@@ -64,7 +64,7 @@ public class UserControllerTests : IClassFixture<AuthorizationWebApplicationFact
             .Generate();
         
         var response = await _client.PostAsJsonAsync("/api/User", command);
-        var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse>();
+        var apiResponse = await response.Content.ReadFromJsonAsync<PipelineResult>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest, string.Join(',', apiResponse.Details));
     }
     
@@ -126,7 +126,7 @@ public class UserControllerTests : IClassFixture<AuthorizationWebApplicationFact
         
         response = await _client.GetAsync($"/api/User?username={command.UserName}");
 
-        var content = await response.Content.ReadFromJsonAsync<ApiResponse<UserDto>>()!;
+        var content = await response.Content.ReadFromJsonAsync<PipelineResult<UserDto>>()!;
         
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         content!.Result.UserName.Should().Be(command.UserName);

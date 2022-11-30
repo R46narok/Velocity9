@@ -6,9 +6,9 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands.Exercises.UpdateExercise;
 
-public record UpdateExerciseCommand(int Id, string? Name, string? Description) : IRequest<ApiResponse>;
+public record UpdateExerciseCommand(int Id, string? Name, string? Description) : IRequest<PipelineResult>;
 
-public class UpdateExerciseCommandHandler : IRequestHandler<UpdateExerciseCommand, ApiResponse>
+public class UpdateExerciseCommandHandler : IRequestHandler<UpdateExerciseCommand, PipelineResult>
 {
     private readonly IMapper _mapper;
     private readonly IExerciseRepository _repository;
@@ -24,7 +24,7 @@ public class UpdateExerciseCommandHandler : IRequestHandler<UpdateExerciseComman
         _publisher = publisher;
     }
     
-    public async Task<ApiResponse> Handle(UpdateExerciseCommand request, CancellationToken cancellationToken)
+    public async Task<PipelineResult> Handle(UpdateExerciseCommand request, CancellationToken cancellationToken)
     {
         var entity = (await _repository.GetByIdAsync(request.Id))!;
         

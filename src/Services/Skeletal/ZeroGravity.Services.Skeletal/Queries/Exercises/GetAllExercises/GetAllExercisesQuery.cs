@@ -7,9 +7,9 @@ using ZeroGravity.Services.Skeletal.Dto;
 
 namespace ZeroGravity.Services.Skeletal.Queries.GetAllExercises;
 
-public record GetAllExercisesQuery : IRequest<ApiResponse<List<ExerciseDto>>>;
+public record GetAllExercisesQuery : IRequest<PipelineResult<List<ExerciseDto>>>;
 
-public class GetAllExercisesQueryHandler : IRequestHandler<GetAllExercisesQuery, ApiResponse<List<ExerciseDto>>>
+public class GetAllExercisesQueryHandler : IRequestHandler<GetAllExercisesQuery, PipelineResult<List<ExerciseDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IExerciseRepository _repository;
@@ -20,7 +20,7 @@ public class GetAllExercisesQueryHandler : IRequestHandler<GetAllExercisesQuery,
         _repository = repository;
     }
     
-    public async Task<ApiResponse<List<ExerciseDto>>> Handle(GetAllExercisesQuery request, CancellationToken cancellationToken)
+    public async Task<PipelineResult<List<ExerciseDto>>> Handle(GetAllExercisesQuery request, CancellationToken cancellationToken)
     {
         var exercises = _repository
             .GetAll()

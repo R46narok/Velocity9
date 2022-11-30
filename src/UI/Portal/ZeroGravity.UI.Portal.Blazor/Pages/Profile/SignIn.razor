@@ -2,13 +2,12 @@
 @using Microsoft.AspNetCore.Components
 @using ZeroGravity.Application
 @using ZeroGravity.UI.Core.Providers
-@using ZeroGravity.UI.Portal.Blazor.Pages.Profile.Contracts
-@using ZeroGravity.UI.Portal.Blazor.Pages.Profile.Models
-@using ZeroGravity.UI.Portal.Models
+@using ZeroGravity.UI.Portal.Services.Authorization.Contracts
+@using ZeroGravity.UI.Portal.Services.Authorization.Requests
 @inject TokenAuthenticationStateProvider StateProvider
 
 @inject NavigationManager NavigationManager
-@inject IAuthorizationApi AuthorizationApi
+@inject IAuthorizationClient AuthorizationClient
 
 <section class="py-5">
     
@@ -43,11 +42,12 @@
 
 @code {
     
-    private SignInModel _model = new();
+    private SignInRequest _model = new();
     
     private async Task HandleValidSubmitAsync()
     {
-        var token = await AuthorizationApi.GetToken(_model);
+        var token = await AuthorizationClient.GetTokenAsync(_model);
+        
         if (token.StatusCode == StatusCode.Ok)
         {
             await StateProvider.SetAuthenticationStateAsync(token.Result);
