@@ -1,0 +1,76 @@
+﻿@page "/exercise/create"
+@using ZeroGravity.UI.Portal.Models
+@using ZeroGravity.UI.Portal.Blazor.Pages.Exercise.Contracts
+
+@inject ISkeletalApi _skeletalApi
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <p class="fw-bold text-success mb-2">Create exercise</p>
+                <h2 class="fw-bold">Contribute to the collection</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+                    <EditForm class="p-3 p-xl-4" Model="@_model" OnValidSubmit="@HandleValidSubmitAsync">
+                        <DataAnnotationsValidator/>
+                        <ValidationSummary/>
+            <div class="col-md-6 col-xl-4">
+                <div>
+                        <div class="mb-3"><InputText class="form-control" placeholder="Name" @bind-Value="@_model.Name"/></div>
+                        <div class="mb-3"><InputTextArea class="form-control" rows="6" placeholder="Description" @bind-Value="@_model.Description"/></div>
+                        <div><button class="btn btn-primary shadow d-block w-100" type="submit">Create</button></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-4 d-flex justify-content-center justify-content-xl-start">
+                <div class="row">
+                    <div class="col">
+                        <h3><span style="font-size: 24px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-wrench" style="color: #19f5aa;font-size: 28px;">
+                            <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"></path>
+                        </svg></span>&nbsp;Target muscles</h3>
+                        <ul class="list-group">
+                            @for (int i = 0; i < _muscles.Count; ++i)
+                            {
+                                <li class="list-group-item bg-body" style="color: white;border: var(--bs-gray-100);">
+                                    <div class="form-check">
+                                        <input @onchange="(e) => _model.Checked[i] = (bool)e.Value" class="form-check-input" type="checkbox" id="formCheck-1" style="font-size: 20px;">
+                                        <label class="form-check-label" for="formCheck-1" style="font-size: 20px;">@_muscles[i].Name</label>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </EditForm>
+        </div>
+    </div>
+</section>
+
+@code {
+
+    private class FormData
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool[] Checked { get; set; }
+    }
+    
+    private FormData _model = new();
+    private List<MuscleModel> _muscles = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        _muscles = (await _skeletalApi.GetAllMuscles()).Result;
+        _model.Checked = new bool[_muscles.Count + 1]; 
+        StateHasChanged();
+    }
+
+    private async Task HandleValidSubmitAsync()
+    {
+        
+    }
+
+}

@@ -1,4 +1,4 @@
-﻿namespace ZeroGravity.UI.Portal.Blazor.Models;
+﻿namespace ZeroGravity.UI.Portal.Models;
 
 public class ExerciseModel
 {

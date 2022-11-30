@@ -20,6 +20,7 @@
       <ProjectReference Include="..\..\..\Common\ZeroGravity.Application\ZeroGravity.Application.csproj" />
       <ProjectReference Include="..\..\..\Common\ZeroGravity.Domain\ZeroGravity.Domain.csproj" />
       <ProjectReference Include="..\..\Core\ZeroGravity.UI.Core\ZeroGravity.UI.Core.csproj" />
+      <ProjectReference Include="..\ZeroGravity.UI.Portal\ZeroGravity.UI.Portal.csproj" />
     </ItemGroup>
 
     <ItemGroup>
