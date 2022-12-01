@@ -25,15 +25,15 @@ public class CreateExerciseCommandValidator : AbstractValidator<CreateExerciseCo
             .NotEmpty()
             .WithErrorCode(StatusCode.BadRequest);
 
-        RuleFor(cmd => cmd.AuthorId)
-            .MustAsync(async (author, _) => await authorRepository.GetByIdAsync(author, false) is not null)
+        RuleFor(cmd => cmd.AuthorName)
+            .MustAsync(async (author, _) => await authorRepository.GetByNameAsync(author, false) is not null)
             .WithErrorCode(StatusCode.BadRequest)
             .WithMessage("Author must not be null");
         
         
-        RuleFor(cmd => cmd.TargetIds)
+        RuleFor(cmd => cmd.TargetNames)
             .ForEach(target => 
-                target.MustAsync(async (t, _) => await muscleRepository.GetByIdAsync(t, false) is not null))
+                target.MustAsync(async (t, _) => await muscleRepository.GetByNameAsync(t, false) is not null))
             .WithErrorCode(StatusCode.BadRequest)
             .WithMessage("Target must not be null");
     }

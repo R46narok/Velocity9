@@ -5,6 +5,8 @@ using ZeroGravity.UI.Portal.Extensions;
 using ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<TokenAuthenticationStateProvider, TokenAuthenticationStateProvider>();

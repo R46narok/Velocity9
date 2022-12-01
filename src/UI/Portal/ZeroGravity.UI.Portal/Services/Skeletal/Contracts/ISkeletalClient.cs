@@ -1,5 +1,6 @@
 ﻿using Refit;
 using ZeroGravity.Domain.Types;
+using ZeroGravity.UI.Portal.Services.Skeletal.Requests;
 using ZeroGravity.UI.Portal.Services.Skeletal.Views;
 
 namespace ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
@@ -12,4 +13,7 @@ public interface ISkeletalClient
 
     [Get(Endpoints.MuscleBase)]
     public Task<IApiResponse<PipelineResult<List<MuscleView>>>> GetAllMusclesAsync();
+
+    [Post(Endpoints.ExerciseBase)]
+    public Task<IApiResponse<PipelineResult>> CreateExerciseAsync(CreateExerciseRequest request);
 }

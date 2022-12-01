@@ -1,9 +1,20 @@
 ﻿@page "/exercise/create"
-@using ZeroGravity.UI.Portal.Services.Skeletal.Contracts
-@using ZeroGravity.UI.Portal.Services.Skeletal.Views
 
+@using ZeroGravity.UI.Portal.Services.Skeletal.Contracts
+@using ZeroGravity.UI.Portal.Services.Skeletal.Requests
+@using ZeroGravity.UI.Portal.Services.Skeletal.Views
+@using ZeroGravity.UI.Core.Providers
+@using System.Security.Claims
+@using System.Text.Json
+
+@inject TokenAuthenticationStateProvider AuthenticationStateProvider
+@inject IMapper Mapper
 @inject ISkeletalClient SkeletalClient
 
+<AuthorizeView>
+    
+    <Authorized>
+        
 <section class="py-5">
     <div class="container py-5">
         <div class="row mb-5">
@@ -13,7 +24,7 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center">
-                    <EditForm class="p-3 p-xl-4" Model="@_model" OnValidSubmit="@HandleValidSubmitAsync">
+                    <EditForm Context="ExerciseCreateContext" class="p-3 p-xl-4" Model="@_model" OnValidSubmit="@HandleValidSubmitAsync">
                         <DataAnnotationsValidator/>
                         <ValidationSummary/>
             <div class="col-md-6 col-xl-4">
@@ -34,7 +45,7 @@
                             {
                                 <li class="list-group-item bg-body" style="color: white;border: var(--bs-gray-100);">
                                     <div class="form-check">
-                                        <input @oninput="(e) => CheckboxChanged(e, muscle)" class="form-check-input" type="checkbox" style="font-size: 20px;"/>
+                                        <input @oninput="e => CheckboxChanged(e, muscle)" class="form-check-input" type="checkbox" style="font-size: 20px;"/>
                                         <label class="form-check-label" for="formCheck-1" style="font-size: 20px;">@muscle.Name</label>
                                     </div>
                                 </li>
@@ -47,19 +58,25 @@
         </div>
     </div>
 </section>
+    </Authorized>
+    
+    
+    <NotAuthorized>
+        <h1>Not auth</h1>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
 
-    private class FormData
+    internal class FormData
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Dictionary<string, bool> Targets { get; set; } = new ();
+        public List<string> TargetNames { get; } = new ();
     }
 
     private FormData _model = new();
     private List<MuscleView> _muscles = new();
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,18 +86,19 @@
 
     private async Task HandleValidSubmitAsync()
     {
+        var request = Mapper.Map<CreateExerciseRequest>(_model);
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        request.AuthorName = authenticationState.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Name).Value;
 
+        var response = await SkeletalClient.CreateExerciseAsync(request);
     }
 
     private void CheckboxChanged(ChangeEventArgs obj, MuscleView muscleModel)
     {
         var name = muscleModel.Name;
-        var value = (bool)obj.Value!;
-
-        if (_model.Targets.ContainsKey(name))
-            _model.Targets[name] = value;
+        if ((bool)obj.Value!)
+            _model.TargetNames.Add(name);
         else
-            _model.Targets.Add(name, value);
+            _model.TargetNames.Remove(name);
     }
-
 }

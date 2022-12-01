@@ -7,7 +7,7 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands.Exercises.CreateExercise;
 
-public record CreateExerciseCommand(string Name, string Description, List<int> TargetIds, int AuthorId) : IRequest<PipelineResult>;
+public record CreateExerciseCommand(string Name, string Description, List<string> TargetNames, string AuthorName) : IRequest<PipelineResult>;
 
 public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseCommand, PipelineResult>
 {
@@ -34,9 +34,9 @@ public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseComman
     public async Task<PipelineResult> Handle(CreateExerciseCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Exercise>(request);
-        var author = await _authorRepository.GetByIdAsync(request.AuthorId);
-        var targets = request.TargetIds
-            .Select(async x => await _muscleRepository.GetByIdAsync(x))!
+        var author = await _authorRepository.GetByNameAsync(request.AuthorName);
+        var targets = request.TargetNames
+            .Select(async x => await _muscleRepository.GetByNameAsync(x))!
             .Select<Task<Muscle>, Muscle>(y =>
             {
                 y.Wait(cancellationToken);
