@@ -1,9 +1,20 @@
 ﻿@page "/exercise/create"
-@using ZeroGravity.UI.Portal.Models
-@using ZeroGravity.UI.Portal.Blazor.Pages.Exercise.Contracts
 
-@inject ISkeletalApi _skeletalApi
+@using ZeroGravity.UI.Portal.Services.Skeletal.Contracts
+@using ZeroGravity.UI.Portal.Services.Skeletal.Requests
+@using ZeroGravity.UI.Portal.Services.Skeletal.Views
+@using ZeroGravity.UI.Core.Providers
+@using System.Security.Claims
+@using System.Text.Json
 
+@inject TokenAuthenticationStateProvider AuthenticationStateProvider
+@inject IMapper Mapper
+@inject ISkeletalClient SkeletalClient
+
+<AuthorizeView>
+    
+    <Authorized>
+        
 <section class="py-5">
     <div class="container py-5">
         <div class="row mb-5">
@@ -13,7 +24,7 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center">
-                    <EditForm class="p-3 p-xl-4" Model="@_model" OnValidSubmit="@HandleValidSubmitAsync">
+                    <EditForm Context="ExerciseCreateContext" class="p-3 p-xl-4" Model="@_model" OnValidSubmit="@HandleValidSubmitAsync">
                         <DataAnnotationsValidator/>
                         <ValidationSummary/>
             <div class="col-md-6 col-xl-4">
@@ -30,12 +41,12 @@
                             <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"></path>
                         </svg></span>&nbsp;Target muscles</h3>
                         <ul class="list-group">
-                            @for (int i = 0; i < _muscles.Count; ++i)
+                            @foreach (var muscle in _muscles)
                             {
                                 <li class="list-group-item bg-body" style="color: white;border: var(--bs-gray-100);">
                                     <div class="form-check">
-                                        <input @onchange="(e) => _model.Checked[i] = (bool)e.Value" class="form-check-input" type="checkbox" id="formCheck-1" style="font-size: 20px;">
-                                        <label class="form-check-label" for="formCheck-1" style="font-size: 20px;">@_muscles[i].Name</label>
+                                        <input @oninput="e => CheckboxChanged(e, muscle)" class="form-check-input" type="checkbox" style="font-size: 20px;"/>
+                                        <label class="form-check-label" for="formCheck-1" style="font-size: 20px;">@muscle.Name</label>
                                     </div>
                                 </li>
                             }
@@ -47,29 +58,47 @@
         </div>
     </div>
 </section>
+    </Authorized>
+    
+    
+    <NotAuthorized>
+        <h1>Not auth</h1>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
 
-    private class FormData
+    internal class FormData
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public bool[] Checked { get; set; }
+        public List<string> TargetNames { get; } = new ();
     }
-    
+
     private FormData _model = new();
-    private List<MuscleModel> _muscles = new();
+    private List<MuscleView> _muscles = new();
 
     protected override async Task OnInitializedAsync()
     {
-        _muscles = (await _skeletalApi.GetAllMuscles()).Result;
-        _model.Checked = new bool[_muscles.Count + 1]; 
+        _muscles = (await SkeletalClient.GetAllMusclesAsync()).Content!.Result;
         StateHasChanged();
     }
 
     private async Task HandleValidSubmitAsync()
     {
-        
+        var request = Mapper.Map<CreateExerciseRequest>(_model);
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        request.AuthorName = authenticationState.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Name).Value;
+
+        var response = await SkeletalClient.CreateExerciseAsync(request);
     }
 
+    private void CheckboxChanged(ChangeEventArgs obj, MuscleView muscleModel)
+    {
+        var name = muscleModel.Name;
+        if ((bool)obj.Value!)
+            _model.TargetNames.Add(name);
+        else
+            _model.TargetNames.Remove(name);
+    }
 }

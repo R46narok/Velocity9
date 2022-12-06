@@ -6,9 +6,9 @@ using ZeroGravity.Services.Skeletal.Dto;
 
 namespace ZeroGravity.Services.Skeletal.Queries.GetAllMuscles;
 
-public record GetAllMusclesQuery : IRequest<ApiResponse<List<MuscleDto>>>;
+public record GetAllMusclesQuery : IRequest<PipelineResult<List<MuscleDto>>>;
 
-public class GetAllMusclesQueryHandler : IRequestHandler<GetAllMusclesQuery, ApiResponse<List<MuscleDto>>>
+public class GetAllMusclesQueryHandler : IRequestHandler<GetAllMusclesQuery, PipelineResult<List<MuscleDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IMuscleRepository _repository;
@@ -21,7 +21,7 @@ public class GetAllMusclesQueryHandler : IRequestHandler<GetAllMusclesQuery, Api
         _repository = repository;
     }
     
-    public async Task<ApiResponse<List<MuscleDto>>> Handle(GetAllMusclesQuery request, CancellationToken cancellationToken)
+    public async Task<PipelineResult<List<MuscleDto>>> Handle(GetAllMusclesQuery request, CancellationToken cancellationToken)
     {
         var muscles = _repository
             .GetAll()

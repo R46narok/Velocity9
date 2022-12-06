@@ -6,9 +6,9 @@ using ZeroGravity.Services.Skeletal.Dto;
 
 namespace ZeroGravity.Services.Skeletal.Queries;
 
-public record GetMuscleGroupQuery(string Name) : IRequest<ApiResponse<MuscleGroupDto>>;
+public record GetMuscleGroupQuery(string Name) : IRequest<PipelineResult<MuscleGroupDto>>;
 
-public class GetMuscleGroupQueryHandler : IRequestHandler<GetMuscleGroupQuery, ApiResponse<MuscleGroupDto>>
+public class GetMuscleGroupQueryHandler : IRequestHandler<GetMuscleGroupQuery, PipelineResult<MuscleGroupDto>>
 {
     private readonly IMapper _mapper;
     private readonly IMuscleGroupRepository _repository;
@@ -19,7 +19,7 @@ public class GetMuscleGroupQueryHandler : IRequestHandler<GetMuscleGroupQuery, A
         _repository = repository;
     }
     
-    public async Task<ApiResponse<MuscleGroupDto>> Handle(GetMuscleGroupQuery request, CancellationToken cancellationToken)
+    public async Task<PipelineResult<MuscleGroupDto>> Handle(GetMuscleGroupQuery request, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetByNameAsync(request.Name);
         var dto = _mapper.Map<MuscleGroupDto>(entity);

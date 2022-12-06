@@ -1,13 +1,12 @@
 ﻿@page "/SignUp"
 @using Microsoft.AspNetCore.Components
 @using ZeroGravity.UI.Core.Providers
-@using ZeroGravity.UI.Portal.Blazor.Pages.Profile.Contracts
-@using ZeroGravity.UI.Portal.Blazor.Pages.Profile.Models
-@using ZeroGravity.UI.Portal.Models
+@using ZeroGravity.UI.Portal.Services.Authorization.Contracts
+@using ZeroGravity.UI.Portal.Services.Authorization.Requests
 
 @inject TokenAuthenticationStateProvider StateProvider
-@inject IAuthenticationApi AuthenticationApi
-@inject IAuthorizationApi AuthorizationApi
+@inject IAuthenticationClient AuthenticationClient
+@inject IAuthorizationClient AuthorizationClient
 
 <section class="py-5">
     
@@ -45,12 +44,18 @@
 
 @code {
     
-    private SignUpModel _model = new();
+    private SignUpRequest _model = new();
     
     private async Task HandleValidSubmitAsync()
     {
-        await AuthenticationApi.CreateUser(_model);
-        var token = await AuthorizationApi.GetToken(new SignInModel {UserName = _model.UserName, Password = _model.Password});
+        var result = await AuthenticationClient.CreateUserAsync(_model);
+        if (result.IsSuccessStatusCode)
+        {
+            
+            return;
+        }
+        
+        var token = await AuthorizationClient.GetTokenAsync(new SignInRequest {UserName = _model.UserName, Password = _model.Password});
         await StateProvider.SetAuthenticationStateAsync(token.Result);
     }
 }

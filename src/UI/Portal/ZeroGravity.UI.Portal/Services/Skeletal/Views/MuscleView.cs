@@ -1,6 +1,6 @@
-﻿namespace ZeroGravity.UI.Portal.Models;
+﻿namespace ZeroGravity.UI.Portal.Services.Skeletal.Views;
 
-public class MuscleModel
+public class MuscleView
 {
      public string Name { get; set; } 
      public string Description { get; set; }

@@ -1,7 +1,9 @@
 ﻿@page "/exercise/list"
-@using ZeroGravity.UI.Portal.Models
-@using ZeroGravity.UI.Portal.Blazor.Pages.Exercise.Contracts
-@inject ISkeletalApi _skeletalApi
+
+@using ZeroGravity.UI.Portal.Services.Skeletal.Contracts
+@using ZeroGravity.UI.Portal.Services.Skeletal.Views
+
+@inject ISkeletalClient SkeletalClient
 
 <section class="py-5">
         <div class="container py-5">
@@ -57,12 +59,16 @@
 
 @code {
 
-    private List<ExerciseModel> _exercises = new();
+    private List<ExerciseView> _exercises = new();
     
     protected override async Task OnInitializedAsync()
     {
-        _exercises = (await _skeletalApi.GetAllExercises()).Result;
-        StateHasChanged();
+        var response = await SkeletalClient.GetAllExercisesAsync();
+        if (response.IsSuccessStatusCode)
+        {
+            _exercises = response.Content!.Result;
+            StateHasChanged();
+        }
     }
 
 }

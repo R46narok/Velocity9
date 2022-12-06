@@ -45,7 +45,7 @@ if (app.Environment.IsDevelopment())
 
 app.UsePersistence<UserDbContext>();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
