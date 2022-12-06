@@ -60,7 +60,6 @@
     private FormData _model = new();
     private List<MuscleModel> _muscles = new();
 
-
     protected override async Task OnInitializedAsync()
     {
         _muscles = (await _skeletalApi.GetAllMuscles()).Result;

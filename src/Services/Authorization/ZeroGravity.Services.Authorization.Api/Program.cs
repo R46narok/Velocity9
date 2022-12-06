@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using RabbitMQ.Client;
+using Serilog;
+using Serilog.Core;
 using ZeroGravity.Application.Extensions;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
 using ZeroGravity.Infrastructure.MessageBrokers;
@@ -9,6 +11,12 @@ using ZeroGravity.Services.Authorization.Data.Persistence;
 var factory = new ConnectionFactory() {HostName = "localhost"};
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

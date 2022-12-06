@@ -2,11 +2,19 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Refit;
+using Serilog;
 using ZeroGravity.UI.Core.Providers;
 using ZeroGravity.UI.Portal.Blazor.Pages.Exercise.Contracts;
 using ZeroGravity.UI.Portal.Blazor.Pages.Profile.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<TokenAuthenticationStateProvider, TokenAuthenticationStateProvider>();
