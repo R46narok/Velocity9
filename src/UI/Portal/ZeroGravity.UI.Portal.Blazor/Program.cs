@@ -1,10 +1,17 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Refit;
+using Serilog;
 using ZeroGravity.UI.Core.Providers;
 using ZeroGravity.UI.Portal.Extensions;
 using ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddRazorPages();
