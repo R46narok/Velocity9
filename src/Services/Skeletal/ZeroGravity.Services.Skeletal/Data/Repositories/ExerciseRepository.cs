@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ZeroGravity.Application.Interfaces;
 using ZeroGravity.Services.Skeletal.Data.Entities;
@@ -9,6 +10,7 @@ namespace ZeroGravity.Services.Skeletal.Data.Repositories;
 public interface IExerciseRepository : IRepository<Exercise, int>
 {
     public Task<Exercise?> GetByNameAsync(string name, bool track = true);
+
 }
 
 public class ExerciseRepository : RepositoryBase<Exercise, int, SkeletalDbContext>, IExerciseRepository
@@ -37,8 +39,7 @@ public class ExerciseRepository : RepositoryBase<Exercise, int, SkeletalDbContex
     {
         return Context
             .Exercises
-            .Include(x => x.Targets)
-            .Include(x => x.Author)
+            .AsNoTracking()
             .ToList();
     }
 }

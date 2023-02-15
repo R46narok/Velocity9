@@ -79,6 +79,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.UI.Core", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Tests.Unit.Infrastructure", "tests\Unit\ZeroGravity.Tests.Unit.Infrastructure\ZeroGravity.Tests.Unit.Infrastructure.csproj", "{60974B0D-C8EB-447D-AE58-0635FAA5F7FB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workout", "Workout", "{E8340837-758F-4F98-B696-28BBDDFE0FD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Workout", "src\Services\Workout\ZeroGravity.Services.Workout\ZeroGravity.Services.Workout.csproj", "{6C0065B8-F6C3-4774-8EE3-0741058E4783}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Workout.Api", "src\Services\Workout\ZeroGravity.Services.Workout.Api\ZeroGravity.Services.Workout.Api.csproj", "{7A01CBC6-1FF8-49C9-8D7B-CB77CD90EEEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Workout.MachineLearning", "src\Services\Workout\ZeroGravity.Services.Workout.MachineLearning\ZeroGravity.Services.Workout.MachineLearning.csproj", "{9441073E-345A-4E65-A0EE-6973092EBBC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +119,10 @@ Global
 		{661C367B-AE87-457C-A3E6-DFC3C2D790DB} = {6B6E4231-0742-4D06-8084-0FF9E7EF8EFC}
 		{8C76075F-6F69-4A0F-8214-0128888535D0} = {661C367B-AE87-457C-A3E6-DFC3C2D790DB}
 		{60974B0D-C8EB-447D-AE58-0635FAA5F7FB} = {54D0350C-6EFE-4A58-B731-F45B9F63902A}
+		{E8340837-758F-4F98-B696-28BBDDFE0FD5} = {24110637-5C78-48E8-986A-1CBA03474AC3}
+		{6C0065B8-F6C3-4774-8EE3-0741058E4783} = {E8340837-758F-4F98-B696-28BBDDFE0FD5}
+		{7A01CBC6-1FF8-49C9-8D7B-CB77CD90EEEC} = {E8340837-758F-4F98-B696-28BBDDFE0FD5}
+		{9441073E-345A-4E65-A0EE-6973092EBBC0} = {E8340837-758F-4F98-B696-28BBDDFE0FD5}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{81D7CAC9-50FE-40AF-A42D-C18F9881A85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -165,5 +177,17 @@ Global
 		{60974B0D-C8EB-447D-AE58-0635FAA5F7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60974B0D-C8EB-447D-AE58-0635FAA5F7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60974B0D-C8EB-447D-AE58-0635FAA5F7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C0065B8-F6C3-4774-8EE3-0741058E4783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C0065B8-F6C3-4774-8EE3-0741058E4783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C0065B8-F6C3-4774-8EE3-0741058E4783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C0065B8-F6C3-4774-8EE3-0741058E4783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A01CBC6-1FF8-49C9-8D7B-CB77CD90EEEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A01CBC6-1FF8-49C9-8D7B-CB77CD90EEEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A01CBC6-1FF8-49C9-8D7B-CB77CD90EEEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A01CBC6-1FF8-49C9-8D7B-CB77CD90EEEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9441073E-345A-4E65-A0EE-6973092EBBC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9441073E-345A-4E65-A0EE-6973092EBBC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9441073E-345A-4E65-A0EE-6973092EBBC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9441073E-345A-4E65-A0EE-6973092EBBC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

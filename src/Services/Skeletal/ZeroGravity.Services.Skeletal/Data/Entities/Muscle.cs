@@ -1,4 +1,5 @@
-﻿using ZeroGravity.Domain.Entities;
+﻿using AutoMapper.Configuration.Annotations;
+using ZeroGravity.Domain.Entities;
 
 namespace ZeroGravity.Services.Skeletal.Data.Entities;
 
@@ -11,6 +12,9 @@ public class Muscle : EntityBase<int>
     public float TypeTwoFiberPercentage { get; set; }
     public float TypeThreeFiberPercentage { get; set; }
     
+    [Ignore]
     public MuscleGroup Group { get; set; }
+    
+    [Ignore]
     public List<Exercise> Exercises { get; set; }
 }

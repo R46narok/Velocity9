@@ -14,6 +14,7 @@ public class ExerciseProfile : Profile
         CreateMap<CreateExerciseCommand, Exercise>()
             .ForMember(x => x.Targets, opt => opt.Ignore())
             .ForMember(x => x.Author, opt => opt.Ignore());
+
         CreateMap<Exercise, ExerciseDto>();
         CreateMap<Exercise, ExerciseCreatedEvent>();
         CreateMap<Exercise, ExerciseDeletedEvent>();

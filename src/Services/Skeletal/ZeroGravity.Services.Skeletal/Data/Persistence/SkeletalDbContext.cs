@@ -4,7 +4,7 @@ using ZeroGravity.Services.Skeletal.Data.Entities;
 
 namespace ZeroGravity.Services.Skeletal.Data.Persistence;
 
-public class SkeletalDbContext : DbContext
+public sealed class SkeletalDbContext : DbContext
 {
     public DbSet<Author> Authors { get; set; } = null!;
     public DbSet<Exercise> Exercises { get; set; } = null!;
@@ -15,6 +15,7 @@ public class SkeletalDbContext : DbContext
     public SkeletalDbContext()
     {
         
+        ChangeTracker.LazyLoadingEnabled = false;
     }
 
     public SkeletalDbContext(DbContextOptions<SkeletalDbContext> options) : base(options)
@@ -51,6 +52,6 @@ public class SkeletalDbContext : DbContext
             .HasConversion(
             v => v.ToString(),
             v => (ResistanceToFatigue)Enum.Parse(typeof(ResistanceToFatigue), v));
-
     }
+
 }
