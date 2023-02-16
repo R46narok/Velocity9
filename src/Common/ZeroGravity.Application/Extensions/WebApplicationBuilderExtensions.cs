@@ -22,12 +22,17 @@ public static class WebApplicationBuilderExtensions
        
        return services;
    }
-   
-   public static void AddPersistence<T>(this WebApplicationBuilder builder, string name = "Database") where T : DbContext
+
+   public static void AddPersistence<T>(this WebApplicationBuilder builder, string name = "Database")
+       where T : DbContext
    {
        var connectionString = builder.Configuration.GetConnectionString(name);
-       builder.Services.AddDbContext<T>(opt => 
-           opt.UseSqlServer(connectionString));
-   }
+       builder.Services.AddDbContext<T>(opt =>
+           {
+               opt.UseSqlServer(connectionString);
+               opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+           }
+       );
+    }
    
 }

@@ -7,7 +7,7 @@ using ZeroGravity.Services.Authorization.Dto;
 
 namespace ZeroGravity.Services.Authorization.Queries.Users.GetUser;
 
-public class GetUserQuery : IRequest<ApiResponse<UserDto>>
+public class GetUserQuery : IRequest<PipelineResult<UserDto>>
 {
     public string UserName { get; set; }
     
@@ -17,7 +17,7 @@ public class GetUserQuery : IRequest<ApiResponse<UserDto>>
     }
 }
 
-public class GetUserQueryHandler : IRequestHandler<GetUserQuery, ApiResponse<UserDto>>
+public class GetUserQueryHandler : IRequestHandler<GetUserQuery, PipelineResult<UserDto>>
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
@@ -28,7 +28,7 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, ApiResponse<Use
         _userManager = userManager;
     }
 
-    public async Task<ApiResponse<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
+    public async Task<PipelineResult<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
         var dto = _mapper.Map<UserDto>(user);

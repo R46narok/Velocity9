@@ -11,9 +11,9 @@ public record CreateMuscleCommand(
     string Name, string Description,
     float TypeOneFiberPercentage, float TypeTwoAFiberPercentage, float TypeTwoXFiberPercentage,
     string Group
-    ) : IRequest<ApiResponse>;
+    ) : IRequest<PipelineResult>;
 
-public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, ApiResponse>
+public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, PipelineResult>
 {
     private readonly IMapper _mapper;
     private readonly IMuscleRepository _muscleRepository;
@@ -26,7 +26,7 @@ public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, A
         _muscleGroupRepository = muscleGroupRepository;
     }
     
-    public async Task<ApiResponse> Handle(CreateMuscleCommand request, CancellationToken cancellationToken)
+    public async Task<PipelineResult> Handle(CreateMuscleCommand request, CancellationToken cancellationToken)
     {
         var group = await _muscleGroupRepository.GetByNameAsync(request.Group);
         var entity = _mapper.Map<Muscle>(request);

@@ -1,23 +1,27 @@
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 using Refit;
+using Serilog;
 using ZeroGravity.UI.Core.Providers;
-using ZeroGravity.UI.Portal.Blazor.Pages.User.Clients;
+using ZeroGravity.UI.Portal.Extensions;
+using ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<TokenAuthenticationStateProvider, TokenAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
 
+builder.AddApplication();
+
 builder.Services.AddAuthenticationCore();
-builder.Services.AddRefitClient<IAuthenticationApi>()
-    .ConfigureHttpClient(x => x.BaseAddress = new Uri("http://localhost:5000"));
-
-
-builder.Services.AddRefitClient<IAuthorizationApi>()
-    .ConfigureHttpClient(x => x.BaseAddress = new Uri("http://localhost:5000"));
 
 var app = builder.Build();
 

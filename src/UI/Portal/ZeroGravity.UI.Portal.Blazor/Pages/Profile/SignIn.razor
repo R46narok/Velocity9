@@ -1,0 +1,57 @@
+﻿@page "/SignIn"
+@using Microsoft.AspNetCore.Components
+@using ZeroGravity.Application
+@using ZeroGravity.UI.Core.Providers
+@using ZeroGravity.UI.Portal.Services.Authorization.Contracts
+@using ZeroGravity.UI.Portal.Services.Authorization.Requests
+@inject TokenAuthenticationStateProvider StateProvider
+
+@inject NavigationManager NavigationManager
+@inject IAuthorizationClient AuthorizationClient
+
+<section class="py-5">
+    
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <p class="fw-bold text-success mb-2">Sign in</p>
+                <h2 class="fw-bold">Welcome back</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <EditForm Model="@_model" OnValidSubmit="@HandleValidSubmitAsync">
+                
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                        
+                    <div class="mb-3"><InputText class="form-control" placeholder="Username" @bind-Value="_model.UserName"/></div>
+                    <div class="mb-3"><InputText class="form-control" placeholder="Password" type="password" @bind-Value="_model.Password"/></div>
+                        
+                    <div class="mb-3"></div>
+                    <div><button class="btn btn-primary shadow d-block w-100" type="submit">Send </button></div>
+                
+                </EditForm>
+            </div>
+        </div>
+        <div class="col-md-8 mt-2 col-xl-6 text-center mx-auto">
+            <a href="/signup">Not a member?</a>
+            </div>
+    </div>
+</section>
+
+@code {
+    
+    private SignInRequest _model = new();
+    
+    private async Task HandleValidSubmitAsync()
+    {
+        var token = await AuthorizationClient.GetTokenAsync(_model);
+        
+        if (token.StatusCode == StatusCode.Ok)
+        {
+            await StateProvider.SetAuthenticationStateAsync(token.Result);
+            NavigationManager.NavigateTo("/");
+        }
+    }
+}

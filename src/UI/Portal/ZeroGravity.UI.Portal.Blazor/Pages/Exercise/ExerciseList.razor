@@ -1,0 +1,74 @@
+﻿@page "/exercise/list"
+
+@using ZeroGravity.UI.Portal.Services.Skeletal.Contracts
+@using ZeroGravity.UI.Portal.Services.Skeletal.Views
+
+@inject ISkeletalClient SkeletalClient
+
+<section class="py-5">
+        <div class="container py-5">
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <p class="fw-bold text-success mb-2">Exercises</p>
+                    <h3 class="fw-bold">Explore the vast collection of time-proven exercises</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <h4 class="mt-2">Verified</h4>
+                </div>
+                <div class="col text-end">
+                    <ul class="list-group list-group-horizontal d-inline-flex">
+                        <li class="list-group-item bg-body" style="border: none;">
+                            <div class="form-check mt-1"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1" style="color: white;font-size: large;">AI support</label></div>
+                        </li>
+                        <li class="list-group-item bg-body" style="border: none;">
+                            <div class="dropdown"><button class="btn btn-primary dropdown-toggle btn-sm" aria-expanded="false" data-bs-toggle="dropdown" type="button">Muscle group</button>
+                                <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item bg-body" style="border: none;">
+                            <div class="dropdown"><button class="btn btn-primary dropdown-toggle btn-sm" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
+                                <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            @foreach (var exercise in _exercises)
+            {
+                <div class="row bg-dark pt-3 mt-3" style="border-radius: 10px;">
+                    <div class="col-3">
+                        <div style="margin-left: 10px;"><a href="#" style="/*margin-left: 10px;*/">
+                                <h4 class="mt-1" style="color: white;"><span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check-circle-fill" style="color: rgb(45, 246, 177) !important;font-size: 28px;">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
+                                        </svg></span>&nbsp; @exercise.Name</h4>
+                            </a></div>
+                    </div>
+                    <div class="col-6">
+                        <p class="mt-2" style="color: white;">@exercise.Description</p>
+                    </div>
+                    <div class="col text-end"><button class="btn btn-primary btn-sm" style="margin-right: 10px;">View</button></div>
+                </div>
+                
+            }
+            
+        </div>
+    </section>
+
+@code {
+
+    private List<ExerciseView> _exercises = new();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await SkeletalClient.GetAllExercisesAsync();
+        if (response.IsSuccessStatusCode)
+        {
+            _exercises = response.Content!.Result;
+            StateHasChanged();
+        }
+    }
+
+}

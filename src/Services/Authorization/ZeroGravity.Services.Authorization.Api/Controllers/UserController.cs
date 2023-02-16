@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ZeroGravity.Services.Authorization.Commands.Users.CreateUser;
 using ZeroGravity.Services.Authorization.Commands.Users.DeleteUser;
 using ZeroGravity.Services.Authorization.Commands.Users.ElevateUser;
+using ZeroGravity.Services.Authorization.Queries.Users.GetAllUsers;
 using ZeroGravity.Services.Authorization.Queries.Users.GetUser;
 
 namespace ZeroGravity.Services.Authorization.Api.Controllers;
@@ -48,6 +49,17 @@ public class UserController : ControllerBase
         var response = await _mediator.Send(query);
         
         return Application.StatusCode.ToObjectResult(response);
+    }
+
+    [HttpGet("/api/[controller]/all")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllAsync()
+    {
+        var query = new GetAllUsersQuery();
+        var response = await _mediator.Send(query);
+        
+        return Application.StatusCode.ToObjectResult(response);
+
     }
 
     [HttpPut]

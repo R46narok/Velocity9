@@ -9,7 +9,7 @@ using ZeroGravity.Services.Authorization.Data.Entities;
 
 namespace ZeroGravity.Services.Authorization.Commands.Users.CreateUser;
 
-public class CreateUserCommand : IRequest<ApiResponse>
+public class CreateUserCommand : IRequest<PipelineResult>
 {
     public string UserName { get; set; }
     public string Email { get; set; }
@@ -25,7 +25,7 @@ public class CreateUserCommand : IRequest<ApiResponse>
     public CreateUserCommand() { }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiResponse>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, PipelineResult>
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
@@ -38,7 +38,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         _userManager = userManager;
     }
     
-    public async Task<ApiResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<PipelineResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<User>(request);
         
@@ -58,9 +58,9 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
             var @event = _mapper.Map<UserCreatedEvent>(user);
             await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
             
-            return new ApiResponse("Successfully created a user");
+            return new PipelineResult("Successfully created a user");
         }
         
-        return new ApiResponse(identityResult.Errors.Select(x => x.Description), StatusCode.BadRequest);
+        return new PipelineResult(identityResult.Errors.Select(x => x.Description), StatusCode.BadRequest);
     }
 }

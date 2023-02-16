@@ -9,7 +9,7 @@ using ZeroGravity.Services.Authorization.Data.Entities;
 
 namespace ZeroGravity.Services.Authorization.Commands.Token.CreateToken;
 
-public class CreateTokenCommand : IRequest<ApiResponse<string>>
+public class CreateTokenCommand : IRequest<PipelineResult<string>>
 {
     public string UserName { get; set; } 
     public string Password { get; set; }
@@ -21,7 +21,7 @@ public class CreateTokenCommand : IRequest<ApiResponse<string>>
     }
 }
 
-public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, ApiResponse<string>>
+public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, PipelineResult<string>>
 {
     private readonly IConfiguration _configuration;
     private readonly UserManager<User> _userManager;
@@ -34,7 +34,7 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Api
         _userManager = userManager;
     }
 
-    public async Task<ApiResponse<string>> Handle(CreateTokenCommand request, CancellationToken cancellationToken)
+    public async Task<PipelineResult<string>> Handle(CreateTokenCommand request, CancellationToken cancellationToken)
     {
         var issuer = _configuration["Jwt:Issuer"];
         var audience = _configuration["Jwt:Audience"];

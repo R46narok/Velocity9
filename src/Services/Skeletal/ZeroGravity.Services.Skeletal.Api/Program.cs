@@ -1,9 +1,14 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using RabbitMQ.Client;
+using Refit;
+using Serilog;
 using ZeroGravity.Application.Extensions;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
+using ZeroGravity.Application.Interfaces;
+using ZeroGravity.Domain.Types;
 using ZeroGravity.Infrastructure.Extensions;
 using ZeroGravity.Infrastructure.MessageBrokers;
 using ZeroGravity.Services.Skeletal.Data;
@@ -15,6 +20,12 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 var factory = new ConnectionFactory() {HostName = "localhost"};
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers().AddJsonOptions(opt =>
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -50,6 +61,7 @@ if (app.Environment.IsDevelopment())
 
 app.UsePersistence<SkeletalDbContext>();
 await app.InitializeDatabase();
+await app.SynchronizeDataFromRemotes();
 
 app.UseHttpsRedirection();
 

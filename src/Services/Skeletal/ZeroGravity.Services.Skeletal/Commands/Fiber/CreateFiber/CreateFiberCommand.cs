@@ -10,9 +10,9 @@ public record CreateFiberCommand(
     string Name, string Description, 
     MotorUnitType MotorUnitType, TwitchSpeed TwitchSpeed, TwitchForce TwitchForce,
     ResistanceToFatigue ResistanceToFatigue
-    ) : IRequest<ApiResponse>;
+    ) : IRequest<PipelineResult>;
 
-public class CreateFiberCommandHandler : IRequestHandler<CreateFiberCommand, ApiResponse>
+public class CreateFiberCommandHandler : IRequestHandler<CreateFiberCommand, PipelineResult>
 {
     private readonly IFiberRepository _repository;
     private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ public class CreateFiberCommandHandler : IRequestHandler<CreateFiberCommand, Api
         _mapper = mapper;
     }
     
-    public async Task<ApiResponse> Handle(CreateFiberCommand request, CancellationToken cancellationToken)
+    public async Task<PipelineResult> Handle(CreateFiberCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Fiber>(request);
         await _repository.CreateAsync(entity);

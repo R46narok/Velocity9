@@ -12,12 +12,12 @@ public static class StatusCode
     public const string Unauthorized = "Unauthorized";
     public const string Fetched = "Fetched";
     
-    public static ObjectResult ToObjectResult(ApiResponse response)
+    public static ObjectResult ToObjectResult(PipelineResult response)
     {
         return Impl(response.StatusCode, response);
     }
     
-    public static ObjectResult ToObjectResult<T>(ApiResponse<T> response)
+    public static ObjectResult ToObjectResult<T>(PipelineResult<T> response)
     {
         return Impl(response.StatusCode, response);
     }
