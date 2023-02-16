@@ -9,12 +9,12 @@ services:
 - name: zerogravity-services-authorization-api
   project: src/Services/Authorization/ZeroGravity.Services.Authorization.Api/ZeroGravity.Services.Authorization.Api.csproj
   bindings:
-    - port: 6000
+    - port: 5000
 
-- name: zerogravity-services-exercises-api
-  project: src/Services/Excersises/ZeroGravity.Services.Exercises.Api/ZeroGravity.Services.Exercises.Api.csproj
+- name: zerogravity-services-skeletal-api
+  project: src/Services/Skeletal/ZeroGravity.Services.Skeletal.Api/ZeroGravity.Services.Skeletal.Api.csproj
   bindings:
-    - port: 6001
+    - port: 5001
 
 - name: mssql
   image: "mcr.microsoft.com/mssql/server:2022-latest"
