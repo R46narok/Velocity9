@@ -85,7 +85,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Workou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Workout.Api", "src\Services\Workout\ZeroGravity.Services.Workout.Api\ZeroGravity.Services.Workout.Api.csproj", "{7A01CBC6-1FF8-49C9-8D7B-CB77CD90EEEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Workout.MachineLearning", "src\Services\Workout\ZeroGravity.Services.Workout.MachineLearning\ZeroGravity.Services.Workout.MachineLearning.csproj", "{9441073E-345A-4E65-A0EE-6973092EBBC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Workout.DeepLearning", "src\Services\Workout\ZeroGravity.Services.Workout.DeepLearning\ZeroGravity.Services.Workout.DeepLearning.csproj", "{9441073E-345A-4E65-A0EE-6973092EBBC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
