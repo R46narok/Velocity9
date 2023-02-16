@@ -39,6 +39,8 @@ public class ExerciseRepository : RepositoryBase<Exercise, int, SkeletalDbContex
     {
         return Context
             .Exercises
+            .Include(x => x.Author)
+            .Include(x => x.Targets)
             .AsNoTracking()
             .ToList();
     }

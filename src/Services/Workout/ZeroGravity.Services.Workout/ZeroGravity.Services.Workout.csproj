@@ -7,22 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\Exercise\CreateExercise" />
       <Folder Include="Commands\Exercise\DeleteExercise" />
       <Folder Include="Commands\Exercise\UpdateExercise" />
       <Folder Include="Commands\Muscle\DeleteMuscle" />
       <Folder Include="Commands\Muscle\UpdateMuscle" />
-      <Folder Include="Commands\Set\CreateSet" />
-      <Folder Include="Commands\Set\DeleteSet" />
       <Folder Include="Commands\Set\UpdateSet" />
-      <Folder Include="Commands\Workout\CreateWorkout" />
-      <Folder Include="Commands\Workout\DeleteWorkout" />
-      <Folder Include="Commands\Workout\UpdateWorkout" />
       <Folder Include="Contracts" />
-      <Folder Include="Dto" />
-      <Folder Include="Handlers" />
-      <Folder Include="Mapping" />
-      <Folder Include="Queires" />
     </ItemGroup>
 
     <ItemGroup>

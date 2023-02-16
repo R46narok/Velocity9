@@ -6,7 +6,9 @@ using ZeroGravity.Application.Infrastructure.MessageBrokers;
 using ZeroGravity.Infrastructure.Extensions;
 using ZeroGravity.Infrastructure.MessageBrokers;
 using ZeroGravity.Services.Workout.Data.Entities;
+using ZeroGravity.Services.Workout.Data.Extensions;
 using ZeroGravity.Services.Workout.Data.Persistence;
+using ZeroGravity.Services.Workout.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var factory = new ConnectionFactory() {HostName = "localhost"};
@@ -17,6 +19,7 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
+
 builder.Services.AddControllers().AddJsonOptions(opt =>
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
@@ -24,6 +27,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.AddPersistence<WorkoutDbContext>();
+
+builder.Services.AddTransient<ISetRepository, SetRepository>();
+builder.Services.AddTransient<IMuscleRepository, MuscleRepository>();
+builder.Services.AddTransient<IWorkoutRepository, WorkoutRepository>();
+builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 builder.Services.AddSingleton<IConnection>(_ => factory.CreateConnection());
 builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
@@ -33,6 +44,7 @@ builder.Services.AddEventHandlers(typeof(WorkoutDbContext).Assembly);
 
 var app = builder.Build();
 app.UsePersistence<WorkoutDbContext>();
+await app.SynchronizeDataFromRemotes();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

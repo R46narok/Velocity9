@@ -6,8 +6,11 @@ using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
-public record CreateMuscleCommand(string Name, int ExternalId)
-: IRequest<PipelineResult>;
+public class CreateMuscleCommand : IRequest<PipelineResult>
+{
+    public string ExternalId { get; set; }
+    public string Name { get; set; }
+}
 
 public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, PipelineResult>
 {

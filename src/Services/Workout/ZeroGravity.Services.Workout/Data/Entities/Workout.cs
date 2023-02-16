@@ -18,4 +18,5 @@ public class Workout : EntityBase<int>
     
     public DateTime CompletedOn { get; set; }
     public List<Set> Sets { get; set; }
+    public User User { get; set; }
 }
