@@ -9,18 +9,6 @@ using ZeroGravity.Services.Workout.Data.Entities;
 using ZeroGravity.Services.Workout.Data.Extensions;
 using ZeroGravity.Services.Workout.Data.Persistence;
 using ZeroGravity.Services.Workout.Data.Repositories;
-using ZeroGravity.Services.Workout.DeepLearning;
-using ZeroGravity.Services.Workout.DeepLearning.Models;
-
-var model = new WorkoutModel("encoder.onnx", "e_decoder.onnx");
-var ex =
-    "Weighted_Dips Weighted_Dips Weighted_Dips Weighted_Dips Incline_Bench_Press Incline_Bench_Press Incline_Bench_Press Incline_Bench_Press Decline_Bench_Press Decline_Bench_Press Decline_Bench_Press Decline_Bench_Press Shoulder_Raise Shoulder_Raise Shoulder_Raise Shoulder_Raise Weighted_Dips Weighted_Dips Weighted_Dips Weighted_Dips Rings"
-    .Split(" ")
-    .ToArray();
-var reps = Array.ConvertAll("10 10 9 8 10 10 9 8 10 10 9 8 10 10 9 8 10 10 9 8 8".Split(" "), int.Parse);
-model.Predict(ex.ToList(), reps.ToList());
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 var factory = new ConnectionFactory() {HostName = "localhost"};
@@ -30,7 +18,6 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
-
 
 builder.Services.AddControllers().AddJsonOptions(opt =>
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

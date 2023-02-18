@@ -12,22 +12,23 @@ public class WorkoutModel
     private readonly Dictionary<string, int> _targetTokens;
     private readonly Dictionary<int, string> _reverse;
 
-    public WorkoutModel(string encoderOnnx, string exerciseDecoderOnnx)
+    public WorkoutModel(
+        string encoderOnnx, 
+        string exerciseDecoderOnnx,
+        List<string> availableExercises)
     {
+        // "Bench_Press Incline_Bench_Press Triceps_Iso Shoulder_Raise Paused_Dips Chest_Flies Weighted_Dips Rings Shoulder_Press HSPU Decline_Bench_Press";
         _encoder = new EncoderInferenceModel(encoderOnnx);
         _exerciseDecoder = new ExerciseInferenceDecoder(exerciseDecoderOnnx);
         
+        availableExercises.Sort();
+        _tokens = Lookup.For(availableExercises.ToArray());
         
-        const string tokensAsString =
-            "Bench_Press Incline_Bench_Press Triceps_Iso Shoulder_Raise Paused_Dips Chest_Flies Weighted_Dips Rings Shoulder_Press HSPU Decline_Bench_Press";
-        var tokens = tokensAsString.Split(' ').ToArray();
-        
-        const string tokensAsString1 =
-            "START_ _END Bench_Press Incline_Bench_Press Triceps_Iso Shoulder_Raise Paused_Dips Chest_Flies Weighted_Dips Rings Shoulder_Press HSPU Decline_Bench_Press";
-        var tokens1 = tokensAsString1.Split(' ').ToArray();
-        _tokens = Lookup.For(tokens);
-        _targetTokens = Lookup.For(tokens1);
-        _reverse = Lookup.ReverseFor(tokens1);
+        availableExercises.Add("START_");
+        availableExercises.Add("_END");
+        var array = availableExercises.ToArray();
+        _targetTokens = Lookup.For(array);
+        _reverse = Lookup.ReverseFor(array);
     }
 
     public void Predict(List<string> exercises, List<int> reps)
