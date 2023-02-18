@@ -6,4 +6,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.ML" Version="2.0.1" />
+      <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.14.0" />
+      <PackageReference Include="Microsoft.ML.OnnxRuntime.Gpu" Version="1.14.0" />
+      <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\ZeroGravity.DeepLearning\ZeroGravity.DeepLearning.csproj" />
+    </ItemGroup>
+
 </Project>

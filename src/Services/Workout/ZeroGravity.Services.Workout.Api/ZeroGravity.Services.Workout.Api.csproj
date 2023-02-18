@@ -16,6 +16,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\ZeroGravity.Application\ZeroGravity.Application.csproj" />
       <ProjectReference Include="..\..\..\Common\ZeroGravity.Infrastructure\ZeroGravity.Infrastructure.csproj" />
+      <ProjectReference Include="..\ZeroGravity.Services.Workout.DeepLearning\ZeroGravity.Services.Workout.DeepLearning.csproj" />
       <ProjectReference Include="..\ZeroGravity.Services.Workout\ZeroGravity.Services.Workout.csproj" />
     </ItemGroup>
 
