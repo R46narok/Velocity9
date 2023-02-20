@@ -6,13 +6,13 @@ using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
-public class CreateUserCommand : IRequest<PipelineResult>
+public class CreateUserCommand : IRequest<CqrsResult>
 {
     public string UserName { get; set; }
     public string ExternalId { get; set; }
 }
 
-public class CreateAuthorCommandHandler : IRequestHandler<CreateUserCommand, PipelineResult>
+public class CreateAuthorCommandHandler : IRequestHandler<CreateUserCommand, CqrsResult>
 {
     private readonly IMapper _mapper;
     private readonly IUserRepository _repository;
@@ -23,7 +23,7 @@ public class CreateAuthorCommandHandler : IRequestHandler<CreateUserCommand, Pip
         _repository = repository;
     }
     
-    public async Task<PipelineResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<User>(request);
         await _repository.CreateAsync(entity);

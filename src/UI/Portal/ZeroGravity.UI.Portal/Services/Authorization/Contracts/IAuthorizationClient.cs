@@ -6,5 +6,5 @@ namespace ZeroGravity.UI.Portal.Services.Authorization.Contracts;
 public interface IAuthorizationClient
 {
     [Post(Endpoints.TokenBase)]
-    public Task<Domain.Types.PipelineResult<string>> GetTokenAsync(SignInRequest request);
+    public Task<Domain.Types.CqrsResult<string>> GetTokenAsync(SignInRequest request);
 }

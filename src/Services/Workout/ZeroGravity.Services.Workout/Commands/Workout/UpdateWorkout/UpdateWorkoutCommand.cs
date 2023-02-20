@@ -8,9 +8,9 @@ namespace ZeroGravity.Services.Workout.Commands;
 
 public record UpdateWorkoutCommand(
         string UserName, string WorkoutName, string? NewWorkoutName, string? Notes, DateTime? CompletedOn) 
- : IRequest<PipelineResult>;
+ : IRequest<CqrsResult>;
 
-public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand, PipelineResult>
+public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand, CqrsResult>
 {
     private readonly IWorkoutRepository _repository;
     private readonly IMessagePublisher _publisher;
@@ -23,7 +23,7 @@ public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand,
         _mapper = mapper;
     }
 
-    public async Task<PipelineResult> Handle(UpdateWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(UpdateWorkoutCommand request, CancellationToken cancellationToken)
     {
         var entity = (await _repository.GetByNameAsync(request.UserName, request.WorkoutName))!;
 

@@ -1,10 +1,9 @@
-﻿using Microsoft.ML.OnnxRuntime;
+﻿using ZeroGravity.DeepLearning.Common;
 using ZeroGravity.DeepLearning.Preprocessing;
-using ZeroGravity.Services.Workout.DeepLearning.Data;
 
 namespace ZeroGravity.Services.Workout.DeepLearning.Models;
 
-public class WorkoutModel
+public class WorkoutModel : IInferenceModel<WorkoutModelInput, WorkoutModelOutput>
 {
     private readonly EncoderInferenceModel _encoder;
     private readonly ExerciseInferenceDecoder _exerciseDecoder;
@@ -13,27 +12,34 @@ public class WorkoutModel
     private readonly Dictionary<int, string> _reverse;
 
     public WorkoutModel(
-        string encoderOnnx, 
+        string encoderOnnx,
         string exerciseDecoderOnnx,
         List<string> availableExercises)
     {
-        // "Bench_Press Incline_Bench_Press Triceps_Iso Shoulder_Raise Paused_Dips Chest_Flies Weighted_Dips Rings Shoulder_Press HSPU Decline_Bench_Press";
         _encoder = new EncoderInferenceModel(encoderOnnx);
         _exerciseDecoder = new ExerciseInferenceDecoder(exerciseDecoderOnnx);
-        
+
         availableExercises.Sort();
         _tokens = Lookup.For(availableExercises.ToArray());
-        
-        availableExercises.Add("START_");
-        availableExercises.Add("_END");
+
         var array = availableExercises.ToArray();
+        Array.Sort(array);
+
+        var list = array.ToList();
+        list.Insert(7, "START_");
+        list.Add("_END");
+
+        array = list.ToArray();
         _targetTokens = Lookup.For(array);
+        
         _reverse = Lookup.ReverseFor(array);
     }
 
-    public void Predict(List<string> exercises, List<int> reps)
+    public WorkoutModelOutput Predict(WorkoutModelInput input)
     {
-        const int maxLength = 25;
+        var exercises = input.Exercises;
+        var reps = input.Reps;
+        const int maxLength = 27;
 
         var exerciseInput = new float[maxLength];
         var repsInput = new float[maxLength];
@@ -43,7 +49,7 @@ public class WorkoutModel
             repsInput[i] = reps[i] / 10.0f;
         }
 
-        var encoded = _encoder.Predict(new (exerciseInput, repsInput));
+        var encoded = _encoder.Predict(new(exerciseInput, repsInput));
         var hiddenState = encoded.HiddenState;
         var cellState = encoded.CellState;
         var data = new float[1];
@@ -52,21 +58,21 @@ public class WorkoutModel
         var predictedExercises = new List<string>();
         while (true)
         {
-            var decoded = _exerciseDecoder.Predict(new(data, hiddenState, cellState));
+            var decoded = _exerciseDecoder.Predict(new(data, hiddenState!, cellState!));
             var tokenDistribution = decoded.Dense!.ToArray();
-            
-            var index = Array.IndexOf(tokenDistribution, tokenDistribution.Max()); 
+            var index = Array.IndexOf(tokenDistribution, tokenDistribution.Max());
             var sampled = _reverse[index];
-            
+
             if (sampled == "_END" || predictedExercises.Count >= 27)
                 break;
-            
+
             predictedExercises.Add(sampled);
-            
+
             hiddenState = decoded.HiddenState;
             cellState = decoded.CellState;
             data[0] = index;
         }
 
+        return new(predictedExercises, null!);
     }
 }

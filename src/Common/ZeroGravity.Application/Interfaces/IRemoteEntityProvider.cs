@@ -5,5 +5,5 @@ namespace ZeroGravity.Application.Interfaces;
 
 public interface IRemoteEntityProvider<T>
 {
-    public Task<IApiResponse<PipelineResult<List<T>>>> GetAllAsync();
+    public Task<IApiResponse<CqrsResult<List<T>>>> GetAllAsync();
 }

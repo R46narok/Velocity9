@@ -6,13 +6,13 @@ using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
-public class CreateMuscleCommand : IRequest<PipelineResult>
+public class CreateMuscleCommand : IRequest<CqrsResult>
 {
     public string ExternalId { get; set; }
     public string Name { get; set; }
 }
 
-public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, PipelineResult>
+public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, CqrsResult>
 {
     private readonly IMapper _mapper;
     private readonly IMuscleRepository _repository;
@@ -23,7 +23,7 @@ public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, P
         _repository = repository;
     }
 
-    public async Task<PipelineResult> Handle(CreateMuscleCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(CreateMuscleCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Muscle>(request);
         await _repository.CreateAsync(entity);

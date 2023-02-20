@@ -12,12 +12,12 @@ public static class StatusCode
     public const string Unauthorized = "Unauthorized";
     public const string Fetched = "Fetched";
     
-    public static ObjectResult ToObjectResult(PipelineResult response)
+    public static ObjectResult ToObjectResult(CqrsResult response)
     {
         return Impl(response.StatusCode, response);
     }
     
-    public static ObjectResult ToObjectResult<T>(PipelineResult<T> response)
+    public static ObjectResult ToObjectResult<T>(CqrsResult<T> response)
     {
         return Impl(response.StatusCode, response);
     }

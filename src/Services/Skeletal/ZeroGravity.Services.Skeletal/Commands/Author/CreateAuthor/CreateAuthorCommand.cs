@@ -6,13 +6,13 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands.CreateAuthor;
 
-public class CreateAuthorCommand : IRequest<PipelineResult>
+public class CreateAuthorCommand : IRequest<CqrsResult>
 {
     public string UserName { get; set; }
     public string ExternalId { get; set; }
 }
 
-public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, PipelineResult>
+public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, CqrsResult>
 {
     private readonly IMapper _mapper;
     private readonly IAuthorRepository _repository;
@@ -23,7 +23,7 @@ public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, P
         _repository = repository;
     }
     
-    public async Task<PipelineResult> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Author>(request);
         await _repository.CreateAsync(entity);

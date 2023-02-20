@@ -1,6 +1,4 @@
-﻿using Microsoft.ML;
-using Microsoft.ML.OnnxRuntime;
-using Microsoft.ML.OnnxRuntime.Tensors;
+﻿using Microsoft.ML.OnnxRuntime;
 using ZeroGravity.DeepLearning.Common;
 using ZeroGravity.Services.Workout.DeepLearning.Data;
 
