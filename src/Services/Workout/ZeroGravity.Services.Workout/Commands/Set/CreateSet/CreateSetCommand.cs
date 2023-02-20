@@ -11,9 +11,9 @@ namespace ZeroGravity.Services.Workout.Commands;
 public record CreateSetCommand
     (string Notes, int TargetReps, int CompletedReps,
         string ExerciseName, string WorkoutName, string UserName) 
-    : IRequest<PipelineResult>;
+    : IRequest<CqrsResult>;
 
-public class CreateSetCommandHandler : IRequestHandler<CreateSetCommand, PipelineResult>
+public class CreateSetCommandHandler : IRequestHandler<CreateSetCommand, CqrsResult>
 {
     private readonly ISetRepository _setRepository;
     private readonly IExerciseRepository _exerciseRepository;
@@ -30,7 +30,7 @@ public class CreateSetCommandHandler : IRequestHandler<CreateSetCommand, Pipelin
         _workoutRepository = workoutRepository;
     }
 
-    public async Task<PipelineResult> Handle(CreateSetCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(CreateSetCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Set>(request);
 

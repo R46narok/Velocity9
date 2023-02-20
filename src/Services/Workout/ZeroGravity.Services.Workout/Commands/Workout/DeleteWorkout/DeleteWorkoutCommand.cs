@@ -6,9 +6,9 @@ using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
-public record DeleteWorkoutCommand(string WorkoutName, string UserName) : IRequest<PipelineResult>;
+public record DeleteWorkoutCommand(string WorkoutName, string UserName) : IRequest<CqrsResult>;
 
-public class DeleteWorkoutCommandHandler : IRequestHandler<DeleteWorkoutCommand, PipelineResult>
+public class DeleteWorkoutCommandHandler : IRequestHandler<DeleteWorkoutCommand, CqrsResult>
 {
     private readonly IWorkoutRepository _repository;
     private readonly IMessagePublisher _messagePublisher;
@@ -21,7 +21,7 @@ public class DeleteWorkoutCommandHandler : IRequestHandler<DeleteWorkoutCommand,
         _mapper = mapper;
     }
 
-    public async Task<PipelineResult> Handle(DeleteWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(DeleteWorkoutCommand request, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetByNameAsync(request.UserName, request.WorkoutName);
         await _repository.DeleteAsync(entity!);

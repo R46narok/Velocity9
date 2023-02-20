@@ -9,11 +9,11 @@ namespace ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
 public interface ISkeletalClient
 {
     [Get(Endpoints.ExerciseBase)]
-    public Task<IApiResponse<PipelineResult<List<ExerciseView>>>> GetAllExercisesAsync();
+    public Task<IApiResponse<CqrsResult<List<ExerciseView>>>> GetAllExercisesAsync();
 
     [Get(Endpoints.MuscleBase)]
-    public Task<IApiResponse<PipelineResult<List<MuscleView>>>> GetAllMusclesAsync();
+    public Task<IApiResponse<CqrsResult<List<MuscleView>>>> GetAllMusclesAsync();
 
     [Post(Endpoints.ExerciseBase)]
-    public Task<IApiResponse<PipelineResult>> CreateExerciseAsync(CreateExerciseRequest request);
+    public Task<IApiResponse<CqrsResult>> CreateExerciseAsync(CreateExerciseRequest request);
 }

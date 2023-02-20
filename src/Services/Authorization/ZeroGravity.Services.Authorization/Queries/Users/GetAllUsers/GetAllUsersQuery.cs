@@ -7,9 +7,9 @@ using ZeroGravity.Services.Authorization.Dto;
 
 namespace ZeroGravity.Services.Authorization.Queries.Users.GetAllUsers;
 
-public record GetAllUsersQuery : IRequest<PipelineResult<List<UserDto>>>;
+public record GetAllUsersQuery : IRequest<CqrsResult<List<UserDto>>>;
 
-public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, PipelineResult<List<UserDto>>>
+public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, CqrsResult<List<UserDto>>>
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, Pipelin
         _mapper = mapper;
     }
 
-    public async Task<PipelineResult<List<UserDto>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+    public async Task<CqrsResult<List<UserDto>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
         var users = _userManager.Users.ToList();
         var dtos = users

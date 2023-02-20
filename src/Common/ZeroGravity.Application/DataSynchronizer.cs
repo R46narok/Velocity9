@@ -7,7 +7,7 @@ namespace ZeroGravity.Application;
 
 public interface IRemoteSynchronizerProvider<TEntity>
 {
-    Task<IApiResponse<PipelineResult<List<TEntity>>>> GetAllAsync();
+    Task<IApiResponse<CqrsResult<List<TEntity>>>> GetAllAsync();
 }
 
 public class DataSynchronizer<TRemoteEntity, TCreateCommand>

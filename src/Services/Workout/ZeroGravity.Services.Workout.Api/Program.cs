@@ -3,12 +3,14 @@ using RabbitMQ.Client;
 using Serilog;
 using ZeroGravity.Application.Extensions;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
+using ZeroGravity.DeepLearning.Common;
 using ZeroGravity.Infrastructure.Extensions;
 using ZeroGravity.Infrastructure.MessageBrokers;
 using ZeroGravity.Services.Workout.Data.Entities;
 using ZeroGravity.Services.Workout.Data.Extensions;
 using ZeroGravity.Services.Workout.Data.Persistence;
 using ZeroGravity.Services.Workout.Data.Repositories;
+using ZeroGravity.Services.Workout.DeepLearning.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var factory = new ConnectionFactory() {HostName = "localhost"};
@@ -40,6 +42,10 @@ builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
 
 builder.Services.AddMediatorAndVluentValidation(new[] {typeof(Workout).Assembly});
 builder.Services.AddEventHandlers(typeof(WorkoutDbContext).Assembly);
+builder.Services.AddTransient<IInferenceModel<WorkoutModelInput, WorkoutModelOutput>, WorkoutModel>(
+    opt => new WorkoutModel("encoder.onnx", "e_decoder.onnx",
+    "Bench press,Incline bench press,Triceps iso,Shoulder raise,Paused dips,Chest flies,Weighted dips,Rings,Shoulder press,HSPU,Decline bench press"
+            .Split(',').ToList()));
 
 var app = builder.Build();
 app.UsePersistence<WorkoutDbContext>();

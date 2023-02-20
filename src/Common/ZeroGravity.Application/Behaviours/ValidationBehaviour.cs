@@ -36,13 +36,13 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             if (responseType.IsGenericType)
             {
                 var resultType = responseType.GetGenericArguments()[0];
-                var invalidResponseType = typeof(PipelineResult<>).MakeGenericType(resultType);
+                var invalidResponseType = typeof(CqrsResult<>).MakeGenericType(resultType);
                 
                 var invalidResponse = Activator.CreateInstance(invalidResponseType, null, errorMessages, code) as TResponse;
  
                 return invalidResponse!;
             }
-            return (Activator.CreateInstance(typeof(PipelineResult), errorMessages, code) as TResponse)!;
+            return (Activator.CreateInstance(typeof(CqrsResult), errorMessages, code) as TResponse)!;
         }
 
         return await next();

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ZeroGravity.Services.Workout.Commands;
+using ZeroGravity.Services.Workout.Commands.PredictWorkout;
 using ZeroGravity.Services.Workout.Queires;
 
 namespace ZeroGravity.Services.Workout.Api.Controllers;
@@ -17,6 +18,7 @@ public class WorkoutController : ControllerBase
     }
 
     [HttpPost]
+    [EndpointName("Create a new workout")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateWorkoutAsync([FromBody] CreateWorkoutCommand command)
@@ -42,6 +44,16 @@ public class WorkoutController : ControllerBase
         return Application.StatusCode.ToObjectResult(response);
     }
 
+    
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> PredictWorkoutAsync([FromQuery] string userName)
+    {
+        var command = new PredictWorkoutCommand(userName);
+        var predicted = await _mediator.Send(command);
+        return Application.StatusCode.ToObjectResult(predicted);
+    }
 
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]

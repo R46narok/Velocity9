@@ -7,7 +7,7 @@ using ZeroGravity.Services.Authorization.Data.Entities;
 
 namespace ZeroGravity.Services.Authorization.Commands.Users.ElevateUser;
 
-public class ElevateUserCommand : IRequest<PipelineResult>
+public class ElevateUserCommand : IRequest<CqrsResult>
 {
     public string? Id { get; set; }
     public string? UserName { get; set; }
@@ -19,7 +19,7 @@ public class ElevateUserCommand : IRequest<PipelineResult>
     }
 }
 
-public class ElevateUserCommandHandler : IRequestHandler<ElevateUserCommand, PipelineResult>
+public class ElevateUserCommandHandler : IRequestHandler<ElevateUserCommand, CqrsResult>
 {
     private readonly UserManager<User> _userManager;
 
@@ -28,7 +28,7 @@ public class ElevateUserCommandHandler : IRequestHandler<ElevateUserCommand, Pip
         _userManager = userManager;
     }
 
-    public async Task<PipelineResult> Handle(ElevateUserCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(ElevateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await FindUserByNameOrId(request);
         

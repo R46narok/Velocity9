@@ -6,9 +6,9 @@ using ZeroGravity.Services.Skeletal.Dto;
 
 namespace ZeroGravity.Services.Skeletal.Queries;
 
-public record GetFiberQuery(string Name) : IRequest<PipelineResult<FiberDto>>;
+public record GetFiberQuery(string Name) : IRequest<CqrsResult<FiberDto>>;
 
-public class GetFiberQueryHandler : IRequestHandler<GetFiberQuery, PipelineResult<FiberDto>>
+public class GetFiberQueryHandler : IRequestHandler<GetFiberQuery, CqrsResult<FiberDto>>
 {
     private readonly IFiberRepository _repository;
     private readonly IMapper _mapper;
@@ -19,7 +19,7 @@ public class GetFiberQueryHandler : IRequestHandler<GetFiberQuery, PipelineResul
         _mapper = mapper;
     }
     
-    public async Task<PipelineResult<FiberDto>> Handle(GetFiberQuery request, CancellationToken cancellationToken)
+    public async Task<CqrsResult<FiberDto>> Handle(GetFiberQuery request, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetByNameAsync(request.Name, false);
         var dto = _mapper.Map<FiberDto>(entity);

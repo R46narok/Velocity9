@@ -15,5 +15,5 @@ public class RemoteExercise
 public interface IRemoteExerciseProvider : IRemoteSynchronizerProvider<RemoteExercise>
 {
     [Get("/api/exercise")]
-    Task<IApiResponse<PipelineResult<List<RemoteExercise>>>> GetAllAsync();
+    Task<IApiResponse<CqrsResult<List<RemoteExercise>>>> GetAllAsync();
 }

@@ -5,7 +5,6 @@ public static class Lookup
 
     public static Dictionary<string, int> For(string[] unique)
     {
-        Array.Sort(unique, StringComparison);
         return unique
             .Select((t, i) => new {Token = t, Index = i})
             .ToDictionary(x => x.Token, x => x.Index);
@@ -13,7 +12,6 @@ public static class Lookup
 
     public static Dictionary<int, string> ReverseFor(string[] unique)
     {
-        Array.Sort(unique, StringComparison);
         return unique
             .Select((t, i) => new {Token = t, Index = i})
             .ToDictionary(x => x.Index, x => x.Token);

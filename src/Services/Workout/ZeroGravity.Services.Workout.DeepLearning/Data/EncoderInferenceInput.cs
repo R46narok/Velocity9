@@ -7,7 +7,7 @@ public class EncoderInferenceInput
     public DenseTensor<float>? Exercises { get; }
     public DenseTensor<float>? Reps { get; }
 
-    public const int MaxLength = 25; // maybe load it
+    public const int MaxLength = 27; // maybe load it
     public static int[] ExercisesDim => new[] {1, MaxLength};
     public static int[] RepsDim => new[] {1, MaxLength, 1};
 

@@ -7,9 +7,9 @@ using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
-public record CreateWorkoutCommand(string WorkoutName, string UserName, string Notes, WorkoutType Type) : IRequest<PipelineResult>;
+public record CreateWorkoutCommand(string WorkoutName, string UserName, string Notes, WorkoutType Type) : IRequest<CqrsResult>;
 
-public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand, PipelineResult>
+public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand, CqrsResult>
 {
     private readonly IWorkoutRepository _repository;
     private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand,
         _userRepository = userRepository;
     }
 
-    public async Task<PipelineResult> Handle(CreateWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(CreateWorkoutCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Data.Entities.Workout>(request);
         entity.User = await _userRepository.GetByNameAsync(request.UserName);

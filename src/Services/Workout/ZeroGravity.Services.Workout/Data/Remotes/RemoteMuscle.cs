@@ -13,5 +13,5 @@ public class RemoteMuscle
 public interface IRemoteMuscleProvider : IRemoteSynchronizerProvider<RemoteMuscle>
 {
     [Get("/api/muscle")]
-    Task<IApiResponse<PipelineResult<List<RemoteMuscle>>>> GetAllAsync();
+    Task<IApiResponse<CqrsResult<List<RemoteMuscle>>>> GetAllAsync();
 }

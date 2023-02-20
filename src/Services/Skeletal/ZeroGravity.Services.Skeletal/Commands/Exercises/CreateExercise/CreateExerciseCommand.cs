@@ -7,9 +7,9 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands.Exercises.CreateExercise;
 
-public record CreateExerciseCommand(string Name, string Description, List<string> TargetNames, string AuthorName) : IRequest<PipelineResult>;
+public record CreateExerciseCommand(string Name, string Description, List<string> TargetNames, string AuthorName) : IRequest<CqrsResult>;
 
-public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseCommand, PipelineResult>
+public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseCommand, CqrsResult>
 {
     private readonly IMapper _mapper;
     private readonly IExerciseRepository _exerciseRepository;
@@ -31,7 +31,7 @@ public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseComman
         _publisher = publisher;
     }
 
-    public async Task<PipelineResult> Handle(CreateExerciseCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(CreateExerciseCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Exercise>(request);
         var author = await _authorRepository.GetByNameAsync(request.AuthorName);

@@ -8,7 +8,7 @@ using ZeroGravity.Services.Authorization.Data.Entities;
 
 namespace ZeroGravity.Services.Authorization.Commands.Users.DeleteUser;
 
-public class DeleteUserCommand : IRequest<PipelineResult>
+public class DeleteUserCommand : IRequest<CqrsResult>
 {
     public string? Id { get; set; }
     public string? UserName { get; set; } 
@@ -20,7 +20,7 @@ public class DeleteUserCommand : IRequest<PipelineResult>
     }
 }
 
-public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, PipelineResult>
+public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, CqrsResult>
 {
     private readonly IMapper _mapper;
     private readonly IMessagePublisher _publisher;
@@ -33,7 +33,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Pipel
         _userManager = userManager;
     }
 
-    public async Task<PipelineResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<CqrsResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         var user = await FindUserByNameOrId(request);
         var identityResult = await _userManager.DeleteAsync(user);

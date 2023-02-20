@@ -7,5 +7,5 @@ namespace ZeroGravity.UI.Portal.Services.Authorization.Contracts;
 public interface IAuthenticationClient
 {
     [Post(Endpoints.UserBase)]
-    public Task<IApiResponse<PipelineResult>> CreateUserAsync(SignUpRequest request);
+    public Task<IApiResponse<CqrsResult>> CreateUserAsync(SignUpRequest request);
 }

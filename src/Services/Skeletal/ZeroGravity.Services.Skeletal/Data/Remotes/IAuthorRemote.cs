@@ -17,5 +17,5 @@ public class RemoteUser
 public interface IAuthorRemote : IRemoteSynchronizerProvider<RemoteUser>
 {
     [Get("/api/user/all")]
-    Task<IApiResponse<PipelineResult<List<RemoteUser>>>> GetAllAsync();
+    Task<IApiResponse<CqrsResult<List<RemoteUser>>>> GetAllAsync();
 }
