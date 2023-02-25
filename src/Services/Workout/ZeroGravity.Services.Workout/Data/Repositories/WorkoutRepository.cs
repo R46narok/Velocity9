@@ -24,6 +24,7 @@ public class WorkoutRepository : RepositoryBase<Entities.Workout, int, WorkoutDb
                 .Set<Entities.Workout>()
                 .Include(x => x.User)
                 .Include(x => x.Sets)
+                .ThenInclude(x => x.Exercise)
                 .AsTracking()
                 .SingleOrDefaultAsync(x => x.Name == workoutName && x.User.UserName == userName);
         }
@@ -32,6 +33,7 @@ public class WorkoutRepository : RepositoryBase<Entities.Workout, int, WorkoutDb
             .Set<Entities.Workout>()
             .Include(x => x.User)
             .Include(x => x.Sets)
+            .ThenInclude(x => x.Exercise)
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Name == workoutName && x.User.UserName == userName);
     }

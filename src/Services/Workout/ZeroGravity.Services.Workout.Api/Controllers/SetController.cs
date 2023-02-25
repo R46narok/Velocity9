@@ -35,4 +35,13 @@ public class SetController : ControllerBase
         var response = await _mediator.Send(command);
         return Application.StatusCode.ToObjectResult(response);
     }
+    
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateSetAsync([FromBody] UpdateSetCommand command)
+    {
+        var response = await _mediator.Send(command);
+        return Application.StatusCode.ToObjectResult(response);
+    }
 }

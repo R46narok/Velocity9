@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Components.Authorization;
-using Refit;
 using Serilog;
 using ZeroGravity.UI.Core.Providers;
+using ZeroGravity.UI.Portal.Blazor.Services;
 using ZeroGravity.UI.Portal.Extensions;
-using ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +17,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<TokenAuthenticationStateProvider, TokenAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
+builder.Services.AddScoped<INavigationService, NavigationService>();
 
 builder.AddApplication();
 

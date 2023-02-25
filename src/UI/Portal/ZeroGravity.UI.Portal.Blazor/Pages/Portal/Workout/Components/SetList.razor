@@ -1,0 +1,50 @@
+﻿@using ZeroGravity.UI.Portal.Services.Workout.Views
+<div class="table-responsive p-1">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Target reps</th>
+            <th>Completed reps</th>
+            <th>Notes</th>
+            @if (Edit)
+            {
+                <th>Actions</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        <CascadingValue Value="@this">
+            @for (int i = 0; i < Sets.Count; ++i)
+            {
+                <Set Index=@i SetView=@Sets[i] Edit=@Edit WorkoutName="@WorkoutName"/>
+            }
+        </CascadingValue>
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public List<SetView> Sets { get; set; }
+    
+    [Parameter, EditorRequired]
+    public bool Edit { get; set; }
+    
+    [Parameter, EditorRequired]
+    public string WorkoutName { get; set; }
+    
+    public event EventHandler SaveButtonClicked;
+
+    protected override void OnInitialized()
+    {
+        StateHasChanged();
+    }
+
+    public void SaveChanges()
+    {
+        SaveButtonClicked?.Invoke(this, EventArgs.Empty);
+        StateHasChanged();
+    }
+}

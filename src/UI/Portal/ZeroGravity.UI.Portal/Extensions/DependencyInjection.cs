@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Refit;
 using ZeroGravity.UI.Portal.Services.Authorization.Contracts;
 using ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
+using ZeroGravity.UI.Portal.Services.Workout.Contracts;
 
 namespace ZeroGravity.UI.Portal.Extensions;
 
@@ -25,5 +26,14 @@ public static class DependencyInjection
         builder.Services
             .AddRefitClient<ISkeletalClient>()
             .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Skeletal:Rest"]));
+
+        builder.Services
+            .AddRefitClient<IWorkoutClient>()
+            .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Workout:Rest"]));
+
+        builder.Services
+            .AddRefitClient<ISetClient>()
+            .SetHandlerLifetime(TimeSpan.FromSeconds(1))
+            .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Workout:Rest"]));
     }
 }
