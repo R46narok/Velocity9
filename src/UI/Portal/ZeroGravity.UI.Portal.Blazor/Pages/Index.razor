@@ -1,4 +1,6 @@
 @page "/"
+@using ZeroGravity.UI.Portal.Blazor.Services
+@inject INavigationService _navigationService
 
 <header class="bg-dark">
         <div class="container pt-4 pt-xl-5">
@@ -198,3 +200,11 @@
         </div>
     </section>
     <section class="py-5"></section>
+@code
+{
+    protected override void OnInitialized()
+    {
+        _navigationService.Invoke(this, new NavigationEventArgs {Main = true});
+        StateHasChanged();
+    }
+}

@@ -16,13 +16,8 @@ services:
   bindings:
     - port: 5001
 
-- name: mssql
-  image: "mcr.microsoft.com/mssql/server:2022-latest"
-  env:
-    - name: ACCEPT_EULA
-      value: Y
-    - name: SA_PASSWORD
-      value: sqladmin123!@#
+- name: zerogravity-services-workout-api
+  project: src/Services/Workout/ZeroGravity.Services.Workout.Api/ZeroGravity.Services.Workout.Api.csproj
   bindings:
-    - port: 1433
+    - port: 5002
 

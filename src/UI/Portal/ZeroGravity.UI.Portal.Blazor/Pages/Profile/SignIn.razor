@@ -41,8 +41,7 @@
 </section>
 
 @code {
-    
-    private SignInRequest _model = new();
+    private readonly SignInRequest _model = new();
     
     private async Task HandleValidSubmitAsync()
     {
@@ -51,7 +50,7 @@
         if (token.StatusCode == StatusCode.Ok)
         {
             await StateProvider.SetAuthenticationStateAsync(token.Result);
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/", forceLoad: true);
         }
     }
 }

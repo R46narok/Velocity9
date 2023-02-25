@@ -10,5 +10,5 @@ public class WorkoutDto
 
     public DateTime CompletedOn { get; set; }
     public string UserName { get; set; }
-    public List<Set> Sets { get; set; }
+    public List<SetDto> Sets { get; set; }
 }

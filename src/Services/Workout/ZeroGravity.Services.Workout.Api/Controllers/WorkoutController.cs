@@ -35,7 +35,6 @@ public class WorkoutController : ControllerBase
         return Application.StatusCode.ToObjectResult(response);
     }
     
-    
     [HttpDelete]
     public async Task<IActionResult> DeleteWorkoutAsync([FromQuery] string userName, [FromQuery] string workoutName)
     {
@@ -43,7 +42,6 @@ public class WorkoutController : ControllerBase
         var response = await _mediator.Send(command);
         return Application.StatusCode.ToObjectResult(response);
     }
-
     
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]

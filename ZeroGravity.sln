@@ -92,6 +92,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Workou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.DeepLearning", "src\Common\ZeroGravity.DeepLearning\ZeroGravity.DeepLearning.csproj", "{403FB1E7-8895-48EF-A91E-DDE783E4D761}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coach", "Coach", "{9225A424-10EF-4434-BE02-D30E4DDF1B7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Coach", "src\Services\Coach\ZeroGravity.Services.Coach\ZeroGravity.Services.Coach.csproj", "{36AD8528-DFBA-46A0-B692-3878BE44E523}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Coach.Api", "src\Services\Coach\ZeroGravity.Services.Coach.Api\ZeroGravity.Services.Coach.Api.csproj", "{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +135,9 @@ Global
 		{7A01CBC6-1FF8-49C9-8D7B-CB77CD90EEEC} = {E8340837-758F-4F98-B696-28BBDDFE0FD5}
 		{9441073E-345A-4E65-A0EE-6973092EBBC0} = {E8340837-758F-4F98-B696-28BBDDFE0FD5}
 		{403FB1E7-8895-48EF-A91E-DDE783E4D761} = {B401010A-A658-4BD8-8E4B-884F3CE60FAB}
+		{9225A424-10EF-4434-BE02-D30E4DDF1B7A} = {24110637-5C78-48E8-986A-1CBA03474AC3}
+		{36AD8528-DFBA-46A0-B692-3878BE44E523} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
+		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{81D7CAC9-50FE-40AF-A42D-C18F9881A85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -199,5 +208,13 @@ Global
 		{403FB1E7-8895-48EF-A91E-DDE783E4D761}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{403FB1E7-8895-48EF-A91E-DDE783E4D761}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{403FB1E7-8895-48EF-A91E-DDE783E4D761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36AD8528-DFBA-46A0-B692-3878BE44E523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36AD8528-DFBA-46A0-B692-3878BE44E523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36AD8528-DFBA-46A0-B692-3878BE44E523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36AD8528-DFBA-46A0-B692-3878BE44E523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

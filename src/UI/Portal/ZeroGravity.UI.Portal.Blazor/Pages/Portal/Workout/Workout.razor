@@ -1,0 +1,91 @@
+﻿@page "/portal/workout/{name?}"
+@using ZeroGravity.UI.Portal.Blazor.Services
+@using ZeroGravity.UI.Portal.Services.Workout.Contracts
+@using ZeroGravity.UI.Portal.Services.Workout.Requests
+@using ZeroGravity.UI.Portal.Services.Workout.Views
+@using ZeroGravity.UI.Portal.Blazor.Pages.Portal.Workout.Components
+@using ZeroGravity.UI.Core.Providers
+@using ZeroGravity.UI.Core.Extensions
+
+@inject INavigationService _navigationService
+@inject IWorkoutClient _workoutClient 
+@inject TokenAuthenticationStateProvider _authenticationProvider 
+
+<div class="row bg-dark my-5">
+    <div class="col-9 p-3">
+        <div class="row align-items-stretch pt-4 pb-4 px-1">
+            <div class="col-4">
+                <Duration/>
+            </div>
+            <div class="col">
+                <Calories/>
+            </div>
+            <div class="col">
+                <Adherence/>
+            </div>
+            <div class="col">
+                <PredictedForm/>
+            </div>
+        </div>
+        <div class="row mt-4 pt-3 pb-3">
+            <div class="col mx-3" style="border-radius: 15px;background-color: var(--bs-body-bg);">
+                <div class="row p-2">
+                    <div class="col pt-3 mx-1">
+                        <h1 class="fw-bold">@Name</h1>
+                    </div>
+                    <div class="col-5 d-flex mt-1 justify-content-end pt-3" style="height: 80%;"><button class="btn btn-primary mx-3" type="button" style="border-color: white;background-color: var(--bs-body-bg);" @onclick="OnEditOrSaveButtonClick">@(_edit ? "Save" : "Edit")</button><button class="btn btn-primary" type="button">Save as CSV</button></div>
+                </div>
+                <div class="row p-2">
+                    <div class="col">
+                        <SetList Sets="_sets" Edit="_edit" @ref="_setList" WorkoutName="@Name"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3 p-2 pt-4 mt-3 d-flex">
+        <DeepLearning/>
+    </div>
+</div>
+@code {
+
+    [Parameter]
+    public string Name { get; set; }
+
+    private List<SetView> _sets = new();
+    private bool _edit;
+
+    private SetList _setList;
+    
+    protected override void OnInitialized()
+    {
+        _navigationService.Invoke(this, new NavigationEventArgs {Main = false});
+        StateHasChanged();
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await _authenticationProvider.GetAuthenticationStateAsync();
+        var @params = new GetWorkoutRequest(state.User.GetUserName()!, Name);
+        var response = await _workoutClient.GetWorkoutAsync(@params);
+        if (response.IsSuccessStatusCode)
+        {
+            var view = response.Content.Result;
+            _sets = view.Sets;
+        }
+        
+        StateHasChanged();
+    }
+
+    private void OnEditOrSaveButtonClick()
+    {
+        if (_edit)
+        {
+            _setList.SaveChanges();
+        }
+        
+        _edit = !_edit;
+        StateHasChanged();
+    }
+
+}

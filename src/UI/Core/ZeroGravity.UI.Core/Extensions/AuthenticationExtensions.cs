@@ -10,6 +10,11 @@ public static class AuthenticationExtensions
         return principal.Identity is not null && principal.Identity.IsAuthenticated;
     }
 
+    public static string? GetUserName(this ClaimsPrincipal principal)
+    {
+        return principal.Identity?.Name;
+    }
+
     public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
     {
         var payload = jwt.Split('.')[1];
