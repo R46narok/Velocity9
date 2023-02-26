@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using ZeroGravity.Domain.Types;
@@ -7,10 +8,10 @@ using ZeroGravity.Services.Authorization.Dto;
 
 namespace ZeroGravity.Services.Authorization.Queries.Users.GetAllUsers;
 
-public record GetAllUsersQuery : IRequest<CqrsResult<List<UserDto>>>;
+public record GetAllUsersQuery : IRequest<ErrorOr<List<UserDto>>>;
 
-public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, CqrsResult<List<UserDto>>>
-{
+    public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, ErrorOr<List<UserDto>>>
+    {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
 
@@ -20,14 +21,14 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, CqrsRes
         _mapper = mapper;
     }
 
-    public async Task<CqrsResult<List<UserDto>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<List<UserDto>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
         var users = _userManager.Users.ToList();
         var dtos = users
             .Select(x => _mapper.Map<UserDto>(x))
             .ToList();
 
-        return new(dtos);
+        return dtos;
     }
 }
 

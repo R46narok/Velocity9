@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Components.Web;
 using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Skeletal.Data.Repositories;
 using ZeroGravity.Services.Skeletal.Dto;
 
 namespace ZeroGravity.Services.Skeletal.Queries;
 
-public record GetMuscleGroupQuery(string Name) : IRequest<CqrsResult<MuscleGroupDto>>;
+public record GetMuscleGroupQuery(string Name) : IRequest<ErrorOr<MuscleGroupDto>>;
 
-public class GetMuscleGroupQueryHandler : IRequestHandler<GetMuscleGroupQuery, CqrsResult<MuscleGroupDto>>
+public class GetMuscleGroupQueryHandler : IRequestHandler<GetMuscleGroupQuery, ErrorOr<MuscleGroupDto>>
 {
     private readonly IMapper _mapper;
     private readonly IMuscleGroupRepository _repository;
@@ -19,11 +21,11 @@ public class GetMuscleGroupQueryHandler : IRequestHandler<GetMuscleGroupQuery, C
         _repository = repository;
     }
     
-    public async Task<CqrsResult<MuscleGroupDto>> Handle(GetMuscleGroupQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<MuscleGroupDto>> Handle(GetMuscleGroupQuery request, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetByNameAsync(request.Name);
         var dto = _mapper.Map<MuscleGroupDto>(entity);
-        
-        return new (dto);
+
+        return dto;
     }
 }

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ErrorOr;
+using FluentValidation;
 using MediatR;
 using ZeroGravity.Domain.Types;
 
@@ -6,45 +7,33 @@ namespace ZeroGravity.Application.Behaviours;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
     where TRequest : IRequest<TResponse> 
-    where TResponse : class
+    where TResponse : IErrorOr
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
+    private readonly IValidator<TRequest>? _validator;
 
-    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+    public ValidationBehavior(IValidator<TRequest>? validator = null)
     {
-        _validators = validators;
+        _validator = validator;
     }
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
-        var context = new ValidationContext<TRequest>(request);
-        var failures = _validators
-            .Select(v => v.ValidateAsync(context, cancellationToken).Result)
-            .SelectMany(result => result.Errors)
-            .Where(f => f != null)
-            .ToList();
-
-        if (failures.Count != 0)
+        if (_validator is null)
         {
-            var responseType = typeof(TResponse);
- 
-            var code = failures[0].ErrorCode;
-            var msg = failures[0].ErrorMessage;
-            var errorMessages = failures
-                .Select(s => s.ErrorMessage)
-                .ToList();
-            if (responseType.IsGenericType)
-            {
-                var resultType = responseType.GetGenericArguments()[0];
-                var invalidResponseType = typeof(CqrsResult<>).MakeGenericType(resultType);
-                
-                var invalidResponse = Activator.CreateInstance(invalidResponseType, null, errorMessages, code) as TResponse;
- 
-                return invalidResponse!;
-            }
-            return (Activator.CreateInstance(typeof(CqrsResult), errorMessages, code) as TResponse)!;
+            return await next();
         }
 
-        return await next();
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+        if (validationResult.IsValid)
+        {
+            return await next();
+        }
+
+        var errors = validationResult.Errors
+            .ConvertAll(validationFailure => Error.Validation(
+                validationFailure.PropertyName,
+                validationFailure.ErrorCode));
+
+        return (dynamic)errors;
     }
 }

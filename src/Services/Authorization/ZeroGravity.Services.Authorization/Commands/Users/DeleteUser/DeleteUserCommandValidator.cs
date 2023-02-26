@@ -9,7 +9,7 @@ public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 {
     public DeleteUserCommandValidator(UserManager<User> userManager)
     {
-        RuleFor(x => x)
+        RuleFor(x => new {x.Id, x.UserName})
             .MustAsync(async (command, _) =>
             {
                 if (command.UserName is not null)
@@ -19,7 +19,7 @@ public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 
                 return false;
             })
-            .WithErrorCode(StatusCode.NotFound)
-            .WithMessage("User does not exist in the database");
+            .WithName("UserName")
+            .WithErrorCode("User does not exist in the database");
     }
 }

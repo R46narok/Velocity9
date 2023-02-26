@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Application;
 using ZeroGravity.Domain.Types;
@@ -7,9 +8,10 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands;
 
-public record CreateMuscleGroupCommand(string Name, string Description) : IRequest<CqrsResult>;
+public record CreateMuscleGroupCommandResponse(int Id);
+public record CreateMuscleGroupCommand(string Name, string Description) : IRequest<ErrorOr<CreateMuscleGroupCommandResponse>>;
 
-public class CreateMuscleGroupCommandHandler : IRequestHandler<CreateMuscleGroupCommand, CqrsResult>
+public class CreateMuscleGroupCommandHandler : IRequestHandler<CreateMuscleGroupCommand, ErrorOr<CreateMuscleGroupCommandResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IMuscleGroupRepository _repository;
@@ -20,11 +22,11 @@ public class CreateMuscleGroupCommandHandler : IRequestHandler<CreateMuscleGroup
         _repository = repository;
     }
     
-    public async Task<CqrsResult> Handle(CreateMuscleGroupCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CreateMuscleGroupCommandResponse>> Handle(CreateMuscleGroupCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<MuscleGroup>(request);
-        await _repository.CreateAsync(entity);
+        var id = await _repository.CreateAsync(entity);
 
-        return new(DetailsMessage.For(StatusCode.Created, nameof(MuscleGroup)));
+        return new CreateMuscleGroupCommandResponse(id);
     }
 }

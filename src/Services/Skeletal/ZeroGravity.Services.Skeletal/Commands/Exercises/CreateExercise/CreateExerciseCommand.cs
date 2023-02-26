@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
 using ZeroGravity.Domain.Types;
@@ -7,9 +8,13 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands.Exercises.CreateExercise;
 
-public record CreateExerciseCommand(string Name, string Description, List<string> TargetNames, string AuthorName) : IRequest<CqrsResult>;
+public record CreateExerciseCommandResponse(int Id);
 
-public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseCommand, CqrsResult>
+public record CreateExerciseCommand
+    (string Name, string Description, List<string> TargetNames, string AuthorName) : IRequest<
+        ErrorOr<CreateExerciseCommandResponse>>;
+
+public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseCommand, ErrorOr<CreateExerciseCommandResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IExerciseRepository _exerciseRepository;
@@ -31,7 +36,7 @@ public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseComman
         _publisher = publisher;
     }
 
-    public async Task<CqrsResult> Handle(CreateExerciseCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CreateExerciseCommandResponse>> Handle(CreateExerciseCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Exercise>(request);
         var author = await _authorRepository.GetByNameAsync(request.AuthorName);
@@ -48,14 +53,13 @@ public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseComman
         entity.Author = author!;
         entity.Targets = targets;
 
-
-        await _exerciseRepository.CreateAsync(entity);
+        var id = await _exerciseRepository.CreateAsync(entity);
 
         entity = await _exerciseRepository.GetByNameAsync(request.Name, false);
         
         var @event = _mapper.Map<ExerciseCreatedEvent>(entity);
         await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
         
-        return new();
+        return new CreateExerciseCommandResponse(id);
     }
 }

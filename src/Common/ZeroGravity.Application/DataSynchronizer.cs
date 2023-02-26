@@ -7,7 +7,7 @@ namespace ZeroGravity.Application;
 
 public interface IRemoteSynchronizerProvider<TEntity>
 {
-    Task<IApiResponse<CqrsResult<List<TEntity>>>> GetAllAsync();
+    Task<IApiResponse<List<TEntity>>> GetAllAsync();
 }
 
 public class DataSynchronizer<TRemoteEntity, TCreateCommand>
@@ -26,13 +26,22 @@ public class DataSynchronizer<TRemoteEntity, TCreateCommand>
     public async Task Synchronize()
     {
         var remoteEntities = await _remoteService.GetAllAsync();
-        var mappedEntities = remoteEntities.Content.Result
-            .Select(e => _mapper.Map<TCreateCommand>(e))
-            .ToList();
 
-        foreach (var entity in mappedEntities)
+        if (remoteEntities.IsSuccessStatusCode)
         {
-            await _mediator.Send(entity);
+            var mappedEntities = remoteEntities.Content
+                .Select(e => _mapper.Map<TCreateCommand>(e))
+                .ToList();
+
+            foreach (var entity in mappedEntities)
+            {
+                await _mediator.Send(entity);
+            }
         }
+        else
+        {
+            throw new Exception();
+        }
+        
     }
 }

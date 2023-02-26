@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ZeroGravity.Application;
 using ZeroGravity.Services.Skeletal.Queries;
 using ZeroGravity.Services.Skeletal.Queries.GetAllFibers;
 
 namespace ZeroGravity.Services.Skeletal.Api.Controllers;
 
 [ApiController, Route("/api/[controller]")]
-public class FiberController : ControllerBase
+public class FiberController : ApiController
 {
     private readonly IMediator _mediator;
 
@@ -19,17 +20,15 @@ public class FiberController : ControllerBase
     public async Task<IActionResult> GetAllFibersAsync()
     {
         var query = new GetAllFibersQuery();
-        var result = await _mediator.Send(query);
-
-        return Application.StatusCode.ToObjectResult(result);
+        var response = await _mediator.Send(query);
+        return response.Match(Ok, Problem);
     }
 
     [HttpGet("{name}")]
     public async Task<IActionResult> GetFiberByNameAsync(string name)
     {
         var query = new GetFiberQuery(name);
-        var result = await _mediator.Send(query);
-
-        return Application.StatusCode.ToObjectResult(result);
+        var response = await _mediator.Send(query);
+        return response.Match(Ok, Problem);
     }
 }

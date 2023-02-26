@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
 using ZeroGravity.Domain.Types;
@@ -6,9 +7,10 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands.Exercises.UpdateExercise;
 
-public record UpdateExerciseCommand(int Id, string? Name, string? Description) : IRequest<CqrsResult>;
+public record UpdateExerciseCommandResponse;
+public record UpdateExerciseCommand(int Id, string? Name, string? Description) : IRequest<ErrorOr<UpdateExerciseCommandResponse>>;
 
-public class UpdateExerciseCommandHandler : IRequestHandler<UpdateExerciseCommand, CqrsResult>
+public class UpdateExerciseCommandHandler : IRequestHandler<UpdateExerciseCommand, ErrorOr<UpdateExerciseCommandResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IExerciseRepository _repository;
@@ -24,7 +26,7 @@ public class UpdateExerciseCommandHandler : IRequestHandler<UpdateExerciseComman
         _publisher = publisher;
     }
     
-    public async Task<CqrsResult> Handle(UpdateExerciseCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<UpdateExerciseCommandResponse>> Handle(UpdateExerciseCommand request, CancellationToken cancellationToken)
     {
         var entity = (await _repository.GetByIdAsync(request.Id))!;
         
@@ -35,7 +37,7 @@ public class UpdateExerciseCommandHandler : IRequestHandler<UpdateExerciseComman
 
         await _repository.UpdateAsync(entity);
         await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
-        
-        return new();
+
+        return new UpdateExerciseCommandResponse();
     }
 }

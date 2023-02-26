@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ZeroGravity.Application;
 using ZeroGravity.Services.Skeletal.Queries;
 using ZeroGravity.Services.Skeletal.Queries.GetAllMuscleGroups;
 
 namespace ZeroGravity.Services.Skeletal.Api.Controllers;
 
 [ApiController, Route("/api/[controller]")]
-public class MuscleGroupController : ControllerBase
+public class MuscleGroupController : ApiController
 {
     private readonly IMediator _mediator;
 
@@ -20,7 +21,7 @@ public class MuscleGroupController : ControllerBase
     {
         var query = new GetAllMuscleGroupsQuery();
         var response = await _mediator.Send(query);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 
     [HttpGet("{name}")]
@@ -28,6 +29,6 @@ public class MuscleGroupController : ControllerBase
     {
         var query = new GetMuscleGroupQuery(name);
         var response = await _mediator.Send(query);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 }

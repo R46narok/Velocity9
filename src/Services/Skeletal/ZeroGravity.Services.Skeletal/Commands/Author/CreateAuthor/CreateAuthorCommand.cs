@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Skeletal.Data.Entities;
@@ -6,13 +7,15 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands.CreateAuthor;
 
-public class CreateAuthorCommand : IRequest<CqrsResult>
+public record CreateAuthorCommandResponse(int ExternalId);
+
+public class CreateAuthorCommand : IRequest<ErrorOr<CreateAuthorCommandResponse>>
 {
     public string UserName { get; set; }
     public string ExternalId { get; set; }
 }
 
-public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, CqrsResult>
+public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, ErrorOr<CreateAuthorCommandResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IAuthorRepository _repository;
@@ -23,10 +26,10 @@ public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, C
         _repository = repository;
     }
     
-    public async Task<CqrsResult> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CreateAuthorCommandResponse>> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Author>(request);
-        await _repository.CreateAsync(entity);
-        return new();
+        var id = await _repository.CreateAsync(entity);
+        return new CreateAuthorCommandResponse(id);
     }
 }

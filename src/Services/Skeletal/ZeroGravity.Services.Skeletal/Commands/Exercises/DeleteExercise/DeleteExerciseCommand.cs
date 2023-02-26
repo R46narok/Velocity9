@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
 using ZeroGravity.Domain.Types;
@@ -6,9 +7,10 @@ using ZeroGravity.Services.Skeletal.Data.Repositories;
 
 namespace ZeroGravity.Services.Skeletal.Commands.Exercises.DeleteExercise;
 
-public record DeleteExerciseCommand(string Name) : IRequest<CqrsResult>;
+public record DeleteExerciseCommandResponse(string Name);
+public record DeleteExerciseCommand(string Name) : IRequest<ErrorOr<DeleteExerciseCommandResponse>>;
 
-public class DeleteExerciseCommandHandler : IRequestHandler<DeleteExerciseCommand, CqrsResult>
+public class DeleteExerciseCommandHandler : IRequestHandler<DeleteExerciseCommand, ErrorOr<DeleteExerciseCommandResponse>>
 {
     private readonly IExerciseRepository _repository;
     private readonly IMessagePublisher _publisher;
@@ -21,7 +23,7 @@ public class DeleteExerciseCommandHandler : IRequestHandler<DeleteExerciseComman
         _publisher = publisher;
     }
     
-    public async Task<CqrsResult> Handle(DeleteExerciseCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<DeleteExerciseCommandResponse>> Handle(DeleteExerciseCommand request, CancellationToken cancellationToken)
     {
         var entity = (await _repository.GetByNameAsync(request.Name))!;
         var id = entity.Id;
@@ -30,6 +32,6 @@ public class DeleteExerciseCommandHandler : IRequestHandler<DeleteExerciseComman
         var @event = new ExerciseDeletedEvent(id, request.Name);
         await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
 
-        return new();
+        return new DeleteExerciseCommandResponse(request.Name);
     }
 }
