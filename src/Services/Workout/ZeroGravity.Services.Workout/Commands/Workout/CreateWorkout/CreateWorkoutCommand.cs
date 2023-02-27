@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Workout.Data.Entities;
 using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
-public record CreateWorkoutCommand(string WorkoutName, string UserName, string Notes, WorkoutType Type) : IRequest<CqrsResult>;
+public record CreateWorkoutCommandResponse(int Id);
+public record CreateWorkoutCommand(string WorkoutName, string UserName, string Notes, WorkoutType Type) : IRequest<ErrorOr<CreateWorkoutCommandResponse>>;
 
-public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand, CqrsResult>
+public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand, ErrorOr<CreateWorkoutCommandResponse>>
 {
     private readonly IWorkoutRepository _repository;
     private readonly IMapper _mapper;
@@ -24,17 +25,17 @@ public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand,
         _userRepository = userRepository;
     }
 
-    public async Task<CqrsResult> Handle(CreateWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CreateWorkoutCommandResponse>> Handle(CreateWorkoutCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Data.Entities.Workout>(request);
         entity.User = await _userRepository.GetByNameAsync(request.UserName);
         
-        await _repository.CreateAsync(entity);
+        var id = await _repository.CreateAsync(entity);
         
         entity = await _repository.GetByNameAsync(request.UserName, request.WorkoutName, false);
         var @event = _mapper.Map<WorkoutCreatedEvent>(entity);
         await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
         
-        return new("Created");
+        return new CreateWorkoutCommandResponse(id);
     }
 }

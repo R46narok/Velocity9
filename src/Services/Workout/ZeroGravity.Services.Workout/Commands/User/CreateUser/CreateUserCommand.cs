@@ -1,18 +1,19 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Workout.Data.Entities;
 using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
-public class CreateUserCommand : IRequest<CqrsResult>
+public record CreateUserCommandResponse(int Id);
+public class CreateUserCommand : IRequest<ErrorOr<CreateUserCommandResponse>>
 {
     public string UserName { get; set; }
     public string ExternalId { get; set; }
 }
 
-public class CreateAuthorCommandHandler : IRequestHandler<CreateUserCommand, CqrsResult>
+public class CreateAuthorCommandHandler : IRequestHandler<CreateUserCommand, ErrorOr<CreateUserCommandResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IUserRepository _repository;
@@ -23,10 +24,10 @@ public class CreateAuthorCommandHandler : IRequestHandler<CreateUserCommand, Cqr
         _repository = repository;
     }
     
-    public async Task<CqrsResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CreateUserCommandResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<User>(request);
-        await _repository.CreateAsync(entity);
-        return new();
+        var id = await _repository.CreateAsync(entity);
+        return new CreateUserCommandResponse(id);
     }
 }

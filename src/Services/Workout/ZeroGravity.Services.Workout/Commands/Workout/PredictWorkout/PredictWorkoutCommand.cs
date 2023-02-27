@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.DeepLearning.Common;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Workout.Data.Repositories;
 using ZeroGravity.Services.Workout.DeepLearning.Models;
 
@@ -9,9 +9,9 @@ namespace ZeroGravity.Services.Workout.Commands.PredictWorkout;
 
 #nullable disable
 
-public record PredictWorkoutCommand(string UserName) : IRequest<CqrsResult<WorkoutModelOutput>>;
+public record PredictWorkoutCommand(string UserName) : IRequest<ErrorOr<WorkoutModelOutput>>;
 
-public class PredictWorkoutCommandHandler : IRequestHandler<PredictWorkoutCommand, CqrsResult<WorkoutModelOutput>>
+public class PredictWorkoutCommandHandler : IRequestHandler<PredictWorkoutCommand, ErrorOr<WorkoutModelOutput>>
 {
     private readonly IInferenceModel<WorkoutModelInput, WorkoutModelOutput> _model;
     private readonly IWorkoutRepository _repository;
@@ -27,7 +27,7 @@ public class PredictWorkoutCommandHandler : IRequestHandler<PredictWorkoutComman
         _repository = repository;
     }
 
-    public async Task<CqrsResult<WorkoutModelOutput>> Handle(PredictWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<WorkoutModelOutput>> Handle(PredictWorkoutCommand request, CancellationToken cancellationToken)
     {
         var last = await _repository.GetLastAsync(request.UserName);
         var exercises = last.Sets
@@ -40,6 +40,6 @@ public class PredictWorkoutCommandHandler : IRequestHandler<PredictWorkoutComman
         var input = new WorkoutModelInput(exercises, reps);
         var output = _model.Predict(input);
         
-        return new(output);
+        return output;
     }
 }

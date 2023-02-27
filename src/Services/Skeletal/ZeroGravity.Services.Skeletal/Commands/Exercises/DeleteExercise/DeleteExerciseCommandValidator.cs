@@ -10,7 +10,6 @@ public class DeleteExerciseCommandValidator : AbstractValidator<DeleteExerciseCo
     {
         RuleFor(cmd => cmd.Name)
             .MustAsync(async (name, _) => await repository.GetByNameAsync(name) is not null)
-            .WithErrorCode(StatusCode.NotFound)
-            .WithMessage(DetailsMessage.For(StatusCode.NotFound, nameof(DeleteExerciseCommand.Name)));
+            .WithErrorCode("Exercise does not exist in the database");
     }
 }

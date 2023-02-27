@@ -10,18 +10,14 @@ public class CreateWorkoutCommandValidator : AbstractValidator<CreateWorkoutComm
     {
         RuleFor(cmd => new {cmd.WorkoutName, cmd.UserName})
             .MustAsync(async (prop, _) => await workoutRepository.GetByNameAsync(prop.UserName, prop.WorkoutName, false) is null)
-            .WithMessage("Workout already present in the database")
-            .WithErrorCode(StatusCode.BadRequest);
+            .WithName("Workout")
+            .WithErrorCode("Workout already present in the database");
 
         RuleFor(cmd => cmd.UserName)
             .MustAsync(async (name, _) => await userRepository.GetByNameAsync(name, false) is not null)
-            .WithMessage("User does not exist in the database")
-            .WithErrorCode(StatusCode.NotFound);
-        
+            .WithErrorCode("User does not exist in the database");
+
         RuleFor(cmd => cmd.WorkoutName)
-            .NotEmpty()
-            .WithErrorCode(StatusCode.BadRequest);
-        
-        
+            .NotEmpty();
     }
 }

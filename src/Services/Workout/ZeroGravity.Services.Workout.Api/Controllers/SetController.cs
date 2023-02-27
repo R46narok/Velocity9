@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ZeroGravity.Application;
 using ZeroGravity.Services.Workout.Commands;
 
 namespace ZeroGravity.Services.Workout.Api.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
-public class SetController : ControllerBase
+public class SetController : ApiController
 {
     private readonly IMediator _mediator;
 
@@ -22,7 +23,7 @@ public class SetController : ControllerBase
     public async Task<IActionResult> CreateSetAsync([FromBody] CreateSetCommand command)
     {
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
     
     
@@ -33,7 +34,7 @@ public class SetController : ControllerBase
     {
         var command = new DeleteSetCommand(workoutName, userName, index);
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
     
     [HttpPatch]
@@ -42,6 +43,6 @@ public class SetController : ControllerBase
     public async Task<IActionResult> UpdateSetAsync([FromBody] UpdateSetCommand command)
     {
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ZeroGravity.Application;
 using ZeroGravity.Services.Authorization.Commands.Users.CreateUser;
 using ZeroGravity.Services.Authorization.Commands.Users.DeleteUser;
 using ZeroGravity.Services.Authorization.Commands.Users.ElevateUser;
@@ -10,7 +11,7 @@ using ZeroGravity.Services.Authorization.Queries.Users.GetUser;
 namespace ZeroGravity.Services.Authorization.Api.Controllers;
 
 [ApiController, Route("/api/[controller]")]
-public class UserController : ControllerBase
+public class UserController : ApiController
 {
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
@@ -27,8 +28,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> RegisterAsync([FromBody] CreateUserCommand command)
     {
         var response = await _mediator.Send(command);
-        
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 
     [HttpDelete]
@@ -37,7 +37,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteUserCommand command)
     {
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 
     [HttpGet]
@@ -47,8 +47,7 @@ public class UserController : ControllerBase
     {
         var query = new GetUserQuery(username);
         var response = await _mediator.Send(query);
-        
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 
     [HttpGet("/api/[controller]/all")]
@@ -57,9 +56,7 @@ public class UserController : ControllerBase
     {
         var query = new GetAllUsersQuery();
         var response = await _mediator.Send(query);
-        
-        return Application.StatusCode.ToObjectResult(response);
-
+        return response.Match(Ok, Problem);
     }
 
     [HttpPut]
@@ -67,6 +64,6 @@ public class UserController : ControllerBase
     {
         var command = new ElevateUserCommand(id, username);
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 }

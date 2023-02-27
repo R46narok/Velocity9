@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ZeroGravity.Application;
 using ZeroGravity.Services.Skeletal.Commands.Exercises.CreateExercise;
 using ZeroGravity.Services.Skeletal.Commands.Exercises.DeleteExercise;
 using ZeroGravity.Services.Skeletal.Commands.Exercises.UpdateExercise;
@@ -8,7 +9,7 @@ using ZeroGravity.Services.Skeletal.Queries.GetAllExercises;
 namespace ZeroGravity.Services.Skeletal.Api.Controllers;
 
 [ApiController, Route("/api/[controller]")]
-public class ExerciseController : ControllerBase
+public class ExerciseController : ApiController
 {
     private readonly IMediator _mediator;
 
@@ -23,7 +24,7 @@ public class ExerciseController : ControllerBase
     {
         var query = new GetAllExercisesQuery();
         var response = await _mediator.Send(query);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 
     [HttpPost]
@@ -32,7 +33,7 @@ public class ExerciseController : ControllerBase
     public async Task<IActionResult> CreateExerciseAsync([FromBody] CreateExerciseCommand command)
     {
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
     
     [HttpPatch]
@@ -42,13 +43,13 @@ public class ExerciseController : ControllerBase
     public async Task<IActionResult> UpdateExerciseAsync([FromBody] UpdateExerciseCommand command)
     {
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteExerciseAsync([FromBody] DeleteExerciseCommand command)
     {
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 }

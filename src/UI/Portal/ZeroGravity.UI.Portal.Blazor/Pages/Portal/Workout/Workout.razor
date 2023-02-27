@@ -1,15 +1,15 @@
 ﻿@page "/portal/workout/{name?}"
+@using ZeroGravity.UI.Core.Extensions
+@using ZeroGravity.UI.Core.Providers
+@using ZeroGravity.UI.Portal.Blazor.Pages.Portal.Workout.Components
 @using ZeroGravity.UI.Portal.Blazor.Services
 @using ZeroGravity.UI.Portal.Services.Workout.Contracts
 @using ZeroGravity.UI.Portal.Services.Workout.Requests
 @using ZeroGravity.UI.Portal.Services.Workout.Views
-@using ZeroGravity.UI.Portal.Blazor.Pages.Portal.Workout.Components
-@using ZeroGravity.UI.Core.Providers
-@using ZeroGravity.UI.Core.Extensions
 
 @inject INavigationService _navigationService
-@inject IWorkoutClient _workoutClient 
-@inject TokenAuthenticationStateProvider _authenticationProvider 
+@inject IWorkoutClient _workoutClient
+@inject TokenAuthenticationStateProvider _authenticationProvider
 
 <div class="row bg-dark my-5">
     <div class="col-9 p-3">
@@ -33,7 +33,9 @@
                     <div class="col pt-3 mx-1">
                         <h1 class="fw-bold">@Name</h1>
                     </div>
-                    <div class="col-5 d-flex mt-1 justify-content-end pt-3" style="height: 80%;"><button class="btn btn-primary mx-3" type="button" style="border-color: white;background-color: var(--bs-body-bg);" @onclick="OnEditOrSaveButtonClick">@(_edit ? "Save" : "Edit")</button><button class="btn btn-primary" type="button">Save as CSV</button></div>
+                    <div class="col-5 d-flex mt-1 justify-content-end pt-3" style="height: 80%;">
+                        <button class="btn btn-primary mx-3" type="button" style="border-color: white;background-color: var(--bs-body-bg);" @onclick="OnEditOrSaveButtonClick">@(_edit ? "Save" : "Edit")</button><button class="btn btn-primary" type="button">Save as CSV</button>
+                    </div>
                 </div>
                 <div class="row p-2">
                     <div class="col">
@@ -47,6 +49,7 @@
         <DeepLearning/>
     </div>
 </div>
+
 @code {
 
     [Parameter]
@@ -56,13 +59,13 @@
     private bool _edit;
 
     private SetList _setList;
-    
+
     protected override void OnInitialized()
     {
         _navigationService.Invoke(this, new NavigationEventArgs {Main = false});
         StateHasChanged();
     }
-    
+
     protected override async Task OnInitializedAsync()
     {
         var state = await _authenticationProvider.GetAuthenticationStateAsync();
@@ -70,10 +73,10 @@
         var response = await _workoutClient.GetWorkoutAsync(@params);
         if (response.IsSuccessStatusCode)
         {
-            var view = response.Content.Result;
+            var view = response.Content;
             _sets = view.Sets;
         }
-        
+
         StateHasChanged();
     }
 
@@ -83,7 +86,7 @@
         {
             _setList.SaveChanges();
         }
-        
+
         _edit = !_edit;
         StateHasChanged();
     }

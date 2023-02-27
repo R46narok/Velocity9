@@ -8,8 +8,11 @@ public class CreateAuthorCommandValidator : AbstractValidator<CreateAuthorComman
     public CreateAuthorCommandValidator(IAuthorRepository repository)
     {
         RuleFor(cmd => cmd.UserName)
-            .MustAsync(async (name, _) => await repository.GetByNameAsync(name, false) is null);
+            .MustAsync(async (name, _) => await repository.GetByNameAsync(name, false) is null)
+            .WithErrorCode("Author with this UserName already exists");
+
         RuleFor(cmd => cmd.ExternalId)
-            .MustAsync(async (id, _) => await repository.GetByExternalIdAsync(id, false) is null);
+            .MustAsync(async (id, _) => await repository.GetByExternalIdAsync(id, false) is null)
+            .WithErrorCode("Author with this ExternalId already exists");
     }   
 }

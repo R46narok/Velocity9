@@ -11,7 +11,6 @@ public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
     {
         RuleFor(x => x.UserName)
             .MustAsync(async (username, _) => await userManager.FindByNameAsync(username) is not null)
-            .WithErrorCode(StatusCode.NotFound)
-            .WithMessage("User does not exist in the database");
+            .WithErrorCode("User does not exist in the database");
     }
 }

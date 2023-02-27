@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ZeroGravity.Application;
 using ZeroGravity.Services.Authorization.Commands.Token.CreateToken;
 using ZeroGravity.Services.Authorization.Dto;
 
 namespace ZeroGravity.Services.Authorization.Api.Controllers;
 
 [ApiController, Route("api/[controller]")]
-public class TokenController : ControllerBase
+public class TokenController : ApiController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
@@ -26,6 +27,6 @@ public class TokenController : ControllerBase
         var command = _mapper.Map<CreateTokenCommand>(credentials);
         var response = await _mediator.Send(command);
 
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 }

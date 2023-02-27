@@ -11,13 +11,12 @@ public class CreateSetCommandValidator : AbstractValidator<CreateSetCommand>
         RuleFor(cmd => new {cmd.WorkoutName, cmd.UserName})
             .MustAsync(async (prop, _) =>
                 await workoutRepository.GetByNameAsync(prop.UserName, prop.WorkoutName, false) is not null)
-            .WithMessage("Workout not present in the database")
-            .WithErrorCode(StatusCode.NotFound);
+            .WithName("WorkoutName")
+            .WithErrorCode("Workout not present in the database");
 
         RuleFor(cmd => cmd.ExerciseName)
             .MustAsync(async (name, _) => await exerciseRepository.GetByNameAsync(name, false) is not null)
-            .WithMessage("Exercise not present in the database")
-            .WithErrorCode(StatusCode.NotFound);
+            .WithErrorCode("Exercise not present in the database");
         
         RuleFor(cmd => cmd.TargetReps)
             .GreaterThan(0);
