@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Authorization.Data.Entities;
 using ZeroGravity.Services.Authorization.Dto;
 
 namespace ZeroGravity.Services.Authorization.Queries.Users.GetUser;
 
-public class GetUserQuery : IRequest<CqrsResult<UserDto>>
+public class GetUserQuery : IRequest<ErrorOr<UserDto>>
 {
     public string UserName { get; set; }
     
@@ -17,7 +17,7 @@ public class GetUserQuery : IRequest<CqrsResult<UserDto>>
     }
 }
 
-public class GetUserQueryHandler : IRequestHandler<GetUserQuery, CqrsResult<UserDto>>
+public class GetUserQueryHandler : IRequestHandler<GetUserQuery, ErrorOr<UserDto>>
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
@@ -28,11 +28,11 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, CqrsResult<User
         _userManager = userManager;
     }
 
-    public async Task<CqrsResult<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
         var dto = _mapper.Map<UserDto>(user);
 
-        return new(dto);
+        return dto;
     }
 }

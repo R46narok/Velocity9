@@ -1,9 +1,9 @@
-﻿using Refit;
-using ZeroGravity.Domain.Types;
+﻿using ErrorOr;
+using Refit;
 
 namespace ZeroGravity.Application.Interfaces;
 
 public interface IRemoteEntityProvider<T>
 {
-    public Task<IApiResponse<CqrsResult<List<T>>>> GetAllAsync();
+    public Task<IApiResponse<ErrorOr<List<T>>>> GetAllAsync();
 }

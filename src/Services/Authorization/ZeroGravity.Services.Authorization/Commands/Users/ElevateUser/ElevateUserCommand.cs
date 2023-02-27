@@ -1,13 +1,13 @@
 ﻿using System.Security.Claims;
+using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using ZeroGravity.Application;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Authorization.Data.Entities;
 
 namespace ZeroGravity.Services.Authorization.Commands.Users.ElevateUser;
 
-public class ElevateUserCommand : IRequest<CqrsResult>
+public class ElevateUserCommand : IRequest<ErrorOr<string>>
 {
     public string? Id { get; set; }
     public string? UserName { get; set; }
@@ -19,7 +19,7 @@ public class ElevateUserCommand : IRequest<CqrsResult>
     }
 }
 
-public class ElevateUserCommandHandler : IRequestHandler<ElevateUserCommand, CqrsResult>
+public class ElevateUserCommandHandler : IRequestHandler<ElevateUserCommand, ErrorOr<string>>
 {
     private readonly UserManager<User> _userManager;
 
@@ -28,14 +28,14 @@ public class ElevateUserCommandHandler : IRequestHandler<ElevateUserCommand, Cqr
         _userManager = userManager;
     }
 
-    public async Task<CqrsResult> Handle(ElevateUserCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<string>> Handle(ElevateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await FindUserByNameOrId(request);
         
         await _userManager.ReplaceClaimAsync(user, 
             new Claim(ClaimTypes.Role, "User"),
             new Claim(ClaimTypes.Role, "Admin"));
-        return new(statusCode: StatusCode.Ok);
+        return request.UserName;
     }
     
      private async Task<User> FindUserByNameOrId(ElevateUserCommand command)

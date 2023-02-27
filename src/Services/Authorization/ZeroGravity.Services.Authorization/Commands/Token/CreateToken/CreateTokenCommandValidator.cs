@@ -10,13 +10,13 @@ public class CreateTokenCommandValidator : AbstractValidator<CreateTokenCommand>
 {
     public CreateTokenCommandValidator(UserManager<User> userManager)
     {
-        RuleFor(x => x)
+        RuleFor(x => new {x.UserName, x.Password})
             .MustAsync(async (command, _) =>
             {
                 var user = await userManager.FindByNameAsync(command.UserName);
                 return await userManager.CheckPasswordAsync(user, command.Password);
             })
-            .WithErrorCode(StatusCode.Unauthorized)
-            .WithMessage("Password is not correct");
-    } 
+            .WithName("Password")
+            .WithErrorCode("Password is not correct.");
+    }
 }

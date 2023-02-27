@@ -1,6 +1,5 @@
 ﻿using Refit;
 using ZeroGravity.Application;
-using ZeroGravity.Domain.Types;
 
 namespace ZeroGravity.Services.Workout.Data.Remotes;
 
@@ -13,5 +12,5 @@ public class RemoteMuscle
 public interface IRemoteMuscleProvider : IRemoteSynchronizerProvider<RemoteMuscle>
 {
     [Get("/api/muscle")]
-    Task<IApiResponse<CqrsResult<List<RemoteMuscle>>>> GetAllAsync();
+    Task<IApiResponse<List<RemoteMuscle>>> GetAllAsync();
 }

@@ -10,7 +10,6 @@ public class UpdateExerciseCommandValidator : AbstractValidator<UpdateExerciseCo
     {
         RuleFor(cmd => cmd.Id)
             .MustAsync(async (id, _) => await repository.GetByIdAsync(id) is not null)
-            .WithErrorCode(StatusCode.NotFound)
-            .WithMessage(DetailsMessage.For(StatusCode.NotFound, nameof(UpdateExerciseCommand.Id)));
+            .WithErrorCode("Exercise does not exist in the database");
     }
 }

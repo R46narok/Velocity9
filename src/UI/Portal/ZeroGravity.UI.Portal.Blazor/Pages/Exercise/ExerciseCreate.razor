@@ -80,7 +80,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _muscles = (await SkeletalClient.GetAllMusclesAsync()).Content!.Result;
+        _muscles = (await SkeletalClient.GetAllMusclesAsync()).Content!;
         StateHasChanged();
     }
 
