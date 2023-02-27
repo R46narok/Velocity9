@@ -2,7 +2,6 @@
 using Refit;
 using ZeroGravity.Application;
 using ZeroGravity.Application.Interfaces;
-using ZeroGravity.Domain.Types;
 
 namespace ZeroGravity.Services.Skeletal.Data.Remotes;
 

@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using ZeroGravity.Application;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Authorization.Data.Entities;
 
 namespace ZeroGravity.Services.Authorization.Commands.Users.DeleteUser;

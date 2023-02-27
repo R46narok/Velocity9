@@ -1,19 +1,21 @@
 ﻿using System.IO.Pipelines;
 using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Workout.Data.Entities;
 using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
+public record CreateSetCommandResponse(int Id);
+
 public record CreateSetCommand
     (string Notes, int TargetReps, int CompletedReps,
         string ExerciseName, string WorkoutName, string UserName) 
-    : IRequest<CqrsResult>;
+    : IRequest<ErrorOr<CreateSetCommandResponse>>;
 
-public class CreateSetCommandHandler : IRequestHandler<CreateSetCommand, CqrsResult>
+public class CreateSetCommandHandler : IRequestHandler<CreateSetCommand, ErrorOr<CreateSetCommandResponse>>
 {
     private readonly ISetRepository _setRepository;
     private readonly IExerciseRepository _exerciseRepository;
@@ -30,7 +32,7 @@ public class CreateSetCommandHandler : IRequestHandler<CreateSetCommand, CqrsRes
         _workoutRepository = workoutRepository;
     }
 
-    public async Task<CqrsResult> Handle(CreateSetCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CreateSetCommandResponse>> Handle(CreateSetCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Set>(request);
 
@@ -39,9 +41,9 @@ public class CreateSetCommandHandler : IRequestHandler<CreateSetCommand, CqrsRes
 
         var @event = _mapper.Map<SetCreatedEvent>(entity);
 
-        await _setRepository.CreateAsync(entity);
+        var id = await _setRepository.CreateAsync(entity);
         await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
 
-        return new();
+       return new CreateSetCommandResponse(id);
     }
 }

@@ -2,7 +2,6 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Components.Web;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Skeletal.Data.Repositories;
 using ZeroGravity.Services.Skeletal.Dto;
 

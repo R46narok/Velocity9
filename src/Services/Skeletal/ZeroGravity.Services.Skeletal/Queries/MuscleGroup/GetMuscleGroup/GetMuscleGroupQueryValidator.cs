@@ -11,6 +11,6 @@ public class GetMuscleGroupQueryValidator : AbstractValidator<GetMuscleGroupQuer
     {
         RuleFor(query => query.Name)
             .MustAsync(async (name, _) => await repository.GetByNameAsync(name) is not null)
-            .WithErrorCode(DetailsMessage.For(StatusCode.NotFound, nameof(GetMuscleGroupQuery.Name)));
+            .WithErrorCode("Muscle group does not exist in the database");
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Refit;
-using ZeroGravity.Domain.Types;
 
 namespace ZeroGravity.Application;
 

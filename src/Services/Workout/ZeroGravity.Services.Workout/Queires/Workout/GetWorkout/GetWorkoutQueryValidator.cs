@@ -12,7 +12,7 @@ public class GetWorkoutQueryValidator : AbstractValidator<GetWorkoutQuery>
         RuleFor(query => new {query.UserName, query.WorkoutName})
             .MustAsync(async (prop, _) =>
                 await workoutRepository.GetByNameAsync(prop.UserName, prop.WorkoutName, false) is not null)
-            .WithMessage("Workout not found")
-            .WithErrorCode(StatusCode.NotFound);
+            .WithName("Workout")
+            .WithErrorCode("Workout not found");
     }
 }

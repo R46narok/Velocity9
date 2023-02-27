@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
 using FluentValidation;
 using MediatR;
-using ZeroGravity.Domain.Types;
 
 namespace ZeroGravity.Application.Behaviours;
 

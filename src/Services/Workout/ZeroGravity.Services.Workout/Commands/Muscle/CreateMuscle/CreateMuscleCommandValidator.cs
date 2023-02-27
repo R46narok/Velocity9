@@ -13,7 +13,6 @@ public class CreateMuscleCommandValidator : AbstractValidator<CreateMuscleComman
 
         RuleFor(cmd => cmd.Name)
             .MustAsync(async (name, _) => await muscleRepository.GetByNameAsync(name) is null)
-            .WithErrorCode(StatusCode.BadRequest)
-            .WithMessage("Already exists");
+            .WithErrorCode("Already exists");
     }
 }

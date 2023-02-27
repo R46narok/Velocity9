@@ -2,7 +2,6 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Authorization.Data.Entities;
 using ZeroGravity.Services.Authorization.Dto;
 

@@ -2,7 +2,6 @@
 using AutoMapper;
 using ErrorOr;
 using MediatR;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Skeletal.Data.Entities;
 using ZeroGravity.Services.Skeletal.Data.Repositories;
 

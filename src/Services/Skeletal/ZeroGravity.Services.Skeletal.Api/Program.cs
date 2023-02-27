@@ -1,17 +1,10 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using RabbitMQ.Client;
-using Refit;
 using Serilog;
 using ZeroGravity.Application.Extensions;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
-using ZeroGravity.Application.Interfaces;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Infrastructure.Extensions;
 using ZeroGravity.Infrastructure.MessageBrokers;
-using ZeroGravity.Services.Skeletal.Data;
 using ZeroGravity.Services.Skeletal.Data.Entities;
 using ZeroGravity.Services.Skeletal.Data.Extensions;
 using ZeroGravity.Services.Skeletal.Data.Persistence;

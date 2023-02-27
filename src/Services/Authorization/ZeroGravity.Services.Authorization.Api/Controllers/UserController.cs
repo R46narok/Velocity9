@@ -64,6 +64,6 @@ public class UserController : ApiController
     {
         var command = new ElevateUserCommand(id, username);
         var response = await _mediator.Send(command);
-        return Application.StatusCode.ToObjectResult(response);
+        return response.Match(Ok, Problem);
     }
 }
