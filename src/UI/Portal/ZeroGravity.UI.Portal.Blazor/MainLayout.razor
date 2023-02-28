@@ -1,29 +1,9 @@
-@using ZeroGravity.UI.Portal.Blazor.Services
 @inherits LayoutComponentBase
 @inject NavigationManager _navigationManager
-@inject INavigationService NavigationService
 
-@if (_isMain)
-{
-    <NavigationBar/>
-}
-else
-{
-    <SideNavigationBar/>
-}
+
+<NavigationBar/>
+
 <main> @Body </main>
 <Footer/>
 
-@code
-{
-    private bool _isMain = true;
-    
-    protected override void OnInitialized()
-    {
-        NavigationService.NavigationChanged += (sender, args) =>
-        {
-            _isMain = args.Main;
-            StateHasChanged();
-        };
-    }
-}

@@ -1,7 +1,4 @@
 ﻿@page "/portal/overview"
-@using ZeroGravity.UI.Portal.Blazor.Services
-@using ZeroGravity.Application
-@inject INavigationService _navigationService
 
 <section class="py-5">
     <div class="container bg-dark">
@@ -85,7 +82,6 @@
 @code {
     protected override void OnInitialized()
     {
-        _navigationService.Invoke(this, new NavigationEventArgs {Main = false});
         StateHasChanged();
     }
 }
