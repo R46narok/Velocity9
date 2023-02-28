@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
+public record UpdateSetCommandResponse(int Index);
 public record UpdateSetCommand
     (string? Notes, int? CompletedReps, int Index, string WorkoutName, string UserName) 
-    : IRequest<CqrsResult>;
+    : IRequest<ErrorOr<UpdateSetCommandResponse>>;
 
-public class UpdateSetCommandHandler : IRequestHandler<UpdateSetCommand, CqrsResult>
+public class UpdateSetCommandHandler : IRequestHandler<UpdateSetCommand, ErrorOr<UpdateSetCommandResponse>>
 {
     private readonly ISetRepository _setRepository;
     private readonly IMessagePublisher _publisher;
@@ -23,7 +24,7 @@ public class UpdateSetCommandHandler : IRequestHandler<UpdateSetCommand, CqrsRes
         _mapper = mapper;
     }
 
-    public async Task<CqrsResult> Handle(UpdateSetCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<UpdateSetCommandResponse>> Handle(UpdateSetCommand request, CancellationToken cancellationToken)
     {
         var entity = (await _setRepository.GetByIndexAsync(request.UserName, request.WorkoutName, request.Index))!;
         
@@ -32,6 +33,6 @@ public class UpdateSetCommandHandler : IRequestHandler<UpdateSetCommand, CqrsRes
 
         await _setRepository.UpdateAsync(entity);
 
-        return new();
+        return new UpdateSetCommandResponse(request.Index);
     }
 }

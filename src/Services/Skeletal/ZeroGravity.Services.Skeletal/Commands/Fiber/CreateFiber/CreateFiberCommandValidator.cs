@@ -10,7 +10,6 @@ public class CreateFiberCommandValidator : AbstractValidator<CreateFiberCommand>
     {
         RuleFor(x => x.Name)
             .MustAsync(async (name, _) => await repository.GetByNameAsync(name) is null)
-            .WithErrorCode(StatusCode.BadRequest)
-            .WithMessage("Fiber already exists");
+            .WithErrorCode("Fiber already exists");
     }
 }

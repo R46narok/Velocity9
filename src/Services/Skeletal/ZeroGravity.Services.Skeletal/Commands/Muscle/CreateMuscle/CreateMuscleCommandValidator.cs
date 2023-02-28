@@ -10,12 +10,10 @@ public class CreateMuscleCommandValidator : AbstractValidator<CreateMuscleComman
     {
         RuleFor(cmd => cmd.Group)
             .MustAsync(async (group, _) => await muscleGroupRepository.GetByNameAsync(group) is not null)
-            .WithErrorCode(StatusCode.BadRequest)
-            .WithMessage("Muscle group does not exist");
+            .WithErrorCode("Muscle group does not exist");
 
         RuleFor(cmd => cmd.Name)
             .MustAsync(async (name, _) => await muscleRepository.GetByNameAsync(name) is null)
-            .WithErrorCode(StatusCode.BadRequest)
-            .WithMessage("Already exists");
+            .WithErrorCode("Already exists");
     }
 }

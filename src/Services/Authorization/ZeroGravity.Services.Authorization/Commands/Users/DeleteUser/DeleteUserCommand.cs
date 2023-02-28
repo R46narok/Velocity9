@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using ZeroGravity.Application;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Authorization.Data.Entities;
 
 namespace ZeroGravity.Services.Authorization.Commands.Users.DeleteUser;
 
-public class DeleteUserCommand : IRequest<CqrsResult>
+public record DeleteUserCommandResponse(string UserName);
+
+public class DeleteUserCommand : IRequest<ErrorOr<DeleteUserCommandResponse>>
 {
     public string? Id { get; set; }
     public string? UserName { get; set; } 
@@ -20,7 +22,7 @@ public class DeleteUserCommand : IRequest<CqrsResult>
     }
 }
 
-public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, CqrsResult>
+public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ErrorOr<DeleteUserCommandResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IMessagePublisher _publisher;
@@ -33,7 +35,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, CqrsR
         _userManager = userManager;
     }
 
-    public async Task<CqrsResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<DeleteUserCommandResponse>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         var user = await FindUserByNameOrId(request);
         var identityResult = await _userManager.DeleteAsync(user);
@@ -42,10 +44,13 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, CqrsR
         {
             var @event = _mapper.Map<UserDeletedEvent>(user);
             await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
-            return new("Successfully deleted a user");
+            return new DeleteUserCommandResponse(request.UserName!);
         }
-
-        return new(identityResult.Errors.Select(x => x.Description), StatusCode.BadRequest);
+        
+        var errors = identityResult.Errors
+            .Select(x => Error.Failure(x.Code, x.Description))
+            .ToList();
+        return ErrorOr<DeleteUserCommandResponse>.From(errors);
     }
 
     private async Task<User> FindUserByNameOrId(DeleteUserCommand command)

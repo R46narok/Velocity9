@@ -12,7 +12,6 @@ public class GetFiberQueryValidator : AbstractValidator<GetFiberQuery>
     {
         RuleFor(q => q.Name)
             .MustAsync(async (name, _) => await repository.GetByNameAsync(name) is not null)
-            .WithErrorCode(StatusCode.NotFound)
-            .WithMessage(DetailsMessage.For(StatusCode.NotFound, nameof(Fiber)));
+            .WithErrorCode("Fiber does not exist in the database");
     }
 }

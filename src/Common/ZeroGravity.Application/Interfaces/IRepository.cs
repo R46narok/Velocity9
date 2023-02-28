@@ -8,7 +8,7 @@ public interface IRepository<T, K> where T : IEntity<K>
     public List<T> GetAll();
     public Task<T?> GetByIdAsync(K id, bool track = true);
 
-    public Task CreateAsync(T entity);
+    public Task<K> CreateAsync(T entity);
     public Task DeleteAsync(T entity);
     public Task UpdateAsync(T entity);
 }
@@ -49,10 +49,12 @@ public class RepositoryBase<T, K, C> : IRepository<T, K>
             .SingleOrDefaultAsync(x => x.Id!.Equals(id));
     }
 
-    public async Task CreateAsync(T entity)
+    public async Task<K> CreateAsync(T entity)
     {
-        await Context.Set<T>().AddAsync(entity);
+        var entry = await Context.Set<T>().AddAsync(entity);
         await Context.SaveChangesAsync();
+
+        return entity.Id;
     }
 
     public async Task DeleteAsync(T entity)

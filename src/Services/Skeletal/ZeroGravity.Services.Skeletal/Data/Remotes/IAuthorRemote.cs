@@ -2,7 +2,6 @@
 using Refit;
 using ZeroGravity.Application;
 using ZeroGravity.Application.Interfaces;
-using ZeroGravity.Domain.Types;
 
 namespace ZeroGravity.Services.Skeletal.Data.Remotes;
 
@@ -17,5 +16,5 @@ public class RemoteUser
 public interface IAuthorRemote : IRemoteSynchronizerProvider<RemoteUser>
 {
     [Get("/api/user/all")]
-    Task<IApiResponse<CqrsResult<List<RemoteUser>>>> GetAllAsync();
+    Task<IApiResponse<List<RemoteUser>>> GetAllAsync();
 }

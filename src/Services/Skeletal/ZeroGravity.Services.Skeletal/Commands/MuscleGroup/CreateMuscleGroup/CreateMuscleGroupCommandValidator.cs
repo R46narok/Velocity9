@@ -10,15 +10,12 @@ public class CreateMuscleGroupCommandValidator : AbstractValidator<CreateMuscleG
     {
         RuleFor(cmd => cmd.Name)
             .MustAsync(async (name, _) => await repository.GetByNameAsync(name, false) is null)
-            .WithErrorCode(StatusCode.BadRequest)
             .WithMessage("Already exists");
 
         RuleFor(cmd => cmd.Name)
-            .NotEmpty()
-            .WithErrorCode(StatusCode.BadRequest);
+            .NotEmpty();
 
         RuleFor(cmd => cmd.Description)
-            .NotEmpty()
-            .WithErrorCode(StatusCode.BadRequest);
+            .NotEmpty();
     }
 }

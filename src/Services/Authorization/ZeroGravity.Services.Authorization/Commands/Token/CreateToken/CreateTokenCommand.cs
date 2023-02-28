@@ -1,15 +1,27 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Authorization.Data.Entities;
 
 namespace ZeroGravity.Services.Authorization.Commands.Token.CreateToken;
 
-public class CreateTokenCommand : IRequest<CqrsResult<string>>
+public class CreateTokenCommandResponse
+{
+    public CreateTokenCommandResponse(string token, DateTime validTo)
+    {
+        Token = token;
+        ValidTo = validTo;
+    }
+
+    public string Token { get; set; }
+    public DateTime ValidTo { get; set; }
+}
+
+public class CreateTokenCommand : IRequest<ErrorOr<CreateTokenCommandResponse>>
 {
     public string UserName { get; set; } 
     public string Password { get; set; }
@@ -21,7 +33,7 @@ public class CreateTokenCommand : IRequest<CqrsResult<string>>
     }
 }
 
-public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, CqrsResult<string>>
+public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, ErrorOr<CreateTokenCommandResponse>>
 {
     private readonly IConfiguration _configuration;
     private readonly UserManager<User> _userManager;
@@ -34,7 +46,7 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Cqr
         _userManager = userManager;
     }
 
-    public async Task<CqrsResult<string>> Handle(CreateTokenCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CreateTokenCommandResponse>> Handle(CreateTokenCommand request, CancellationToken cancellationToken)
     {
         var issuer = _configuration["Jwt:Issuer"];
         var audience = _configuration["Jwt:Audience"];
@@ -44,16 +56,18 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Cqr
         var user = await _userManager.FindByNameAsync(request.UserName);
 
         var claims = await _userManager.GetClaimsAsync(user);
+
+        var expires = DateTime.UtcNow.AddMinutes(ExpirationInMinutes);
         
         var token = new JwtSecurityToken(
             issuer: issuer,
             audience: audience,
-            expires: DateTime.UtcNow.AddMinutes(ExpirationInMinutes),
+            expires: expires,
             claims: claims);
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var stringToken = tokenHandler.WriteToken(token);
 
-        return new(stringToken, "Successfully created a token");
+        return new CreateTokenCommandResponse(stringToken, expires);
     }
 }

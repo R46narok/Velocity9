@@ -7,8 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Commands\Exercise\CreateExercise" />
       <Folder Include="Dto" />
       <Folder Include="Handlers" />
+      <Folder Include="Mapping" />
       <Folder Include="Queries" />
     </ItemGroup>
 

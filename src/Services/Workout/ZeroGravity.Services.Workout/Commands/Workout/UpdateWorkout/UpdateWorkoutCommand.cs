@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
+public record UpdateWorkoutCommandResponse;
 public record UpdateWorkoutCommand(
-        string UserName, string WorkoutName, string? NewWorkoutName, string? Notes, DateTime? CompletedOn) 
- : IRequest<CqrsResult>;
+        string UserName, string WorkoutName, string? NewWorkoutName, string? Notes, DateTime? CompletedOn)
+    : IRequest<ErrorOr<UpdateWorkoutCommandResponse>>;
 
-public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand, CqrsResult>
+public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand, ErrorOr<UpdateWorkoutCommandResponse>>
 {
     private readonly IWorkoutRepository _repository;
     private readonly IMessagePublisher _publisher;
@@ -23,7 +24,7 @@ public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand,
         _mapper = mapper;
     }
 
-    public async Task<CqrsResult> Handle(UpdateWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<UpdateWorkoutCommandResponse>> Handle(UpdateWorkoutCommand request, CancellationToken cancellationToken)
     {
         var entity = (await _repository.GetByNameAsync(request.UserName, request.WorkoutName))!;
 
@@ -32,11 +33,10 @@ public class UpdateWorkoutCommandHandler : IRequestHandler<UpdateWorkoutCommand,
         entity.CompletedOn = request.CompletedOn ?? entity.CompletedOn;
 
         var @event = _mapper.Map<WorkoutUpdatedEvent>(entity);
-        
+
         await _repository.UpdateAsync(entity);
         await _publisher.PublishTopicAsync(@event, MessageMetadata.Now(), cancellationToken);
 
-        return new();
+        return new UpdateWorkoutCommandResponse();
     }
 }
- 

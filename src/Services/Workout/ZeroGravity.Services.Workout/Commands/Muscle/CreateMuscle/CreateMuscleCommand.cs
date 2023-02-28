@@ -1,18 +1,20 @@
 ﻿using AutoMapper;
+using ErrorOr;
 using MediatR;
-using ZeroGravity.Domain.Types;
 using ZeroGravity.Services.Workout.Data.Entities;
 using ZeroGravity.Services.Workout.Data.Repositories;
 
 namespace ZeroGravity.Services.Workout.Commands;
 
-public class CreateMuscleCommand : IRequest<CqrsResult>
+public record CreateMuscleCommandResponse(int Id);
+
+public class CreateMuscleCommand : IRequest<ErrorOr<CreateMuscleCommandResponse>>
 {
     public string ExternalId { get; set; }
     public string Name { get; set; }
 }
 
-public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, CqrsResult>
+public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, ErrorOr<CreateMuscleCommandResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IMuscleRepository _repository;
@@ -23,11 +25,11 @@ public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, C
         _repository = repository;
     }
 
-    public async Task<CqrsResult> Handle(CreateMuscleCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CreateMuscleCommandResponse>> Handle(CreateMuscleCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<Muscle>(request);
-        await _repository.CreateAsync(entity);
+        var id = await _repository.CreateAsync(entity);
 
-        return new("Created");
+        return new CreateMuscleCommandResponse(id);
     }
 }
