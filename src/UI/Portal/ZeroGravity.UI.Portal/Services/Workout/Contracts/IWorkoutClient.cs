@@ -9,4 +9,8 @@ public interface IWorkoutClient
 {
     [Get("/api/workout")]
     public Task<IApiResponse<WorkoutView>> GetWorkoutAsync([Query] GetWorkoutRequest request);
+    
+    
+    [Get("/api/workout/all")]
+    public Task<IApiResponse<List<WorkoutView>>> GetAllWorkoutsAsync([Query] GetAllWorkoutsRequest request);
 }

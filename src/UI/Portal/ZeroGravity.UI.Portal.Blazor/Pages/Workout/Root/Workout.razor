@@ -1,0 +1,103 @@
+﻿@page "/workout/{Name?}"
+@using ZeroGravity.UI.Portal.Services.Workout.Contracts
+@using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Root.Components
+@using ZeroGravity.UI.Portal.Services.Workout.Views
+
+@inject IWorkoutClient _workoutClient
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-3">
+            <WorkoutBanner Name="@_workoutView?.Name"/>
+        </div>
+        <div class="col-4" style="/*color: #777E90;*/">
+            <WorkoutStats CompletedOn="@_workoutView?.CompletedOn"/>
+            <hr style="color: #777E90;">
+            <p class="text-white">
+                <span style="color: rgb(230, 232, 236);">@_workoutView?.Notes</span><br><br>
+            </p>
+        </div>
+        <div class="col-auto">
+            <div class="vr mx-2" style="color: #777E90;height: 100%;"></div>
+        </div>
+        <div class="col-4">
+            <Clock/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="mt-5 text-white">Your personalized workout</h1>
+            <p style="color: #777E90;">Use <span class="fw-bold" style="color: #45B26B;">proper from</span>&nbsp;to get the best <span class="text-white fw-bold">results</span>&nbsp;possible.</p>
+        </div>
+    </div>
+    <div class="row mt-5 d-flex justify-content-center">
+        <div class="col-7 text-white">
+            <div class="row pt-3" style="border-radius: 20px;background-color: #23262F;">
+                <ExerciseBanner Name="@_exerciseSplit?[_exerciseActive][0].ExerciseName"
+                                Sets="@_exerciseSplit?[_exerciseActive].Count"
+                                OnNextButtonClicked="OnNextButtonClicked"
+                                OnExpandButtonClicked="OnExpandButtonClicked"/>
+            </div>
+            
+            <div style="animation: @(_showSets ? "fadeAndScale" : "fadeAndScaleReverse") 0.75s cubic-bezier(.39,-1.05,.58,1.95);transform-origin: center bottom;">
+                @if (_showSets)
+                {
+                    for (int i = 0; i < _exerciseSplit?[_exerciseActive].Count; ++i)
+                    {
+                        <div class="row pt-3 mt-4"
+                             style="width: 90%;border-radius: 20px;background-color: #23262F;">
+                            <SetBanner SetView="_exerciseSplit[_exerciseActive][i]" Index="@(i + 1)"/>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="vr mx-2 bg-body" style="/*color: #777E90;*//*height: 100%;*/"></div>
+        </div>
+        <div class="col-4">
+            <GeneralGuidelines/>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Name { get; set; }
+
+    private WorkoutView? _workoutView;
+    private int _exerciseActive;
+    private bool _showSets = false;
+    private List<List<SetView>>? _exerciseSplit;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await _workoutClient.GetWorkoutAsync(new("test", Name));
+        if (response.IsSuccessStatusCode)
+        {
+            _workoutView = response.Content;
+            _exerciseSplit = _workoutView?.Sets
+                .GroupBy(x => x.ExerciseName)
+                .Select(x => x.ToList())
+                .ToList();
+        }
+        StateHasChanged();
+    }
+
+    private void OnNextButtonClicked()
+    {
+        if (_exerciseActive >= _exerciseSplit?.Count - 1)
+            _exerciseActive = 0;
+        else ++_exerciseActive;
+
+        StateHasChanged();
+    }
+
+    private void OnExpandButtonClicked()
+    {
+        _showSets = !_showSets;
+        StateHasChanged();
+    }
+
+}

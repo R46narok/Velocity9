@@ -14,6 +14,22 @@
 }
 
 
+@keyframes fadeAndScaleReverse {
+    0% {
+        opacity: 1;
+        transform: scale3d(1,1,1);
+    }
+    40% {
+        opacity: 1;
+        transform: scale3d(.75,.75,1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale3d(.75,.75,1);
+    }
+}
+
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

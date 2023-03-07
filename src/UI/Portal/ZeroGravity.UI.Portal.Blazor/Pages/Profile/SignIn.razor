@@ -62,9 +62,9 @@
     {
         var token = await AuthorizationClient.GetTokenAsync(_model);
         
-        if (token.StatusCode == StatusCode.Ok)
+        if (token.IsSuccessStatusCode)
         {
-            await StateProvider.SetAuthenticationStateAsync(token.Result);
+            await StateProvider.SetAuthenticationStateAsync(token.Content.Token);
             NavigationManager.NavigateTo("/", forceLoad: true);
         }
     }

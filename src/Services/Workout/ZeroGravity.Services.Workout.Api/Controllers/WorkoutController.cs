@@ -35,7 +35,15 @@ public class WorkoutController : ApiController
         var response = await _mediator.Send(query);
         return response.Match(Ok, Problem);
     }
-    
+
+    [HttpGet("/api/[controller]/all")]
+    public async Task<IActionResult> GetAllWorkouts([FromQuery] string userName)
+    {
+        var query = new GetAllWorkoutsQuery(userName);
+        var response = await _mediator.Send(query);
+        return response.Match(Ok, Problem);
+    }
+
     [HttpDelete]
     public async Task<IActionResult> DeleteWorkoutAsync([FromQuery] string userName, [FromQuery] string workoutName)
     {
@@ -43,7 +51,7 @@ public class WorkoutController : ApiController
         var response = await _mediator.Send(command);
         return response.Match(Ok, Problem);
     }
-    
+
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -63,5 +71,4 @@ public class WorkoutController : ApiController
         var response = await _mediator.Send(command);
         return response.Match(Ok, Problem);
     }
-    
 }

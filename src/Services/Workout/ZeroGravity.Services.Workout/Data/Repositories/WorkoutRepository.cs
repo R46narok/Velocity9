@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ZeroGravity.Application.Interfaces;
 using ZeroGravity.Services.Workout.Data.Persistence;
 
@@ -8,6 +9,7 @@ public interface IWorkoutRepository : IRepository<Entities.Workout, int>
 {
     public Task<Entities.Workout?> GetByNameAsync(string userName, string workoutName, bool track = true);
     public Task<Entities.Workout?> GetLastAsync(string userName, bool track = true);
+    public Task<List<Entities.Workout>> GetAll(string userName, bool track = true);
 }
 
 public class WorkoutRepository : RepositoryBase<Entities.Workout, int, WorkoutDbContext>, IWorkoutRepository
@@ -58,5 +60,14 @@ public class WorkoutRepository : RepositoryBase<Entities.Workout, int, WorkoutDb
             .OrderBy(x => x.CompletedOn)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.User.UserName == userName);
+    }
+
+    public async Task<List<Entities.Workout>> GetAll(string userName, bool track = true)
+    {
+        return await Context
+            .Set<Entities.Workout>()
+            .AsNoTracking()
+            .Where(x => x.User.UserName == userName)
+            .ToListAsync();
     }
 }
