@@ -1,0 +1,50 @@
+﻿@page "/workout/generate"
+
+@using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Generate.Components
+@using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Generate.Enums
+@using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Generate.Extensions
+
+<div class="container mb-5">
+    <Banner/>
+
+    <div class="row g-0 mt-5 pb-5">
+        @switch (_active.Component())
+        {
+            case DisplayComponent.Request: <Request ControlRequested="OnControlRequested"/> break;
+            case DisplayComponent.Tune: <Tune ControlRequested="OnControlRequested"/> break;
+            case DisplayComponent.Approve: <Approve ControlRequested="OnControlRequested"/> break;
+        }
+        
+        <NetworkAnimation/>
+    </div>
+
+    <div class="row mt-5 d-flex justify-content-center">
+        <div class="col-auto btn-group">
+
+            @for (int i = 0; i < _buttons.Length; i++)
+            {
+                var captured = i;
+                <button
+                    class="btn btn-primary mx-1 @(_active == i ? "bg-white" : "bg-body") fw-bold"
+                    style="color: @(_active == i ? "var(--bs-body-color)" : "#777E90");border: none;border-radius: 20px;"
+                    @onclick="() => { _active = captured; StateHasChanged(); }">
+                    @_buttons[i]
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private readonly string[] _buttons = {"Request", "Tune", "Approve"};
+    private int _active;
+
+    private void OnControlRequested()
+    {
+        var length = _buttons.Length;
+        if (_active < length - 1)
+            _active++;
+        
+        StateHasChanged();
+    }
+}

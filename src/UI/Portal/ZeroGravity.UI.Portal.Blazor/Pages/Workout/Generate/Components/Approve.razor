@@ -1,0 +1,21 @@
+﻿@inherits ZeroGravity.UI.Portal.Blazor.Pages.Workout.Generate.Common.DisplayComponentControl
+
+<div class="col-7 d-flex align-items-center" style="border-top-right-radius: 20px;border-bottom-right-radius: 20px;/*background-color: #23262F;*/">
+    <div class="p-5">
+        <span class="fw-bold px-2 text-white" style="background-color: #9757D7;border-radius: 5px;">DEEP LEARNING</span>
+        <h1 class="text-white mt-3">Generate your next<br>workout</h1>
+        <p class="mt-3" style="color: #777E90;">Our well trained recursive neural network algorithm predicts your next workout by taking into account your previous training experience.</p>
+        <button 
+            @onclick="() => ControlRequested?.Invoke()"
+            class="btn btn-primary fw-bold" type="button" style="border-radius: 20px;">
+            Next
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" class="ms-2" style="vertical-align: sub;">
+                <path d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+
+@code {
+
+}
