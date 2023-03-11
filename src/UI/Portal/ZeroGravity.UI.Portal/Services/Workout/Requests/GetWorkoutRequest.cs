@@ -2,12 +2,10 @@
 
 public class GetWorkoutRequest
 {
-    public GetWorkoutRequest(string userName, string workoutName)
+    public GetWorkoutRequest(string workoutName)
     {
-        UserName = userName;
         WorkoutName = workoutName;
     }
 
-    public string UserName { get; set; }
     public string WorkoutName { get; set; }
 }

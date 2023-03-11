@@ -8,7 +8,14 @@ using ZeroGravity.Services.Workout.Data.Repositories;
 namespace ZeroGravity.Services.Workout.Commands;
 
 public record CreateWorkoutCommandResponse(int Id);
-public record CreateWorkoutCommand(string WorkoutName, string UserName, string Notes, WorkoutType Type) : IRequest<ErrorOr<CreateWorkoutCommandResponse>>;
+
+public class CreateWorkoutCommand : IRequest<ErrorOr<CreateWorkoutCommandResponse>>
+{
+    public string? WorkoutName { get; set; }
+    public string UserName { get; set; }
+    public string Notes { get; set; }
+    public WorkoutType Type { get; set; }
+}
 
 public class CreateWorkoutCommandHandler : IRequestHandler<CreateWorkoutCommand, ErrorOr<CreateWorkoutCommandResponse>>
 {

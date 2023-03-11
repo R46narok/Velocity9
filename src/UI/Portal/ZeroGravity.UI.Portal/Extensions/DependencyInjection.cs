@@ -1,6 +1,12 @@
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
+using ZeroGravity.UI.Core.Providers;
+using ZeroGravity.UI.Portal.Security;
 using ZeroGravity.UI.Portal.Services.Authorization.Contracts;
 using ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
 using ZeroGravity.UI.Portal.Services.Workout.Contracts;
@@ -22,14 +28,16 @@ public static class DependencyInjection
             .AddRefitClient<IAuthorizationClient>()
             .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Authorization:Rest"]));
 
-
         builder.Services
             .AddRefitClient<ISkeletalClient>()
-            .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Skeletal:Rest"]));
+            .ConfigureHttpClient((sp, x) => x.BaseAddress = new Uri(config["Services:Skeletal:Rest"]));
 
+
+        builder.Services.AddScoped<AuthorizationHttpClientHandler>();
         builder.Services
             .AddRefitClient<IWorkoutClient>()
-            .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Workout:Rest"]));
+            .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Workout:Rest"]))
+            .AddHttpMessageHandler<AuthorizationHttpClientHandler>();
 
         builder.Services
             .AddRefitClient<ISetClient>()

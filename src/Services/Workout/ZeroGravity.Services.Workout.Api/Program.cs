@@ -10,6 +10,7 @@ using ZeroGravity.Services.Workout.Data.Entities;
 using ZeroGravity.Services.Workout.Data.Extensions;
 using ZeroGravity.Services.Workout.Data.Persistence;
 using ZeroGravity.Services.Workout.Data.Repositories;
+using ZeroGravity.Services.Workout.DeepLearning.Data;
 using ZeroGravity.Services.Workout.DeepLearning.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.AddJwtAuthentication();
 
 builder.AddPersistence<WorkoutDbContext>();
 
@@ -50,17 +53,13 @@ builder.Services.AddTransient<IInferenceModel<WorkoutModelInput, WorkoutModelOut
 var app = builder.Build();
 app.UsePersistence<WorkoutDbContext>();
 await app.SynchronizeDataFromRemotes();
-
+app.UseJwtAuthentication();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

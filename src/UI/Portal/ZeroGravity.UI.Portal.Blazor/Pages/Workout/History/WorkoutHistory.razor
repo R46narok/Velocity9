@@ -1,9 +1,12 @@
-﻿@page "/workout/history"
+﻿@attribute [Authorize]
+@page "/workout/history"
+
 @using ZeroGravity.UI.Portal.Services.Workout.Contracts
 @using ZeroGravity.UI.Core.Providers
 @using ZeroGravity.UI.Core.Extensions
 @using ZeroGravity.UI.Portal.Services.Workout.Views
 @using ZeroGravity.UI.Portal.Blazor.Pages.Workout.History.Components
+@using ZeroGravity.UI.Portal.Security
 
 @inject IWorkoutClient _client
 @inject TokenAuthenticationStateProvider _authenticationProvider
@@ -115,15 +118,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var state = await _authenticationProvider.GetAuthenticationStateAsync();
-        var userName = state.User.GetUserName()!;
-        var response = await _client.GetAllWorkoutsAsync(new (userName));
+        var bearer = BearerHeader.Construct((await _authenticationProvider.GetTokenAsync())!);
+        var response = await _client.GetAllWorkoutsAsync(bearer);
 
         if (response.IsSuccessStatusCode)
         {
             _workouts = response.Content;
         }
-        
+
         StateHasChanged();
     }
 

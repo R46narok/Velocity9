@@ -45,6 +45,5 @@ public static class JwtExtensions
      {
          app.UseAuthentication();
          app.UseAuthorization();
-         app.UseHttpsRedirection();
      }
 }

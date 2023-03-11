@@ -3,6 +3,7 @@ using ErrorOr;
 using MediatR;
 using ZeroGravity.DeepLearning.Common;
 using ZeroGravity.Services.Workout.Data.Repositories;
+using ZeroGravity.Services.Workout.DeepLearning.Data;
 using ZeroGravity.Services.Workout.DeepLearning.Models;
 
 namespace ZeroGravity.Services.Workout.Commands.PredictWorkout;

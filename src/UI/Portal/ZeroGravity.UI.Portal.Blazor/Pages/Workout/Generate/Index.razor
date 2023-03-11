@@ -1,41 +1,60 @@
-﻿@page "/workout/generate"
+﻿@attribute [Authorize]
+@page "/workout/generate"
 
 @using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Generate.Components
 @using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Generate.Enums
 @using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Generate.Extensions
+@using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Generate.ViewModels
 
-<div class="container mb-5">
-    <Banner/>
+<FeatureFlagEnabled FlagName="WorkoutGeneration">
 
-    <div class="row g-0 mt-5 pb-5">
-        @switch (_active.Component())
-        {
-            case DisplayComponent.Request: <Request ControlRequested="OnControlRequested"/> break;
-            case DisplayComponent.Tune: <Tune ControlRequested="OnControlRequested"/> break;
-            case DisplayComponent.Approve: <Approve ControlRequested="OnControlRequested"/> break;
-        }
-        
-        <NetworkAnimation/>
-    </div>
+    <div class="container mb-5">
+        <Banner/>
 
-    <div class="row mt-5 d-flex justify-content-center">
-        <div class="col-auto btn-group">
-
-            @for (int i = 0; i < _buttons.Length; i++)
+        <div class="row g-0 mt-5 pb-5">
+            @switch (_active.Component())
             {
-                var captured = i;
-                <button
-                    class="btn btn-primary mx-1 @(_active == i ? "bg-white" : "bg-body") fw-bold"
-                    style="color: @(_active == i ? "var(--bs-body-color)" : "#777E90");border: none;border-radius: 20px;"
-                    @onclick="() => { _active = captured; StateHasChanged(); }">
-                    @_buttons[i]
-                </button>
+                case DisplayComponent.Request:
+                    <Request ControlRequested="OnControlRequested"/>
+                    break;
+                case DisplayComponent.Tune:
+                    <Tune ControlRequested="OnControlRequested"
+                          @bind-Name="_model.Name" 
+                          @bind-Description="_model.Notes"/>
+                    break;
+                case DisplayComponent.Approve:
+                    <Approve ControlRequested="OnControlRequested" Model="_model"/>
+                    break;
             }
+
+            <NetworkAnimation/>
+        </div>
+
+        <div class="row mt-5 d-flex justify-content-center">
+            <div class="col-auto btn-group">
+
+                @for (int i = 0; i < _buttons.Length; i++)
+                {
+                    var captured = i;
+                    <button
+                        class="btn btn-primary mx-1 @(_active == i ? "bg-white" : "bg-body") fw-bold"
+                        style="color: @(_active == i ? "var(--bs-body-color)" : "#777E90");border: none;border-radius: 20px;"
+                        @onclick="() => { _active = captured; StateHasChanged(); }">
+                        @_buttons[i]
+                    </button>
+                }
+            </div>
         </div>
     </div>
-</div>
+    
+</FeatureFlagEnabled>
+
+<FeatureFlagDisabled FlagName="WorkoutGeneration">
+    <h1>Sorry nothing here</h1>
+</FeatureFlagDisabled>
 
 @code {
+    private readonly GenerateWorkoutViewModel _model = new();
     private readonly string[] _buttons = {"Request", "Tune", "Approve"};
     private int _active;
 
@@ -44,7 +63,7 @@
         var length = _buttons.Length;
         if (_active < length - 1)
             _active++;
-        
+
         StateHasChanged();
     }
 }

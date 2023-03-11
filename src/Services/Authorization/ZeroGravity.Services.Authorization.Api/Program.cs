@@ -44,7 +44,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UsePersistence<UserDbContext>();
-
+app.UseJwtAuthentication();
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
