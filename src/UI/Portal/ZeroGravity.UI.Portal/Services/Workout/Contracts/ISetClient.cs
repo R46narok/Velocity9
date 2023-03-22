@@ -7,4 +7,7 @@ public interface ISetClient
 {
     [Patch("/api/set")]
     public Task<IApiResponse> UpdateSetAsync(UpdateSetRequest request);
+    
+    [Post("/api/set")]
+    public Task<IApiResponse> CreateSetAsync(CreateSetRequest request);
 }
