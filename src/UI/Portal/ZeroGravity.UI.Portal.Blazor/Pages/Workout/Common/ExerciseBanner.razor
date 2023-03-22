@@ -17,12 +17,15 @@
         <p class="m-0 p-0" style="color: #777E90;">@Sets</p>
     </div>
 </div>
-<div class="col-auto">
-    <div class="mx-4">
-        <p class="fw-bold m-0 p-0">Intensity</p>
-        <p class="m-0 p-0" style="color: #777E90;">Moderate</p>
+@if (ShowIntensity)
+{
+    <div class="col-auto">
+        <div class="mx-4">
+            <p class="fw-bold m-0 p-0">Intensity</p>
+            <p class="m-0 p-0" style="color: #777E90;">Moderate</p>
+        </div>
     </div>
-</div>
+}
 <div class="col mx-2 mt-1 d-flex justify-content-end">
     <div>
         <button class="btn btn-primary" type="button" style="float: right;border-radius: 20px;" @onclick="() => OnNextButtonClicked?.Invoke()">
@@ -45,15 +48,20 @@
 
 
 @code {
-    [Parameter] 
+
+    [Parameter]
+    public bool ShowIntensity { get; set; } = true;
+
+    [Parameter]
     public Action? OnNextButtonClicked { get; set; }
-    
-    [Parameter] 
+
+    [Parameter]
     public Action? OnExpandButtonClicked { get; set; }
-    
+
     [Parameter]
     public string Name { get; set; }
-    
+
     [Parameter]
     public int? Sets { get; set; }
+
 }

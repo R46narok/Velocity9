@@ -2,6 +2,7 @@
 @page "/workout/{Name?}"
 @using ZeroGravity.UI.Portal.Services.Workout.Contracts
 @using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Index.Components
+@using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Common
 @using ZeroGravity.UI.Portal.Services.Workout.Views
 @using ZeroGravity.UI.Core.Providers
 @using ZeroGravity.UI.Portal.Security
@@ -44,7 +45,7 @@
             </div>
             
             <div style="animation: @(_showSets ? "fadeAndScale" : "fadeAndScaleReverse") 0.75s cubic-bezier(.39,-1.05,.58,1.95);transform-origin: center bottom;">
-                @if (_showSets && _exerciseSplit.Count > 0)
+                @if (_showSets && _exerciseSplit?.Count > 0)
                 {
                     for (int i = 0; i < _exerciseSplit?[_exerciseActive].Count; ++i)
                     {
