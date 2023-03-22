@@ -1,0 +1,46 @@
+﻿<div class="table-responsive table-borderless">
+    <table class="table">
+        <thead class="text-white">
+        <tr></tr>
+        </thead>
+        <tbody class="text-white">
+        <tr>
+            <td style="/*vertical-align: baseline;*/border: none;color: #777E90;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" style="vertical-align: baseline;">
+                    <path d="M152 64H296V24C296 10.75 306.7 0 320 0C333.3 0 344 10.75 344 24V64H384C419.3 64 448 92.65 448 128V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V128C0 92.65 28.65 64 64 64H104V24C104 10.75 114.7 0 128 0C141.3 0 152 10.75 152 24V64zM48 448C48 456.8 55.16 464 64 464H384C392.8 464 400 456.8 400 448V192H48V448z"></path>
+                </svg>&nbsp;Date<span></span>
+            </td>
+            <td class="fw-bold" style="border: none;">@CompletedOn?.ToString("dd/MM/yyyy")</td>
+        </tr>
+        <tr>
+            <td style="/*vertical-align: baseline;*/border: none;color: #777E90;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" style="vertical-align: baseline;">
+                    <path d="M232 120C232 106.7 242.7 96 256 96C269.3 96 280 106.7 280 120V243.2L365.3 300C376.3 307.4 379.3 322.3 371.1 333.3C364.6 344.3 349.7 347.3 338.7 339.1L242.7 275.1C236 271.5 232 264 232 255.1L232 120zM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0zM48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256z"></path>
+                </svg>&nbsp;Average duration<span></span>
+            </td>
+            <td class="fw-bold" style="border: none;">45 minutes</td>
+        </tr>
+        <tr>
+            <td style="/*vertical-align: baseline;*/border: none;color: #777E90;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor" style="vertical-align: baseline;">
+                    <path d="M288 320H96V192H288V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"></path>
+                </svg>&nbsp;Difficulty<span></span>
+            </td>
+            <td class="fw-bold" style="color: #45B26B;border: none;">Beginner</td>
+        </tr>
+        <tr>
+            <td style="/*vertical-align: baseline;*/border: none;color: #777E90;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor" style="vertical-align: baseline;">
+                    <path d="M224 263.3C224.2 233.3 238.4 205.2 262.4 187.2L499.1 9.605C517.7-4.353 543.6-2.965 560.7 12.9C577.7 28.76 580.8 54.54 568.2 74.07L406.5 324.1C391.3 347.7 366.6 363.2 339.3 367.1L224 263.3zM320 400C320 461.9 269.9 512 208 512H64C46.33 512 32 497.7 32 480C32 462.3 46.33 448 64 448H68.81C86.44 448 98.4 429.1 96.59 411.6C96.2 407.8 96 403.9 96 400C96 339.6 143.9 290.3 203.7 288.1L319.8 392.5C319.9 394.1 320 397.5 320 400V400z"></path>
+                </svg>&nbsp;Style<span></span>
+            </td>
+            <td class="fw-bold" style="border: none;">Weighted</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public DateTime? CompletedOn { get; set; }
+}

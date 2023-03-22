@@ -13,6 +13,7 @@ public class TokenAuthenticationStateProvider : AuthenticationStateProvider
     public TokenAuthenticationStateProvider(ProtectedSessionStorage sessionStorage)
     {
         _sessionStorage = sessionStorage;
+        var task = _sessionStorage.GetAsync<string>(StorageKey);
     }
 
     public async Task SetAuthenticationStateAsync(string? token)
@@ -21,7 +22,7 @@ public class TokenAuthenticationStateProvider : AuthenticationStateProvider
             await _sessionStorage.DeleteAsync(StorageKey);
         else
             await _sessionStorage.SetAsync(StorageKey, token);
-
+        
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 

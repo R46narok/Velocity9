@@ -1,0 +1,143 @@
+﻿@inject NavigationManager _navigationManager
+@inject IJSRuntime _js
+
+<div id="someId" class="collapse bg-dark" style="position: fixed;border-radius: 20px;border: 1px solid #353945;left: 50%;transform: translate(-50%, 0);z-index: 2;width: 70vw;">
+    <div class="row text-white">
+        <div class="col-auto p-4" style="height: inherit;border-right: 1px solid #353945;">
+            <h3 class="mx-3 fw-bold">
+                AI-powered<br>workout <br>programs<br>and virtual <br>coach&nbsp;
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor" style="color: #FF592C;vertical-align: baseline;">
+                        <path d="M9.375 233.4C3.375 239.4 0 247.5 0 256v128c0 8.5 3.375 16.62 9.375 22.62S23.5 416 32 416h32V224H32C23.5 224 15.38 227.4 9.375 233.4zM464 96H352V32c0-17.62-14.38-32-32-32S288 14.38 288 32v64H176C131.8 96 96 131.8 96 176V448c0 35.38 28.62 64 64 64h320c35.38 0 64-28.62 64-64V176C544 131.8 508.3 96 464 96zM256 416H192v-32h64V416zM224 296C201.9 296 184 278.1 184 256S201.9 216 224 216S264 233.9 264 256S246.1 296 224 296zM352 416H288v-32h64V416zM448 416h-64v-32h64V416zM416 296c-22.12 0-40-17.88-40-40S393.9 216 416 216S456 233.9 456 256S438.1 296 416 296zM630.6 233.4C624.6 227.4 616.5 224 608 224h-32v192h32c8.5 0 16.62-3.375 22.62-9.375S640 392.5 640 384V256C640 247.5 636.6 239.4 630.6 233.4z"></path>
+                    </svg>
+                </span>
+            </h3>
+            <div class="mb-3 mx-1 btn-group-vertical" style="position: absolute;bottom: 0;">
+                <button class="btn btn-primary bg-body fw-bold fs-5 text-start" type="button" style="border: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor" class="fw-bold" style="color: #FF592C;vertical-align: baseline;">
+                        <path d="M240.5 224H352C365.3 224 377.3 232.3 381.1 244.7C386.6 257.2 383.1 271.3 373.1 280.1L117.1 504.1C105.8 513.9 89.27 514.7 77.19 505.9C65.1 497.1 60.7 481.1 66.59 467.4L143.5 288H31.1C18.67 288 6.733 279.7 2.044 267.3C-2.645 254.8 .8944 240.7 10.93 231.9L266.9 7.918C278.2-1.92 294.7-2.669 306.8 6.114C318.9 14.9 323.3 30.87 317.4 44.61L240.5 224z"></path>
+                    </svg>&nbsp;Exercises
+                </button>
+                <button @onclick="OnHistoryButtonClicked" class="btn btn-primary bg-body fw-bold fs-5 text-start mt-1" type="button" style="border: none;">
+                    <svg class="fw-bold" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" style="color: #FF592C;vertical-align: baseline;">
+                        <path d="M232 120C232 106.7 242.7 96 256 96C269.3 96 280 106.7 280 120V243.2L365.3 300C376.3 307.4 379.3 322.3 371.1 333.3C364.6 344.3 349.7 347.3 338.7 339.1L242.7 275.1C236 271.5 232 264 232 255.1L232 120zM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0zM48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256z"></path>
+                    </svg>&nbsp;History
+                </button>
+            </div>
+        </div>
+        <div class="col p-2">
+            <div class="row h-100 g-0">
+                <div class="col-7 col-xl-7 col-xxl-6">
+                    <div class="p-4" style="width: 90%;">
+                        <img class="w-100" src="img/card-pic-3.png" style="border-radius: 20px;">
+                        <div class="carousel-caption" style="color: var(--bs-body-color);left: -28%;top: 1.25rem;bottom: auto;">
+                            <p>
+                                <span class="bg-white fw-bold px-2 py-1" style="font-size: 12px;border-radius: 5px;color: var(--bs-body-color);">FEATURED</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-4">
+                        <h4 class="text-white mt-2" style="width: 90%;">Workout Name<span class="px-2 fw-bold mt-1" style="float: right;border-radius: 5px;font-size: 15px;color: #45B26B;border: 2px solid #45B26B;">BEGINNER</span></h4>
+                        <p class="pb-3" style="color: #777E90;">Some long workout description which provides information about the workout and some other stuff</p>
+                    </div>
+                </div>
+                <div class="col" style="height: 100%;">
+                    <div class="row mt-4 overflow-hidden g-0" style="height: 30%; cursor: pointer;" @onclick="OnWorkoutButtonClicked">
+                        <div class="col h-100 d-flex justify-content-end">
+                            <div style="width: 80%;">
+                                <img src="img/implementing-artificial-intelligence-part-1-hero.jpg" style="border-radius: 5px;width: inherit;height: auto;">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mt-4">
+                                <span class="fw-bold px-2 py-0" style="background-color: #FF592C;border-radius: 5px;">AI</span>
+                                <div class="d-flex mt-2">
+                                    <div class="my-auto py-2 px-2" style="background-color: #23262F;border-radius: 7px;">
+                                        <span class="fw-bold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" class="fw-bold">
+                                                <path d="M184 0C214.9 0 240 25.07 240 56V456C240 486.9 214.9 512 184 512C155.1 512 131.3 490.1 128.3 461.9C123.1 463.3 117.6 464 112 464C76.65 464 48 435.3 48 400C48 392.6 49.27 385.4 51.59 378.8C21.43 367.4 0 338.2 0 304C0 272.1 18.71 244.5 45.77 231.7C37.15 220.8 32 206.1 32 192C32 161.3 53.59 135.7 82.41 129.4C80.84 123.9 80 118 80 112C80 82.06 100.6 56.92 128.3 49.93C131.3 21.86 155.1 0 184 0zM383.7 49.93C411.4 56.92 432 82.06 432 112C432 118 431.2 123.9 429.6 129.4C458.4 135.7 480 161.3 480 192C480 206.1 474.9 220.8 466.2 231.7C493.3 244.5 512 272.1 512 304C512 338.2 490.6 367.4 460.4 378.8C462.7 385.4 464 392.6 464 400C464 435.3 435.3 464 400 464C394.4 464 388.9 463.3 383.7 461.9C380.7 490.1 356.9 512 328 512C297.1 512 272 486.9 272 456V56C272 25.07 297.1 0 328 0C356.9 0 380.7 21.86 383.7 49.93z"></path>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="mx-3">
+                                        <p class="fw-bold m-0 p-0">Workout</p>
+                                        <p class="m-0 p-0" style="color: #777E90;">Some notes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 overflow-hidden g-0" style="height: 30%;">
+                        <div class="col h-100 d-flex justify-content-end">
+                            <div style="width: 80%;">
+                                <img src="img/Computer_vision.png" style="height: 85%;width: inherit;border-radius: 5px;">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mt-3">
+                                <span class="fw-bold px-2 py-0" style="background-color: #9757D7;border-radius: 5px;">AI</span>
+                                <div class="d-flex mt-2">
+                                    <div class="my-auto py-2 px-2" style="background-color: #23262F;border-radius: 7px;">
+                                        <span class="fw-bold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor" class="fw-bold">
+                                                <path d="M279.6 160.4C282.4 160.1 285.2 160 288 160C341 160 384 202.1 384 256C384 309 341 352 288 352C234.1 352 192 309 192 256C192 253.2 192.1 250.4 192.4 247.6C201.7 252.1 212.5 256 224 256C259.3 256 288 227.3 288 192C288 180.5 284.1 169.7 279.6 160.4zM480.6 112.6C527.4 156 558.7 207.1 573.5 243.7C576.8 251.6 576.8 260.4 573.5 268.3C558.7 304 527.4 355.1 480.6 399.4C433.5 443.2 368.8 480 288 480C207.2 480 142.5 443.2 95.42 399.4C48.62 355.1 17.34 304 2.461 268.3C-.8205 260.4-.8205 251.6 2.461 243.7C17.34 207.1 48.62 156 95.42 112.6C142.5 68.84 207.2 32 288 32C368.8 32 433.5 68.84 480.6 112.6V112.6zM288 112C208.5 112 144 176.5 144 256C144 335.5 208.5 400 288 400C367.5 400 432 335.5 432 256C432 176.5 367.5 112 288 112z"></path>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="mx-3">
+                                        <p class="fw-bold m-0 p-0">Vision</p>
+                                        <p class="m-0 p-0" style="color: #777E90;">Some notes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2 overflow-hidden g-0" style="height: 30%; cursor: pointer;" @onclick="OnCodeButtonClicked">
+                        <div class="col h-100 d-flex justify-content-end">
+                            <div style="width: 80%;">
+                                <img src="img/yX14WLBBgDr6kLPhBR5dHApmfLokbMJqkNGACkS1.png" style="border-radius: 5px;width: inherit;height: auto;">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mt-4">
+                                <span class="fw-bold px-2 py-0" style="background-color: #45B26B;border-radius: 5px;">CODE</span>
+                                <div class="d-flex mt-2">
+                                    <div class="my-auto py-2 px-2" style="background-color: #23262F;border-radius: 7px;">
+                                        <span class="fw-bold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor" class="fw-bold">
+                                                <path d="M414.8 40.79L286.8 488.8C281.9 505.8 264.2 515.6 247.2 510.8C230.2 505.9 220.4 488.2 225.2 471.2L353.2 23.21C358.1 6.216 375.8-3.624 392.8 1.232C409.8 6.087 419.6 23.8 414.8 40.79H414.8zM518.6 121.4L630.6 233.4C643.1 245.9 643.1 266.1 630.6 278.6L518.6 390.6C506.1 403.1 485.9 403.1 473.4 390.6C460.9 378.1 460.9 357.9 473.4 345.4L562.7 256L473.4 166.6C460.9 154.1 460.9 133.9 473.4 121.4C485.9 108.9 506.1 108.9 518.6 121.4V121.4zM166.6 166.6L77.25 256L166.6 345.4C179.1 357.9 179.1 378.1 166.6 390.6C154.1 403.1 133.9 403.1 121.4 390.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4L121.4 121.4C133.9 108.9 154.1 108.9 166.6 121.4C179.1 133.9 179.1 154.1 166.6 166.6V166.6z"></path>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="mx-3">
+                                        <p class="fw-bold m-0 p-0">Project</p>
+                                        <p class="m-0 p-0" style="color: #777E90;">Some notes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private void OnHistoryButtonClicked()
+    {
+        _navigationManager.NavigateTo("/workout/history");
+    }
+
+    private void OnWorkoutButtonClicked()
+    {
+        _navigationManager.NavigateTo("/workout/generate");
+    }
+
+    private void OnCodeButtonClicked()
+    {
+        _navigationManager.NavigateTo("https://github.com/r46narok/zerogravity");
+    }
+
+}

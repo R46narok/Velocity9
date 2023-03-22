@@ -3,48 +3,62 @@
 @using ZeroGravity.UI.Portal.Services.Authorization.Contracts
 @using ZeroGravity.UI.Portal.Services.Authorization.Requests
 
+@inject NavigationManager _navigationManager
 @inject TokenAuthenticationStateProvider StateProvider
 @inject IAuthenticationClient AuthenticationClient
 @inject IAuthorizationClient AuthorizationClient
 
-<section class="py-5">
-
-    <div class="container py-5">
-        <div class="row mb-5">
-            <div class="col-md-8 col-xl-6 text-center mx-auto">
-                <p class="fw-bold text-success mb-2">Sign up</p>
-                <h2 class="fw-bold">Join the trend</h2>
+<section>
+    <div class="container d-flex justify-content-center">
+        <div class="row mx-5 my-5">
+            <div class="col d-flex align-items-center">
+                <img src="/img/dumbbell-dark.png" style="/*animation-duration: 2;*/animation: fadeAndScale 1.5s cubic-bezier(.39,-1.05,.58,1.95);transform-origin: center bottom;">
             </div>
-        </div>
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-6 col-xl-4">
-                <EditForm Model="@_model" OnValidSubmit="@HandleValidSubmitAsync">
-
-                    <DataAnnotationsValidator/>
-                    <ValidationSummary/>
-
-                    <div class="mb-3">
-                        <InputText class="form-control" placeholder="Username" @bind-Value="_model.UserName"/>
-                    </div>
-                    <div class="mb-3">
-                        <InputText class="form-control" placeholder="Email" @bind-Value="_model.Email"/>
-                    </div>
-                    <div class="mb-3">
-                        <InputText class="form-control" placeholder="Password" type="password" @bind-Value="_model.Password"/>
-                    </div>
-
-                    <div class="mb-3"></div>
-                    <div>
-                        <button class="btn btn-primary shadow d-block w-100" type="submit">Send </button>
-                    </div>
-
-                </EditForm>
+            <div class="col-5 text-wrap align-items-center d-flex" style="border-radius: 20px;">
+                <div>
+                    <p class="fw-bold mb-0" style="font-size: 16px;color: #777E90;">ONE STEP CLOSER.</p>
+                    <h1 class="text-white fw-bold my-0" style="font-size: 48px;">Join the community</h1>
+                    <p class="my-2 text-wrap" style="color: #B1B5C3;font-size: 16px;">Discover the world of AI-powered workouts, where machines are taking over the fitness industry.</p>
+                    <EditForm Model="@_model" OnValidSubmit="@HandleValidSubmitAsync" class="mt-4">
+                        <DataAnnotationsValidator/>
+                        <ValidationSummary/>
+                        <div class="border-1" style="border-radius: 20px;border: 1px solid #777E90;/*border-radius: 20px;*//*border-color: white;*/">
+                            <div class="input-group p-1" style="/*border-radius: 20px;*//*border-color: white;*/">
+                                <InputText @bind-Value="_model.UserName" class="form-control bg-dark border-0 shadow-none text-white" type="text" placeholder="Username"/>
+                                <button class="btn btn-primary" type="button" style="border-radius: 50px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 18px;">
+                                        <path d="M438.6 105.4C451.1 117.9 451.1 138.1 438.6 150.6L182.6 406.6C170.1 419.1 149.9 419.1 137.4 406.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4C21.87 220.9 42.13 220.9 54.63 233.4L159.1 338.7L393.4 105.4C405.9 92.88 426.1 92.88 438.6 105.4H438.6z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border-1 mt-3" style="border-radius: 20px;border: 1px solid #777E90;/*border-radius: 20px;*//*border-color: white;*/">
+                            <div class="input-group p-1" style="/*border-radius: 20px;*//*border-color: white;*/">
+                                <InputText @bind-Value="_model.Email" class="form-control bg-dark border-0 shadow-none text-white" type="text" placeholder="Email"/>
+                                <button class="btn btn-primary" type="button" style="border-radius: 50px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 18px;">
+                                        <path d="M438.6 105.4C451.1 117.9 451.1 138.1 438.6 150.6L182.6 406.6C170.1 419.1 149.9 419.1 137.4 406.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4C21.87 220.9 42.13 220.9 54.63 233.4L159.1 338.7L393.4 105.4C405.9 92.88 426.1 92.88 438.6 105.4H438.6z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border-1 mt-3" style="border-radius: 20px;border: 1px solid #777E90;/*border-radius: 20px;*//*border-color: white;*/">
+                            <div class="input-group p-1" style="/*border-radius: 20px;*//*border-color: white;*/">
+                                <InputText @bind-Value="_model.Password" class="form-control bg-dark border-0 shadow-none text-white" type="password" placeholder="Password"/>
+                                <button class="btn btn-primary" type="button" style="border-radius: 50px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 18px;">
+                                        <path d="M438.6 105.4C451.1 117.9 451.1 138.1 438.6 150.6L182.6 406.6C170.1 419.1 149.9 419.1 137.4 406.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4C21.87 220.9 42.13 220.9 54.63 233.4L159.1 338.7L393.4 105.4C405.9 92.88 426.1 92.88 438.6 105.4H438.6z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex">
+                            <button class="btn btn-primary fw-bold px-3 py-2" type="submit" style="border-radius: 20px;">Sign up</button>
+                            <button class="btn btn-primary fw-bold bg-dark mx-3 px-3 py-2" type="button" style="border-color: white;border-radius: 20px;border-width: 2px;" @onclick="OnSignInButtonClick">Already a member?</button>
+                        </div>
+                    </EditForm>
+                </div>
             </div>
-        </div>
-
-
-        <div class="col-md-8 mt-2 col-xl-6 text-center mx-auto">
-            <a href="/signin">Already a member?</a>
         </div>
     </div>
 </section>
@@ -61,12 +75,13 @@
             return;
         }
 
-        var response = await AuthorizationClient.GetTokenAsync(new SignInRequest {UserName = _model.UserName, Password = _model.Password});
-        if (response.IsSuccessStatusCode)
-        {
-            var content = response.Content;
-            await StateProvider.SetAuthenticationStateAsync(content.Token);
-        }
+        var token = await AuthorizationClient.GetTokenAsync(new SignInRequest {UserName = _model.UserName, Password = _model.Password});
+        await StateProvider.SetAuthenticationStateAsync(token.Content.Token);
+    }
+
+    private void OnSignInButtonClick()
+    {
+        _navigationManager.NavigateTo("/signin");
     }
 
 }

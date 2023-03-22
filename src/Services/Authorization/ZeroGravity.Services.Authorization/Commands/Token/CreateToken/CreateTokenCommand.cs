@@ -62,6 +62,7 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Err
         var token = new JwtSecurityToken(
             issuer: issuer,
             audience: audience,
+            signingCredentials: credentials,
             expires: expires,
             claims: claims);
 

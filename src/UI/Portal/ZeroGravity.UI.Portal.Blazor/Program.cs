@@ -1,7 +1,8 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.FeatureManagement;
 using Serilog;
 using ZeroGravity.UI.Core.Providers;
-using ZeroGravity.UI.Portal.Blazor.Services;
 using ZeroGravity.UI.Portal.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,17 +12,18 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
-
+builder.Services.AddFeatureManagement(builder.Configuration.GetSection("FeatureManagement"));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<TokenAuthenticationStateProvider, TokenAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
-builder.Services.AddScoped<INavigationService, NavigationService>();
+builder.Services.AddDataProtection();
 
 builder.AddApplication();
 
 builder.Services.AddAuthenticationCore();
+builder.Services.AddAuthorizationCore();
 
 var app = builder.Build();
 
@@ -32,7 +34,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
 app.UseRouting();

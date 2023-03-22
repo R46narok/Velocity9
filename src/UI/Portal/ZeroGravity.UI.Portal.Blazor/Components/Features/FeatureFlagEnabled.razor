@@ -1,0 +1,20 @@
+﻿@using Microsoft.FeatureManagement
+@inject IFeatureManager _featureManager
+
+@if (_enabled)
+{
+    @ChildContent
+}
+
+@code {
+    private bool _enabled;
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string FlagName { get; set; }
+     
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(FlagName)) return;
+        _enabled = await _featureManager.IsEnabledAsync(FlagName);
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace ZeroGravity.UI.Core.Extensions;
 
@@ -10,9 +11,9 @@ public static class AuthenticationExtensions
         return principal.Identity is not null && principal.Identity.IsAuthenticated;
     }
 
-    public static string? GetUserName(this ClaimsPrincipal principal)
+    public static string? GetUserName(this AuthenticationState state)
     {
-        return principal.Identity?.Name;
+        return state.User.Identity?.Name;
     }
 
     public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)

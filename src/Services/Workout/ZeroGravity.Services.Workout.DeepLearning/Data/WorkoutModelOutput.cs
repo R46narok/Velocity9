@@ -1,4 +1,4 @@
-﻿namespace ZeroGravity.Services.Workout.DeepLearning.Models;
+﻿namespace ZeroGravity.Services.Workout.DeepLearning.Data;
 
 public class WorkoutModelOutput
 {

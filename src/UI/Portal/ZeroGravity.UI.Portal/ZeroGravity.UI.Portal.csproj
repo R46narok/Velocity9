@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\ZeroGravity.Domain\ZeroGravity.Domain.csproj" />
+      <ProjectReference Include="..\..\Core\ZeroGravity.UI.Core\ZeroGravity.UI.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using ZeroGravity.DeepLearning.Common;
 using ZeroGravity.DeepLearning.Preprocessing;
+using ZeroGravity.Services.Workout.DeepLearning.Data;
 
 namespace ZeroGravity.Services.Workout.DeepLearning.Models;
 
