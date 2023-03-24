@@ -7,14 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\Exercise\CreateExercise" />
-      <Folder Include="Dto" />
-      <Folder Include="Handlers" />
-      <Folder Include="Mapping" />
-      <Folder Include="Queries" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
     </ItemGroup>
 

@@ -98,6 +98,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Coach"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Coach.Api", "src\Services\Coach\ZeroGravity.Services.Coach.Api\ZeroGravity.Services.Coach.Api.csproj", "{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Services.Coach.DeepLearning", "src\Services\Coach\ZeroGravity.Services.Coach.DeepLearning\ZeroGravity.Services.Coach.DeepLearning.csproj", "{0EE52B80-4EF7-4263-8494-8C5D1F739662}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,7 @@ Global
 		{9225A424-10EF-4434-BE02-D30E4DDF1B7A} = {24110637-5C78-48E8-986A-1CBA03474AC3}
 		{36AD8528-DFBA-46A0-B692-3878BE44E523} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
 		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
+		{0EE52B80-4EF7-4263-8494-8C5D1F739662} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{81D7CAC9-50FE-40AF-A42D-C18F9881A85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -216,5 +219,9 @@ Global
 		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EE52B80-4EF7-4263-8494-8C5D1F739662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE52B80-4EF7-4263-8494-8C5D1F739662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE52B80-4EF7-4263-8494-8C5D1F739662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE52B80-4EF7-4263-8494-8C5D1F739662}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
