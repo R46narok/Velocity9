@@ -1,20 +1,40 @@
-﻿using System.Drawing;
-using Emgu.CV;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
 
 namespace ZeroGravity.Services.Coach.DeepLearning.Extensions;
 
 public static class MatExtensions
 {
-    public static byte[] ToByteArrayWithInputResolution(this Mat image, int dim)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="frame"></param>
+    /// <param name="dim"></param>
+    /// <returns></returns>
+    public static Mat Pad(this Mat frame, int dim)
     {
-        var resized = image.Clone();
-        CvInvoke.Resize(image, resized, new Size(dim, dim));
-        var data = resized.GetData();
+        var width = frame.Width;
+        var height = frame.Height;
 
-        return Flatten(
-            (byte[,,]) data,
-            dim, dim,
-            image.NumberOfChannels);
+        var ratio = Math.Min(dim / (float) width, dim / (float) height);
+        var newWidth = (int) (ratio * width);
+        var newHeight = (int) (ratio * height);
+
+        var temp = new Mat();
+        CvInvoke.Resize(frame, temp, new(newWidth, newHeight));
+
+        var padWidth = (dim - newWidth) / 2;
+        var padHeight = (dim - newHeight) / 2;
+
+        CvInvoke.CopyMakeBorder(temp, frame, 
+            padHeight, padHeight, 
+            padWidth, padWidth, 
+            BorderType.Replicate,
+            new(0));
+        
+        CvInvoke.Resize(frame, temp, new(dim, dim));
+
+        return temp;
     }
 
     private static byte[] Flatten(byte[,,] image, int width, int height, int channels)
