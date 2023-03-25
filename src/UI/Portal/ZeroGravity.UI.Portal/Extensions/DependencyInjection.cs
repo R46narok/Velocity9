@@ -9,6 +9,7 @@ using ZeroGravity.UI.Core.Providers;
 using ZeroGravity.UI.Portal.Security;
 using ZeroGravity.UI.Portal.Services.Authorization.Contracts;
 using ZeroGravity.UI.Portal.Services.Coach.Contracts;
+using ZeroGravity.UI.Portal.Services.Preferences.Contracts;
 using ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
 using ZeroGravity.UI.Portal.Services.Workout.Contracts;
 
@@ -39,6 +40,11 @@ public static class DependencyInjection
             .AddRefitClient<IWorkoutClient>()
             .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Workout:Rest"]))
             .AddHttpMessageHandler<AuthorizationHttpClientHandler>();
+
+
+        builder.Services
+            .AddRefitClient<IPreferencesClient>()
+            .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Workout:Rest"]));
 
         builder.Services
             .AddRefitClient<ISetClient>()

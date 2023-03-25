@@ -39,6 +39,7 @@ builder.Services.AddTransient<IMuscleRepository, MuscleRepository>();
 builder.Services.AddTransient<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IPreferencesRepository, PreferencesRepository>();
 
 builder.Services.AddSingleton<IConnection>(_ => factory.CreateConnection());
 builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
