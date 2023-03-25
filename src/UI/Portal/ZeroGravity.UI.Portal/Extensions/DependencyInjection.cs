@@ -8,6 +8,7 @@ using Refit;
 using ZeroGravity.UI.Core.Providers;
 using ZeroGravity.UI.Portal.Security;
 using ZeroGravity.UI.Portal.Services.Authorization.Contracts;
+using ZeroGravity.UI.Portal.Services.Coach.Contracts;
 using ZeroGravity.UI.Portal.Services.Skeletal.Contracts;
 using ZeroGravity.UI.Portal.Services.Workout.Contracts;
 
@@ -43,5 +44,13 @@ public static class DependencyInjection
             .AddRefitClient<ISetClient>()
             .SetHandlerLifetime(TimeSpan.FromSeconds(1))
             .ConfigureHttpClient(x => x.BaseAddress = new Uri(config["Services:Workout:Rest"]));
+        
+        builder.Services
+            .AddRefitClient<IAnomalyClient>()
+            .ConfigureHttpClient(x =>
+            {
+                x.BaseAddress = new Uri(config["Services:Coach:Rest"]);
+                x.Timeout = TimeSpan.FromSeconds(30);
+            });
     }
 }

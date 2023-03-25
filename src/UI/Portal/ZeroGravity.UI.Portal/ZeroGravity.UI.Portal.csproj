@@ -21,4 +21,9 @@
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\Coach\Requests" />
+      <Folder Include="Services\Coach\Views" />
+    </ItemGroup>
+
 </Project>

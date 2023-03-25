@@ -1,0 +1,8 @@
+﻿.capability:hover {
+    cursor: pointer;
+    background-color: #353945;
+}
+
+.capability {
+    background-color: #23262F;
+}
