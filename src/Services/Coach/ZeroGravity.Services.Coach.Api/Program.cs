@@ -1,24 +1,38 @@
-using System.Drawing;
+using System.Text.Json.Serialization;
 using ZeroGravity.Services.Coach.DeepLearning.Inference.Movenet;
-using ZeroGravity.Services.Coach.DeepLearning.Inference.Movenet.IO;
-using Emgu.CV;
-using Emgu.CV.Structure;
-using ZeroGravity.Services.Coach.DeepLearning.Extensions;
+using RabbitMQ.Client;
+using Serilog;
+using ZeroGravity.Application.Extensions;
+using ZeroGravity.Application.Infrastructure.MessageBrokers;
+using ZeroGravity.DeepLearning.Common;
+using ZeroGravity.Infrastructure.MessageBrokers;
 using ZeroGravity.Services.Coach.DeepLearning.Inference.Anomaly;
 using ZeroGravity.Services.Coach.DeepLearning.Inference.Movenet.Impl;
 using ZeroGravity.Services.Coach.DeepLearning.Pipelines;
 
-var inference = new MovenetInference("thunder.onnx");
-var anomaly = new AnomalyInference("anomaly.onnx");
-
-var pipeline = new CoachPredictionPipeline(inference, anomaly);
-pipeline.Run("1.avi");
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+var factory = new ConnectionFactory() {HostName = "localhost"};
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+builder.Services.AddControllers().AddJsonOptions(opt =>
+    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.AddJwtAuthentication();
+
+builder.Services.AddSingleton<IConnection>(_ => factory.CreateConnection());
+builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
+builder.Services.AddTransient<IMovenetInference, MovenetInference>(opt => new MovenetInference("thunder.onnx"));
+builder.Services.AddTransient<IAnomalyInference, AnomalyInference>(opt => new AnomalyInference("anomaly.onnx"));
+builder.Services.AddTransient<IPredictionPipeline, CoachPredictionPipeline>();
 
 var app = builder.Build();
 
@@ -31,8 +45,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseJwtAuthentication();
 
 app.MapControllers();
 
 app.Run();
+
+public partial class Program
+{
+    
+}
