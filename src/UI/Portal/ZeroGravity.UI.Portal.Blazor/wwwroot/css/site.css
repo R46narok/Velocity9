@@ -242,7 +242,7 @@ a {
 }
 
 .body-pd {
-    padding-left: calc(var(--nav-width) + 1rem);
+    /*padding-left: calc(var(--nav-width) + 1rem);*/
 }
 
 .active {
@@ -265,14 +265,14 @@ a {
 @media screen and (min-width: 768px) {
     body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;
-        padding-left: calc(var(--nav-width) + 2rem);
+        /*padding-left: calc(var(--nav-width) + 2rem);*/
     }
 }
 
 @media screen and (min-width: 768px) {
     .header {
         height: calc(var(--header-height) + 1rem);
-        padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+        /*padding: 0 2rem 0 calc(var(--nav-width) + 2rem);*/
     }
 }
 
@@ -304,7 +304,7 @@ a {
 
 @media screen and (min-width: 768px) {
     .body-pd {
-        padding-left: calc(var(--nav-width) + 188px);
+        /*padding-left: calc(var(--nav-width) + 188px);*/
     }
 }
 
@@ -425,4 +425,3 @@ div.social-links {
     margin-right: 5px;
     margin-bottom: 5px;
 }
-

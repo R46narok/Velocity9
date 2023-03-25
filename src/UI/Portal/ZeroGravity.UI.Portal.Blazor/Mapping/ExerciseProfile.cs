@@ -8,7 +8,8 @@ public class ExerciseProfile : Profile
 {
     public ExerciseProfile()
     {
-        CreateMap<ExerciseCreate.FormData,CreateExerciseRequest>()
+        CreateMap<
+                ZeroGravity.UI.Portal.Blazor.Pages.Exercise.ExerciseCreate.FormData,CreateExerciseRequest>()
             .ForMember(x => x.AuthorName, opt => opt.Ignore());
     }
 }

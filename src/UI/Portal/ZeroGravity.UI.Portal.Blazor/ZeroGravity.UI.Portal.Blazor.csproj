@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Pages\Coach\Index\Components" />
       <Folder Include="wwwroot\img" />
     </ItemGroup>
 

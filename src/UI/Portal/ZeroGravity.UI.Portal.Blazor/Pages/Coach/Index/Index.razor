@@ -1,0 +1,108 @@
+﻿@attribute [Authorize]
+@page "/coach"
+
+<div class="container mt-5 py-5 w-75">
+    <div class="row pb-5">
+        <div class="col text-center text-white">
+            <p class="m-0 p-0 fw-bold" style="color: #777E90;">TAKE YOUR WORKOUTS TO THE NEXT LEVEL</p>
+            <h1>
+                <strong>A new fitness experience</strong><br><strong>for everyone</strong>
+            </h1>
+        </div>
+    </div>
+    <div class="row text-white pt-4">
+        <div class="col d-flex justify-content-evenly flex-column">
+            <div class="py-4">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" class="fw-bold" style="font-size: 2em;">
+                    <path d="M184 0C214.9 0 240 25.07 240 56V456C240 486.9 214.9 512 184 512C155.1 512 131.3 490.1 128.3 461.9C123.1 463.3 117.6 464 112 464C76.65 464 48 435.3 48 400C48 392.6 49.27 385.4 51.59 378.8C21.43 367.4 0 338.2 0 304C0 272.1 18.71 244.5 45.77 231.7C37.15 220.8 32 206.1 32 192C32 161.3 53.59 135.7 82.41 129.4C80.84 123.9 80 118 80 112C80 82.06 100.6 56.92 128.3 49.93C131.3 21.86 155.1 0 184 0zM383.7 49.93C411.4 56.92 432 82.06 432 112C432 118 431.2 123.9 429.6 129.4C458.4 135.7 480 161.3 480 192C480 206.1 474.9 220.8 466.2 231.7C493.3 244.5 512 272.1 512 304C512 338.2 490.6 367.4 460.4 378.8C462.7 385.4 464 392.6 464 400C464 435.3 435.3 464 400 464C394.4 464 388.9 463.3 383.7 461.9C380.7 490.1 356.9 512 328 512C297.1 512 272 486.9 272 456V56C272 25.07 297.1 0 328 0C356.9 0 380.7 21.86 383.7 49.93z"></path>
+                </svg>
+                <p class="fw-bold mt-3">Use cutting-edge AI to track <br>your progress</p>
+                <p style="color: #777E90;">Our computer vision model has been trained on a large dataset to provide you with the best results. Less thinking!</p>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="vr h-100"></div>
+        </div>
+        <div class="col">
+            <div class="py-4 d-flex justify-content-evenly flex-column">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor" class="fw-bold" style="font-size: 2em;">
+                    <path d="M336 0h-288C22.38 0 0 22.38 0 48v416C0 489.6 22.38 512 48 512h288c25.62 0 48-22.38 48-48v-416C384 22.38 361.6 0 336 0zM64 208C64 199.2 71.2 192 80 192h32C120.8 192 128 199.2 128 208v32C128 248.8 120.8 256 112 256h-32C71.2 256 64 248.8 64 240V208zM64 304C64 295.2 71.2 288 80 288h32C120.8 288 128 295.2 128 304v32C128 344.8 120.8 352 112 352h-32C71.2 352 64 344.8 64 336V304zM224 432c0 8.801-7.199 16-16 16h-128C71.2 448 64 440.8 64 432v-32C64 391.2 71.2 384 80 384h128c8.801 0 16 7.199 16 16V432zM224 336c0 8.801-7.199 16-16 16h-32C167.2 352 160 344.8 160 336v-32C160 295.2 167.2 288 176 288h32C216.8 288 224 295.2 224 304V336zM224 240C224 248.8 216.8 256 208 256h-32C167.2 256 160 248.8 160 240v-32C160 199.2 167.2 192 176 192h32C216.8 192 224 199.2 224 208V240zM320 432c0 8.801-7.199 16-16 16h-32c-8.799 0-16-7.199-16-16v-32c0-8.801 7.201-16 16-16h32c8.801 0 16 7.199 16 16V432zM320 336c0 8.801-7.199 16-16 16h-32c-8.799 0-16-7.199-16-16v-32C256 295.2 263.2 288 272 288h32C312.8 288 320 295.2 320 304V336zM320 240C320 248.8 312.8 256 304 256h-32C263.2 256 256 248.8 256 240v-32C256 199.2 263.2 192 272 192h32C312.8 192 320 199.2 320 208V240zM320 144C320 152.8 312.8 160 304 160h-224C71.2 160 64 152.8 64 144v-64C64 71.2 71.2 64 80 64h224C312.8 64 320 71.2 320 80V144z"></path>
+                </svg>
+                <p class="fw-bold mt-3">Inspired by the amazing world of signal processing</p>
+                <p style="color: #777E90;">To reduce overhead and save memory the virtual coach uses clever techniques to count your reps.</p>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="vr h-100"></div>
+        </div>
+        <div class="col">
+            <div class="py-4 d-flex justify-content-evenly flex-column">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" class="fw-bold" style="font-size: 2em;">
+                    <path d="M305.8 2.076C314.4 5.932 320 14.52 320 24V64H336C406.7 64 464 121.3 464 192V358.7C492.3 371 512 399.2 512 432C512 476.2 476.2 512 432 512C387.8 512 352 476.2 352 432C352 399.2 371.7 371 400 358.7V192C400 156.7 371.3 128 336 128H320V168C320 177.5 314.4 186.1 305.8 189.9C297.1 193.8 286.1 192.2 279.9 185.8L199.9 113.8C194.9 109.3 192 102.8 192 96C192 89.2 194.9 82.71 199.9 78.16L279.9 6.161C286.1-.1791 297.1-1.779 305.8 2.077V2.076zM432 456C445.3 456 456 445.3 456 432C456 418.7 445.3 408 432 408C418.7 408 408 418.7 408 432C408 445.3 418.7 456 432 456zM112 358.7C140.3 371 160 399.2 160 432C160 476.2 124.2 512 80 512C35.82 512 0 476.2 0 432C0 399.2 19.75 371 48 358.7V153.3C19.75 140.1 0 112.8 0 80C0 35.82 35.82 .0004 80 .0004C124.2 .0004 160 35.82 160 80C160 112.8 140.3 140.1 112 153.3V358.7zM80 56C66.75 56 56 66.75 56 80C56 93.25 66.75 104 80 104C93.25 104 104 93.25 104 80C104 66.75 93.25 56 80 56zM80 408C66.75 408 56 418.7 56 432C56 445.3 66.75 456 80 456C93.25 456 104 445.3 104 432C104 418.7 93.25 408 80 408z"></path>
+                </svg>
+                <p class="fw-bold mt-3">Constantly updated to ensure maximum accuracy</p>
+                <p style="color: #777E90;">To deliver the latest and greatest model we constantly update the dataset and fine-tune the model.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="py-5 h-100 w-100" style="background-color: #23262F;">
+    <div class="container h-100 py-5">
+        <div class="row p-5 h-100" style="border-radius: 20px;background-color: #141416;">
+            <div class="col-5 d-flex align-items-center justify-content-center">
+                <div>
+                    <p class="fw-bold" style="color: #777E90;">COACH CAPABILITIES</p>
+                    <div class="row py-1">
+                        <div class="col text-white p-3 d-flex capability" style="border-radius: 15px;">
+                            <div class="p-2 my-auto" style="border-radius: 7px;background-color: #45B26B;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor" class="fw-bold" style="font-size: 1.5em;vertical-align: bottom;">
+                                    <path d="M240.5 224H352C365.3 224 377.3 232.3 381.1 244.7C386.6 257.2 383.1 271.3 373.1 280.1L117.1 504.1C105.8 513.9 89.27 514.7 77.19 505.9C65.1 497.1 60.7 481.1 66.59 467.4L143.5 288H31.1C18.67 288 6.733 279.7 2.044 267.3C-2.645 254.8 .8944 240.7 10.93 231.9L266.9 7.918C278.2-1.92 294.7-2.669 306.8 6.114C318.9 14.9 323.3 30.87 317.4 44.61L240.5 224z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="ms-4 my-auto pe-4">Check form</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-128 0 512 512" width="1em" height="1em" fill="currentColor" class="ms-auto my-auto me-2" style="color: #777E90;">
+                                <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="row py-1 mt-3">
+                        <div class="col text-white p-3 d-flex capability" style="border-radius: 15px;">
+                            <div class="p-2 my-auto" style="border-radius: 7px;background-color: #9757D7;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor" class="fw-bold" style="font-size: 1.5em;vertical-align: bottom;">
+                                    <path d="M476 480h-152c-19.88 0-36-16.12-36-36v-348H192v156c0 19.88-16.12 36-36 36H31.1C14.33 288 0 273.7 0 256s14.33-31.1 31.1-31.1H128v-156c0-19.88 16.12-36 36-36h152c19.88 0 36 16.12 36 36v348h96v-156c0-19.88 16.12-36 36-36h124C625.7 224 640 238.3 640 256s-14.33 32-31.1 32H512v156C512 463.9 495.9 480 476 480z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="ms-4 my-auto">Count reps</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-128 0 512 512" width="1em" height="1em" fill="currentColor" class="ms-auto my-auto me-2" style="color: #777E90;">
+                                <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="row py-1 mt-3">
+                        <div class="col text-white p-3 d-flex capability" style="border-radius: 15px;">
+                            <div class="p-2 my-auto" style="border-radius: 7px;background-color: #3772FF;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor" class="fw-bold" style="font-size: 1.5em;vertical-align: bottom;">
+                                    <path d="M112.1 454.3c0 6.297 1.816 12.44 5.284 17.69l17.14 25.69c5.25 7.875 17.17 14.28 26.64 14.28h61.67c9.438 0 21.36-6.401 26.61-14.28l17.08-25.68c2.938-4.438 5.348-12.37 5.348-17.7L272 415.1h-160L112.1 454.3zM191.4 .0132C89.44 .3257 16 82.97 16 175.1c0 44.38 16.44 84.84 43.56 115.8c16.53 18.84 42.34 58.23 52.22 91.45c.0313 .25 .0938 .5166 .125 .7823h160.2c.0313-.2656 .0938-.5166 .125-.7823c9.875-33.22 35.69-72.61 52.22-91.45C351.6 260.8 368 220.4 368 175.1C368 78.61 288.9-.2837 191.4 .0132zM192 96.01c-44.13 0-80 35.89-80 79.1C112 184.8 104.8 192 96 192S80 184.8 80 176c0-61.76 50.25-111.1 112-111.1c8.844 0 16 7.159 16 16S200.8 96.01 192 96.01z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="ms-4 my-auto">More</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-128 0 512 512" width="1em" height="1em" fill="currentColor" class="ms-auto my-auto me-2" style="color: #777E90;">
+                                <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center">
+                    <img class="w-100" src="/img/Computer_vision.png">
+                    <p class="mt-3" style="color: #777E90;">Our inference models use GPU acceleration<br>to reduce latency and provide you with the best experience.</p><button class="btn btn-primary fw-bold py-2 px-3" type="button" style="border-radius: 20px;">Run inference</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+
+}
