@@ -21,3 +21,8 @@ services:
   bindings:
     - port: 5002
 
+- name: zerogravity-services-coach-api
+  project: src/Services/Coach/ZeroGravity.Services.Coach.Api/ZeroGravity.Services.Coach.Api.csproj
+  bindings:
+    - port: 5003
+
