@@ -91,7 +91,7 @@
             var exercise = viewModel.Exercises[i];
     // var reps = viewModel.Reps[i];
 
-            var setView = new SetView {ExerciseName = exercise,};
+            var setView = new SetView {ExerciseName = exercise, TargetReps = 10};
             if (exercise != last)
             {
                 setViews.Add(split);

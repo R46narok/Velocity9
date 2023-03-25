@@ -32,6 +32,8 @@ public class ExerciseRepository : RepositoryBase<Exercise, int, SkeletalDbContex
         return await Context
             .Set<Exercise>()
             .AsNoTracking()
+            .Include(x => x.Targets)
+            .Include(x => x.Author)
             .SingleOrDefaultAsync(x => x.Name == name);
     }
 
@@ -39,8 +41,8 @@ public class ExerciseRepository : RepositoryBase<Exercise, int, SkeletalDbContex
     {
         return Context
             .Exercises
-            .Include(x => x.Author)
             .Include(x => x.Targets)
+            .Include(x => x.Author)
             .AsNoTracking()
             .ToList();
     }

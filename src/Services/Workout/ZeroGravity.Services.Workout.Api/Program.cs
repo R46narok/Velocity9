@@ -53,6 +53,8 @@ builder.Services.AddTransient<IInferenceModel<WorkoutModelInput, WorkoutModelOut
 var app = builder.Build();
 app.UsePersistence<WorkoutDbContext>();
 await app.SynchronizeDataFromRemotes();
+
+app.UseEventHandlers();
 app.UseJwtAuthentication();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
