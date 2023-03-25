@@ -1,4 +1,5 @@
-﻿using Emgu.CV;
+﻿using System.Diagnostics;
+using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Microsoft.ML.OnnxRuntime.Tensors;
@@ -24,27 +25,27 @@ public class CoachPredictionPipeline : PredictionPipelineBase
         _anomaly = anomaly;
     }
 
-    public void Run(string fileName)
+    public override void Run(string fileName)
     {
         using var capture = new VideoCapture(fileName);
         var count = (int) capture.Get(CapProp.FrameCount);
 
-        var frame = new Mat();
         var features = new DenseTensor<float>(new[] {1, TimeStep, Features});
 
-        PredictKeyPoints(capture, ref frame, count, ref features);
+        PredictKeyPoints(capture, count, ref features);
 
         var reconstructed = RunAnomalyOnValidKeyPoints(ref features);
         capture.Set(CapProp.PosFrames, 0.0);
 
-        DrawPredictedKeyPoints(capture, ref frame, count, ref reconstructed);
+        DrawPredictedKeyPoints(capture, count, ref reconstructed, fileName);
     }
 
     private void PredictKeyPoints(
-        VideoCapture capture, ref Mat frame, 
+        VideoCapture capture,
         int count, 
         ref DenseTensor<float> features)
     {
+        var frame = new Mat();
         int idx = 0;
         for (int i = 0; i < count; i++)
         {
@@ -61,10 +62,17 @@ public class CoachPredictionPipeline : PredictionPipelineBase
     }
 
     private void DrawPredictedKeyPoints(
-        VideoCapture capture, ref Mat frame,
+        VideoCapture capture, 
         int count, 
-        ref DenseTensor<float> reconstructed)
+        ref DenseTensor<float> reconstructed,
+        string fileName)
     {
+        var fn = Path.GetFileNameWithoutExtension(fileName);
+        var filePath = Path.Combine(Path.GetTempPath(), $"predicted_{fn}.mp4");
+        var fps = (int)capture.Get(CapProp.Fps) / 10;
+        using var writer = new VideoWriter(filePath, fps, new (256, 256), true);
+        
+        var frame = new Mat();
         int idx = 0;
         for (int i = 10; i < count; i++)
         {
@@ -77,8 +85,10 @@ public class CoachPredictionPipeline : PredictionPipelineBase
             {
                 DrawPose(frame, reconstructed!, idx);
                 ++idx;
+                writer.Write(frame);
             }
         }
+        
     }
     
     private void RunMovenetOnValidFrame(Mat frame, int idx, ref DenseTensor<float> features)

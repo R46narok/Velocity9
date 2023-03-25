@@ -1,2 +1,2 @@
 # ZeroGravity
-## By R46narok
+## A virtual calisthenics coach

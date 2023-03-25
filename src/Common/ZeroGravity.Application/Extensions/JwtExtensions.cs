@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,13 @@ public static class JwtExtensions
              
          });
     
-         services.AddAuthorization();
+         services.AddAuthorization(options =>
+         {
+             options.AddPolicy("User",
+                 policy => policy.RequireClaim(ClaimTypes.Role, "User"));
+             options.AddPolicy("Admin",
+                 policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+         });
      }
     
      public static void UseJwtAuthentication(this WebApplication app)
