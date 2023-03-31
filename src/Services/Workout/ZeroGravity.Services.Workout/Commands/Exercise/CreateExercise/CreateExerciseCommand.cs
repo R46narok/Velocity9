@@ -12,8 +12,8 @@ public record CreateExerciseCommandResponse(int Id);
 public class CreateExerciseCommand : IRequest<ErrorOr<CreateExerciseCommandResponse>>
 {
     public string Name { get; set; }
-    public List<string> TargetNames { get; set; }
     public string AuthorName { get; set; }
+    public List<string> TargetNames { get; set; }
 }
 
 public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseCommand, ErrorOr<CreateExerciseCommandResponse>>

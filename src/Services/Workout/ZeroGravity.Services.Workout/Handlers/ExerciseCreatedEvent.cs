@@ -8,11 +8,10 @@ namespace ZeroGravity.Services.Workout.Handlers;
 
 public class ExerciseCreatedEvent : IDomainEvent
 {
-     public string Name { get; set; }
-     public string Description { get; set; }
-     
-     public List<Muscle> Targets { get; set; }
-     public User Author { get; set; }   
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string AuthorName { get; set; }
+    public List<string> TargetNames { get; set; }
 }
 
 
@@ -30,6 +29,6 @@ public class ExerciseCreatedEventHandler : IDomainEventHandler<ExerciseCreatedEv
     public async Task HandleAsync(ExerciseCreatedEvent domainEvent, CancellationToken cancellationToken = default)
     {
         var command = _mapper.Map<CreateExerciseCommand>(domainEvent);
-        await _mediator.Send(command, cancellationToken);
+        var response = await _mediator.Send(command, cancellationToken);
     }
 }

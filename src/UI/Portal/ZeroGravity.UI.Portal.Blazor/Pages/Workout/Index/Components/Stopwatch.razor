@@ -1,0 +1,32 @@
+﻿@if (string.IsNullOrEmpty(_elapsed))
+{
+    <div style="color: black;">Elapsed time</div>
+}
+else
+{
+    <div style="color: black;">@_elapsed</div>
+}
+
+@code {
+    private System.Diagnostics.Stopwatch? _stopwatch;
+    private string _elapsed;
+    private bool _running;
+
+    public async Task Start()
+    {
+        _running = true;
+        _stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+        while (_running)
+        {
+            await Task.Delay(50);
+            _elapsed = _stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.ff");
+            StateHasChanged();
+        }
+    }
+
+    public void Stop()
+    {
+        _running = false;
+    }
+}
