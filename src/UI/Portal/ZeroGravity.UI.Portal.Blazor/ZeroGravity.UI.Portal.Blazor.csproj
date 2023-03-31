@@ -15,8 +15,8 @@
 
     <ItemGroup>
       <Folder Include="Pages\Workout\Index\Common" />
-      <Folder Include="Pages\Workout\Index\Enums" />
       <Folder Include="Pages\Workout\Index\Extensions" />
+      <Folder Include="Pages\Workout\Index\Services\Interfaces" />
       <Folder Include="wwwroot\img" />
     </ItemGroup>
 

@@ -1,7 +1,10 @@
 ﻿@using ZeroGravity.UI.Core.Providers
+@using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Index.Enums
 @using ZeroGravity.UI.Portal.Blazor.Pages.Workout.Index.ViewModels
 @using ZeroGravity.UI.Portal.Security
 @using ZeroGravity.UI.Portal.Services.Preferences.Contracts
+@using System.Diagnostics
+@using System.Timers
 
 @inject TokenAuthenticationStateProvider _provider
 @inject IPreferencesClient _client
@@ -14,17 +17,15 @@
     </svg>&nbsp;Time for action<span></span>
 </h3>
 <div class="bg-white text-center mt-5" style="width: 80%;border-radius: 20px;">
-    <p class="text-body p-2 fw-bolder">@(!_running ? "Elapsed time" : ElapsedTime)</p>
+    <p class="text-body p-2 fw-bolder">
+        <Stopwatch @ref="_stopwatch"/>
+    </p>
 </div>
 <div class="d-flex">
-    <button data-toggle="tooltip" data-placement="top" class="btn btn-primary px-3 py-2 bg-dark" type="button" style="border-color: #777e90;border-radius: 20px;border-width: 3px;"
-            title="Rest this amount of time between individual sets.">
-       @ExerciseRestMinutes:@ExerciseRestSeconds.ToString("D2") rest
-    </button>
-    <button data-toggle="tooltip" data-popper-placement="top" class="btn btn-primary px-3 py-2 bg-dark mx-2" type="button" style="border-color: #777e90;border-radius: 20px;border-width: 3px;"
-            title="Rest this amount of time between individual exercises.">
-        @SetRestMinutes:@SetRestSeconds.ToString("D2")
-    </button>
+    <RestTimer @ref="_exerciseRest"/>
+    <div class="mx-1">
+        <RestTimer @ref="_setRest"/>
+    </div>
     <button class="btn btn-primary px-3 py-2 bg-dark" type="button" style="border-color: #777e90;border-radius: 20px;border-width: 3px;">More</button>
 </div>
 <div class="d-flex mt-3" style="width: 80%;">
@@ -44,11 +45,48 @@
 
 @code {
     private PreferencesViewModel? _preferences;
-    private int ExerciseRestMinutes => (int) Math.Truncate(_preferences?.ExerciseRestTime ?? 0);
-    private int ExerciseRestSeconds => (int) Math.Round((_preferences?.ExerciseRestTime - ExerciseRestMinutes) * 60 ?? 0);
+    private bool _running;
 
-    private int SetRestMinutes => (int) Math.Truncate(_preferences?.SetRestTime ?? 0);
-    private int SetRestSeconds => (int) Math.Round((_preferences?.SetRestTime - SetRestMinutes) * 60 ?? 0);
+    private RestTimer _exerciseRest;
+    private RestTimer _setRest;
+    private Stopwatch _stopwatch;
+
+    public event EventHandler? Started;
+    public event EventHandler? Stopped;
+    public event EventHandler? TimerCompleted;
+
+    private ClockPhase _clockPhase = ClockPhase.None;
+
+    public ClockPhase Phase
+    {
+        get => _clockPhase;
+        set
+        {
+            _clockPhase = value;
+            ClockPhaseHasChanged();
+        }
+    }
+
+    private void ClockPhaseHasChanged()
+    {
+        var timer = _clockPhase switch 
+        {
+            ClockPhase.ExerciseRest => _exerciseRest,
+            ClockPhase.SetRest => _setRest,
+            _ => throw new ArgumentException()
+            };
+
+        var inactive = _clockPhase switch 
+        {
+            ClockPhase.ExerciseRest => _setRest,
+            ClockPhase.SetRest => _exerciseRest,
+            _ => throw new ArgumentException()
+            };
+
+        timer.Active = true;
+        inactive.Active = false;
+    }
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -66,30 +104,26 @@
         if (response.IsSuccessStatusCode)
         {
             _preferences = _mapper.Map<PreferencesViewModel>(response.Content!);
-            
+            _exerciseRest.Time = _preferences.ExerciseRestTime;
+            _setRest.Time = _preferences.SetRestTime;
             StateHasChanged();
         }
     }
 
-    private bool _running;
-    private TimeSpan _elapsedTime = TimeSpan.Zero;
-    private DateTime _startTime;
-
-    private string ElapsedTime => _elapsedTime.ToString(@"hh\:mm\:ss\.ff");
-
-    private async Task OnStartEndButtonClicked()
+    private void OnStartEndButtonClicked()
     {
         _running = !_running;
         if (_running)
         {
-            _startTime = DateTime.UtcNow;
-            while (_running)
-            {
-                _elapsedTime = DateTime.UtcNow - _startTime;
-                await Task.Delay(50);
-                StateHasChanged();
-            }
+            _stopwatch.Start();
+            Started?.Invoke(this, new());
         }
+        else
+        {
+            _stopwatch.Stop();
+            Stopped?.Invoke(this, new());
+        }
+        StateHasChanged();
     }
 
 }
