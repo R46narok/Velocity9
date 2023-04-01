@@ -1,0 +1,91 @@
+﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@page "/coach"
+
+@inject IAnomalyClient _anomaly
+@inject IJSRuntime _js
+
+@using V9.UI.Portal.Blazor.Pages.Coach.Index.Components
+@using V9.UI.Portal.Services.Coach.Contracts
+@using Refit
+@using Microsoft.AspNetCore.Mvc
+@using System.Reflection.Metadata
+
+
+<div class="container mt-5 py-5 w-75">
+    <InformationBanner/>
+</div>
+
+<section class="py-5 h-100 w-100" style="background-color: #23262F;">
+    <div class="container h-100 py-5">
+        <div class="row p-5 h-100" style="border-radius: 20px;background-color: #141416;">
+            <div class="col-5 d-flex align-items-center justify-content-center">
+                <div>
+                    <p class="fw-bold" style="color: #777E90;">COACH CAPABILITIES</p>
+                    <CheckFormCapability/>
+                    <CountRepsCapability/>
+                    <MoreCapabilities/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center">
+                    @if (videoBytes is null)
+                    {
+                        <InputFile OnChange="@LoadFile"/>
+                    }
+                    else
+                    {
+                        <video width="320" height="240" controls>
+                            <source type="video/mp4" src="@videoSrc" />
+                        </video>
+                    }
+                    <p class="mt-3" style="color: #777E90;">
+                        Our inference models use GPU acceleration<br>to reduce latency and provide you with the best experience.
+                    </p>
+                    <button class="btn btn-primary fw-bold py-2 px-3" type="button" style="border-radius: 20px;"
+                            @onclick="@OnRunInferenceButtonClicked">
+                        Run inference
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+        private const int MaxAllowedFiles = 1;
+    private IBrowserFile? _file;
+    private byte[]? videoBytes;
+    private string videoSrc => videoBytes is not null ? $"data:video/avi;base64,{Convert.ToBase64String(videoBytes)}" : "";
+
+    private async Task OnRunInferenceButtonClicked()
+    {
+        if (_file is not null)
+        {
+            var maxLength = Math.Pow(10, 7);
+            await using var stream = _file.OpenReadStream((long) maxLength);
+
+            var streamPart = new StreamPart(stream, _file.Name, "application/octet-stream");
+
+            var response = await _anomaly.PredictAsync(streamPart);
+            if (response.IsSuccessStatusCode)
+                await ValidAnomalyResponse(response.Content!);
+        }
+    }
+
+    private async Task ValidAnomalyResponse(Stream stream)
+    {
+        var ms = new MemoryStream();
+        await stream.CopyToAsync(ms);
+        videoBytes = ms.ToArray();
+        var s = videoSrc;
+        StateHasChanged();
+    }
+
+    private void LoadFile(InputFileChangeEventArgs obj)
+    {
+        if (obj.FileCount is <= MaxAllowedFiles and > 0)
+        {
+            _file = obj.File;
+        }
+    }
+}

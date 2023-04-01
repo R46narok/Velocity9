@@ -14,7 +14,7 @@ using RabbitMQ.Client;
 using Xunit;
 using ZeroGravity.Application.Infrastructure.MessageBrokers;
 using ZeroGravity.Infrastructure.MessageBrokers;
-using ZeroGravity.Services.Authorization.Data.Persistence;
+using V9.Services.Authorization.Data.Persistence;
 
 namespace ZeroGravity.Tests.Integration.Authorization;
 

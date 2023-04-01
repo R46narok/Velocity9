@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands\Exercise\DeleteExercise" />
+      <Folder Include="Commands\Exercise\UpdateExercise" />
+      <Folder Include="Commands\Muscle\DeleteMuscle" />
+      <Folder Include="Commands\Muscle\UpdateMuscle" />
+      <Folder Include="Contracts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\V9.Application\V9.Application.csproj" />
+      <ProjectReference Include="..\..\..\Common\V9.DeepLearning\V9.DeepLearning.csproj" />
+      <ProjectReference Include="..\..\..\Common\V9.Domain\V9.Domain.csproj" />
+      <ProjectReference Include="..\V9.Services.Workout.DeepLearning\V9.Services.Workout.DeepLearning.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+    </ItemGroup>
+
+</Project>

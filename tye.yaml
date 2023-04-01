@@ -4,25 +4,25 @@
 # when you've given us a try, we'd love to know what you think:
 #    https://aka.ms/AA7q20u
 #
-name: zerogravity
+name: v9
 services:
-- name: zerogravity-services-authorization-api
-  project: src/Services/Authorization/ZeroGravity.Services.Authorization.Api/ZeroGravity.Services.Authorization.Api.csproj
+- name: v9-services-authorization-api
+  project: src/Services/Authorization/V9.Services.Authorization.Api/V9.Services.Authorization.Api.csproj
   bindings:
     - port: 5000
 
-- name: zerogravity-services-skeletal-api
-  project: src/Services/Skeletal/ZeroGravity.Services.Skeletal.Api/ZeroGravity.Services.Skeletal.Api.csproj
+- name: v9-services-skeletal-api
+  project: src/Services/Skeletal/V9.Services.Skeletal.Api/V9.Services.Skeletal.Api.csproj
   bindings:
     - port: 5001
 
-- name: zerogravity-services-workout-api
-  project: src/Services/Workout/ZeroGravity.Services.Workout.Api/ZeroGravity.Services.Workout.Api.csproj
+- name: v9-services-workout-api
+  project: src/Services/Workout/V9.Services.Workout.Api/V9.Services.Workout.Api.csproj
   bindings:
     - port: 5002
 
-- name: zerogravity-services-coach-api
-  project: src/Services/Coach/ZeroGravity.Services.Coach.Api/ZeroGravity.Services.Coach.Api.csproj
+- name: v9-services-coach-api
+  project: src/Services/Coach/V9.Services.Coach.Api/V9.Services.Coach.Api.csproj
   bindings:
     - port: 5003
 

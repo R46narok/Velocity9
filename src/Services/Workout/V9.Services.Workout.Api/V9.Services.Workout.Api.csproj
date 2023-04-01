@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+        <PackageReference Include="Serilog" Version="2.12.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\V9.Application\V9.Application.csproj" />
+      <ProjectReference Include="..\..\..\Common\V9.Infrastructure\V9.Infrastructure.csproj" />
+      <ProjectReference Include="..\V9.Services.Workout.DeepLearning\V9.Services.Workout.DeepLearning.csproj" />
+      <ProjectReference Include="..\V9.Services.Workout\V9.Services.Workout.csproj" />
+    </ItemGroup>
+
+</Project>
