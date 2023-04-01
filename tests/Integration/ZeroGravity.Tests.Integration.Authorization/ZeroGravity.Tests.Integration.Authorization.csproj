@@ -25,8 +25,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\src\Services\Authorization\ZeroGravity.Services.Authorization.Api\ZeroGravity.Services.Authorization.Api.csproj" />
-      <ProjectReference Include="..\..\..\src\Services\Authorization\ZeroGravity.Services.Authorization\ZeroGravity.Services.Authorization.csproj" />
+      <ProjectReference Include="..\..\..\src\Services\Authorization\V9.Services.Authorization.Api\V9.Services.Authorization.Api.csproj" />
+      <ProjectReference Include="..\..\..\src\Services\Authorization\V9.Services.Authorization\V9.Services.Authorization.csproj" />
     </ItemGroup>
 
 </Project>
