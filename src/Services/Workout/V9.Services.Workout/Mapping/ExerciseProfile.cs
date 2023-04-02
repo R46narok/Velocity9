@@ -2,7 +2,6 @@
 using V9.Services.Workout.Commands;
 using V9.Services.Workout.Data.Entities;
 using V9.Services.Workout.Data.Remotes;
-using V9.Services.Workout.Handlers;
 
 namespace V9.Services.Workout.Mapping;
 
@@ -11,8 +10,6 @@ public class ExerciseProfile : Profile
     public ExerciseProfile()
     {
         CreateMap<RemoteExercise, CreateExerciseCommand>()
-            .ReverseMap();
-        CreateMap<ExerciseCreatedEvent, CreateExerciseCommand>()
             .ReverseMap();
         
         CreateMap<CreateExerciseCommand, Exercise>()

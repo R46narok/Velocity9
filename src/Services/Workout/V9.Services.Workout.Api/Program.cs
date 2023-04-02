@@ -44,7 +44,7 @@ builder.Services.AddTransient<IPreferencesRepository, PreferencesRepository>();
 builder.Services.AddSingleton<IConnection>(_ => factory.CreateConnection());
 builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
 
-builder.Services.AddMediatorAndVluentValidation(new[] {typeof(Workout).Assembly});
+builder.Services.AddMediatorAndFluentValidation(new[] {typeof(Workout).Assembly});
 builder.Services.AddEventHandlers(typeof(WorkoutDbContext).Assembly);
 builder.Services.AddTransient<IInferenceModel<WorkoutModelInput, WorkoutModelOutput>, WorkoutModel>(
     opt => new WorkoutModel("encoder.onnx", "e_decoder.onnx",

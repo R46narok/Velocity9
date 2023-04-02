@@ -11,7 +11,7 @@ namespace V9.Application.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
-   public static IServiceCollection AddMediatorAndVluentValidation(this IServiceCollection services, Assembly[] assemblies)
+   public static IServiceCollection AddMediatorAndFluentValidation(this IServiceCollection services, Assembly[] assemblies)
    {
        services.AddMediatR(assemblies);
        

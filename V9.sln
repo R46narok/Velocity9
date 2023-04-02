@@ -100,6 +100,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Services.Coach.Api", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Services.Coach.DeepLearning", "src\Services\Coach\V9.Services.Coach.DeepLearning\V9.Services.Coach.DeepLearning.csproj", "{0EE52B80-4EF7-4263-8494-8C5D1F739662}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Services.Skeletal.Serverless", "src\Services\Skeletal\V9.Services.Skeletal.Serverless\V9.Services.Skeletal.Serverless.csproj", "{22188C53-9544-4C23-BCA9-5A0FEBE82D14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Services.Workout.Serverless", "src\Services\Workout\V9.Services.Workout.Serverless\V9.Services.Workout.Serverless.csproj", "{4A48656F-7129-4FA1-8076-3C1015825525}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +145,8 @@ Global
 		{36AD8528-DFBA-46A0-B692-3878BE44E523} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
 		{BD35ECC9-ED3E-4294-83E7-2E8849CE15A8} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
 		{0EE52B80-4EF7-4263-8494-8C5D1F739662} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
+		{22188C53-9544-4C23-BCA9-5A0FEBE82D14} = {06D68D73-1743-4A78-90CE-31DA6C27569A}
+		{4A48656F-7129-4FA1-8076-3C1015825525} = {E8340837-758F-4F98-B696-28BBDDFE0FD5}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{81D7CAC9-50FE-40AF-A42D-C18F9881A85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -223,5 +229,13 @@ Global
 		{0EE52B80-4EF7-4263-8494-8C5D1F739662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EE52B80-4EF7-4263-8494-8C5D1F739662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EE52B80-4EF7-4263-8494-8C5D1F739662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22188C53-9544-4C23-BCA9-5A0FEBE82D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22188C53-9544-4C23-BCA9-5A0FEBE82D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22188C53-9544-4C23-BCA9-5A0FEBE82D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22188C53-9544-4C23-BCA9-5A0FEBE82D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A48656F-7129-4FA1-8076-3C1015825525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A48656F-7129-4FA1-8076-3C1015825525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A48656F-7129-4FA1-8076-3C1015825525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A48656F-7129-4FA1-8076-3C1015825525}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

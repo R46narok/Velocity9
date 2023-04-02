@@ -41,7 +41,7 @@ builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
 builder.AddPersistence<SkeletalDbContext>();
 
 // Mediator 
-builder.Services.AddMediatorAndVluentValidation(new[] {typeof(Muscle).Assembly});
+builder.Services.AddMediatorAndFluentValidation(new[] {typeof(Muscle).Assembly});
 builder.Services.AddEventHandlers(typeof(SkeletalDbContext).Assembly);
 
 builder.AddJwtAuthentication();

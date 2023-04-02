@@ -11,7 +11,6 @@
       <Folder Include="Commands\Exercise\UpdateExercise" />
       <Folder Include="Commands\Muscle\DeleteMuscle" />
       <Folder Include="Commands\Muscle\UpdateMuscle" />
-      <Folder Include="Contracts" />
     </ItemGroup>
 
     <ItemGroup>

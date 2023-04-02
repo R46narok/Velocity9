@@ -16,10 +16,16 @@ services:
   bindings:
     - port: 5001
 
+- name: v9-services-skeletal-serverless
+  azureFunction: src/Services/Skeletal/V9.Services.Skeletal.Serverless/
+
 - name: v9-services-workout-api
   project: src/Services/Workout/V9.Services.Workout.Api/V9.Services.Workout.Api.csproj
   bindings:
     - port: 5002
+
+- name: v9-services-workout-serverless
+  azureFunction: src/Services/Workout/V9.Services.Workout.Serverless/
 
 - name: v9-services-coach-api
   project: src/Services/Coach/V9.Services.Coach.Api/V9.Services.Coach.Api.csproj

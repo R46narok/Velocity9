@@ -13,12 +13,12 @@ public class CreateUserCommand : IRequest<ErrorOr<CreateUserCommandResponse>>
     public string ExternalId { get; set; }
 }
 
-public class CreateAuthorCommandHandler : IRequestHandler<CreateUserCommand, ErrorOr<CreateUserCommandResponse>>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ErrorOr<CreateUserCommandResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IUserRepository _repository;
 
-    public CreateAuthorCommandHandler(IMapper mapper, IUserRepository repository)
+    public CreateUserCommandHandler(IMapper mapper, IUserRepository repository)
     {
         _mapper = mapper;
         _repository = repository;

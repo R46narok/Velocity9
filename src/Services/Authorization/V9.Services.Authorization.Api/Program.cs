@@ -28,7 +28,7 @@ builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
 builder.AddPersistence<UserDbContext>();
 
 // Mediator 
-builder.Services.AddMediatorAndVluentValidation(new[] {typeof(User).Assembly});
+builder.Services.AddMediatorAndFluentValidation(new[] {typeof(User).Assembly});
 
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<UserDbContext>()
