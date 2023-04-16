@@ -11,7 +11,7 @@ using V9.Services.Authorization.Commands.Users.CreateUser;
 using V9.Services.Authorization.Commands.Users.DeleteUser;
 using V9.Services.Authorization.Dto;
 
-namespace ZeroGravity.Tests.Integration.Authorization;
+namespace V9.Tests.Integration.Authorization;
 
 public class UserControllerTests : IClassFixture<AuthorizationWebApplicationFactory>
 {

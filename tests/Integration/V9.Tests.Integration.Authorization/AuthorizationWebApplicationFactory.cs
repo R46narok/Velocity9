@@ -12,16 +12,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using Xunit;
-using ZeroGravity.Application.Infrastructure.MessageBrokers;
-using ZeroGravity.Infrastructure.MessageBrokers;
 using V9.Services.Authorization.Data.Persistence;
 
-namespace ZeroGravity.Tests.Integration.Authorization;
+namespace V9.Tests.Integration.Authorization;
 
 public class AuthorizationWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
    private readonly MsSqlTestcontainer _dbContainer;
-
    private readonly int _dbPort = Random.Shared.Next(10000, 60000);
    
    public AuthorizationWebApplicationFactory()

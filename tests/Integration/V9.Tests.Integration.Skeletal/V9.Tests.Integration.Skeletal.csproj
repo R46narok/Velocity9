@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>ZeroGravity.Tests.Integration.Excersises</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
