@@ -1,0 +1,5 @@
+terraform destroy -var serviceprinciple_id="4dd090a4-f7b3-4de4-8a09-4728af961109" `
+    -var serviceprinciple_key="y_y6pSyJHgUUVbC4dQ~89AhKRnhmJ-YyRP" `
+    -var tenant_id="505fc22a-c476-49ef-97df-da53b5b7dfe9" `
+    -var subscription_id="54f3ec28-3431-4535-a0c7-07cb9b26d87f" `
+    -var ssh_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDS/sm97iPJ/CGgze2NjX1/X55q5O4nexRoLiYFmECPS6u6KSFsi8cWBGY0gO9gJdtT3WVDqkYwIOqtOTqJIZSqlw3qpZB0mmO5nkAG9l/BYhJr8naAqdfRe3dZ4HWuohMyr5cNET+2RkMeNd2/rSmvXqomncoWPTN5Un39vRIsS2sYhlEPh86R3VpiTxYI9iohVAi/nHO8YAtETNuCpIOiG+5EKA7D6uQelC42XxEgB34iIEl5+CNrnbalgRpuosvTu1XW8QxrpU3Eq3siPClHg32qoWfeTC0XA7QVno8zYbn4LFHJ9rpB7aZXn2U+PA7ixqeKaKh17QliwNdd4ftSVlTl1ByS81Mr5g/P6BJ4fGS4S3wUnzc1bP8QsPd/Pjx9YWXxFRqJl4pMXJ6pHYgEfL1gQmDrwRsJf5RebcTEyEgjc9k/LoX8nZWJD/2aCEq6XtTpDrnePHiG/wI0iW7jPW2qillRCJJRre8sb0lWVdgba7+7xac65BKGPrAPTRI7fJNQPxvitNI0hsM4C2BRVvcaWF/4Zjg0fsA6YsOYxnSAwX9DTs5mO3Zw0pAT1vpNq4DCpAuQipRuPp0oqEIODE+HwOKy1dImdfRwOH4/fFFQwtH93HYNPHOcOzgTbzAQpRB6/WzTswYP4DmS71bd4Xg56br63pVef5uHpapWMQ== stanimirkolev04@gmail.com"

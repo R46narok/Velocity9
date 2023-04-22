@@ -12,9 +12,15 @@ using V9.Services.Workout.Data.Persistence;
 using V9.Services.Workout.Data.Repositories;
 using V9.Services.Workout.DeepLearning.Data;
 using V9.Services.Workout.DeepLearning.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+var factory = new ConnectionFactory() {HostName = "localhost"};
 
 var builder = WebApplication.CreateBuilder(args);
-var factory = new ConnectionFactory() {HostName = "localhost"};
+
+builder.Configuration.AddEnvironmentVariables();
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -26,13 +32,17 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.AddJwtAuthentication();
 
-builder.AddPersistence<WorkoutDbContext>();
+if (builder.Environment.IsDevelopment())
+    builder.AddPersistence<WorkoutDbContext>();
+else
+    builder.Services.AddDbContext<WorkoutDbContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetValue<string>("EnvConnection")));
+
 
 builder.Services.AddTransient<ISetRepository, SetRepository>();
 builder.Services.AddTransient<IMuscleRepository, MuscleRepository>();
@@ -48,7 +58,7 @@ builder.Services.AddMediatorAndFluentValidation(new[] {typeof(Workout).Assembly}
 builder.Services.AddEventHandlers(typeof(WorkoutDbContext).Assembly);
 builder.Services.AddTransient<IInferenceModel<WorkoutModelInput, WorkoutModelOutput>, WorkoutModel>(
     opt => new WorkoutModel("encoder.onnx", "e_decoder.onnx",
-    "Bench press,Incline bench press,Triceps iso,Shoulder raise,Paused dips,Chest flies,Weighted dips,Rings,Shoulder press,HSPU,Decline bench press"
+        "Bench press,Incline bench press,Triceps iso,Shoulder raise,Paused dips,Chest flies,Weighted dips,Rings,Shoulder press,HSPU,Decline bench press"
             .Split(',').ToList()));
 
 var app = builder.Build();
@@ -57,7 +67,6 @@ await app.SynchronizeDataFromRemotes();
 
 app.UseEventHandlers();
 app.UseJwtAuthentication();
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

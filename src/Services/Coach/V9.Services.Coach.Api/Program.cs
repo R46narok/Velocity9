@@ -30,8 +30,10 @@ builder.AddJwtAuthentication();
 
 builder.Services.AddSingleton<IConnection>(_ => factory.CreateConnection());
 builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
-builder.Services.AddTransient<IMovenetInference, MovenetInference>(opt => new MovenetInference("thunder.onnx"));
-builder.Services.AddTransient<IAnomalyInference, AnomalyInference>(opt => new AnomalyInference("anomaly.onnx"));
+builder.Services.AddTransient<IMovenetInference, MovenetInference>(
+    opt => new MovenetInference("thunder.onnx"));
+builder.Services.AddTransient<IAnomalyInference, AnomalyInference>(
+    opt => new AnomalyInference("anomaly.onnx"));
 builder.Services.AddTransient<IPredictionPipeline, CoachPredictionPipeline>();
 
 var app = builder.Build();

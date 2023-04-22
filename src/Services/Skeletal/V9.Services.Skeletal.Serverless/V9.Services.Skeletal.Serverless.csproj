@@ -5,6 +5,7 @@
         <OutputType>Exe</OutputType>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="12.0.1" />
@@ -31,5 +32,10 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\V9.Infrastructure\V9.Infrastructure.csproj" />
       <ProjectReference Include="..\V9.Services.Skeletal\V9.Services.Skeletal.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="..\..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 </Project>

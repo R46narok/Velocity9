@@ -1,7 +1,158 @@
-﻿<Modal Id="createExercise" Title="Create exercise" TriggerName="Create">
-    
-</Modal>
+﻿@using V9.UI.Portal.Blazor.Pages.Exercise.Explore.ViewModels
+@using V9.UI.Portal.Services.Skeletal.Contracts
+@using V9.UI.Portal.Services.Skeletal.Enums
+@using V9.UI.Portal.Services.Skeletal.Requests
+@using V9.UI.Portal.Services.Skeletal.Views
+@using V9.UI.Core.Providers
+@using V9.UI.Core.Extensions
+
+@inject ISkeletalClient Skeletal
+@inject IMapper Mapper
+@inject TokenAuthenticationStateProvider AuthenticationProvider
+
+@if (_muscles is not null)
+{
+    <Modal Id="createExercise" Title="Create exercise" TriggerName="Create">
+        <EditForm Model="@_viewModel" OnValidSubmit="@HandleValidCreateAsync" class="mt-4">
+            <div class="modal-body text-white">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+
+                <div class="d-flex flex-column justify-content-evenly">
+
+                    <label for="inputName">Name</label>
+                    <div class="border-1 overflow-hidden" style="border-radius: 20px;border: 1px solid #777E90;/*border-radius: 20px;*//*border-color: white;*/">
+                        <InputText class="form-control bg-dark border-0 shadow-none text-white"
+                                   id="inputName" @bind-Value="@_viewModel.Name" placeholder="Name of the exercise"/>
+                    </div>
+
+                    <label for="inputDescription">Description</label>
+                    <div class="border-1 overflow-hidden" style="border-radius: 20px;border: 1px solid #777E90;/*border-radius: 20px;*//*border-color: white;*/">
+                        <InputText class="form-control bg-dark border-0 shadow-none text-white" 
+                                   id="inputDescription" @bind-Value="@_viewModel.Description" placeholder="Short description of the exercise"/>
+                    </div>
+
+                    <div>
+                    <label class="form-check-label" for="inputWeighted">Is Weighted?</label>
+                        <InputCheckbox class="form-check-input form-control bg-dark border-0 shadow-none text-white"
+                                       id="inputWeighted" @bind-Value="@_viewModel.IsWeighted"/>
+                    </div>
+
+                    <label for="inputDifficulty">Exercise Difficulty</label>
+                    <div class="border-1 overflow-hidden" style="border-radius: 20px;border: 1px solid #777E90;/*border-radius: 20px;*//*border-color: white;*/">
+                        <InputSelect class="form-control bg-dark border-0 shadow-none text-white" id="inputDifficulty" @bind-Value="@_viewModel.ExerciseDifficulty">
+                            <option value="@((int) ExerciseDifficulty.Beginner)">Easy</option>
+                            <option value="@((int) ExerciseDifficulty.Intermediate)">Medium</option>
+                            <option value="@((int) ExerciseDifficulty.Advanced)">Hard</option>
+                        </InputSelect>
+                    </div>
+
+                    <label for="inputExecutionSteps">Execution Steps</label>
+                    <div class="border-1 overflow-hidden" style="border-radius: 20px;border: 1px solid #777E90;/*border-radius: 20px;*//*border-color: white;*/">
+                        <InputTextArea class="form-control bg-dark border-0 shadow-none text-white" id="inputExecutionSteps" rows="3" @bind-Value="@_viewModel.ExecutionSteps" placeholder="Detailed movement description"></InputTextArea>
+                    </div>
+
+                    <label for="thumbnail">Thumbnail</label>
+                    <div >
+                        <InputFile id="thumbnail" OnChange="@LoadThumbnailFile"/>
+                    </div>
+
+                    <label for="video">Video</label>
+                    <div >
+                        <InputFile id="video" OnChange="@LoadVideoFile"/>
+                    </div>
+
+                    <label for="inputTargetNames">Targets</label>
+
+                    @foreach (var target in _viewModel.TargetNames)
+                    {
+                        <p class="m-0 p-0">@target</p>
+                    }
+
+                    <div class="border-1 overflow-hidden" style="border-radius: 20px;border: 1px solid #777E90;/*border-radius: 20px;*//*border-color: white;*/">
+
+                        <InputSelect class="form-control bg-dark border-0 shadow-none text-white" id="inputTargetNames" @bind-Value="@_viewModel.CurrentTarget">
+                            @foreach (var muscle in _muscles)
+                            {
+                                <option value="@muscle.Name">@muscle.Name</option>
+                            }
+                        </InputSelect>
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary mt-3" @onclick="OnAddTargetButtonClicked">Add target</button>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            </div>
+        </EditForm>
+    </Modal>
+}
 
 @code {
-    
+    private readonly CreateExerciseViewModel _viewModel = new();
+    private List<MuscleView>? _muscles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Skeletal.GetAllMusclesAsync();
+        if (response.IsSuccessStatusCode)
+        {
+            _muscles = response.Content;
+            StateHasChanged();
+        }
+    }
+
+    private async Task HandleValidCreateAsync()
+    {
+        var userName = (await AuthenticationProvider.GetAuthenticationStateAsync()).GetUserName();
+        var request = Mapper.Map<CreateExerciseRequest>(_viewModel);
+
+        request.AuthorName = userName!;
+        var response = await Skeletal.CreateExerciseAsync(request);
+
+        if (!response.IsSuccessStatusCode)
+        {
+        }
+    }
+
+    private void OnAddTargetButtonClicked()
+    {
+        _viewModel.TargetNames.Add(_viewModel.CurrentTarget);
+        StateHasChanged();
+    }
+
+    private async Task LoadThumbnailFile(InputFileChangeEventArgs obj)
+    {
+        if (obj.FileCount is <= 1 and > 0)
+        {
+            var file = obj.File;
+            await using var stream = file.OpenReadStream();
+            var length = stream.Length;
+
+            _viewModel.Thumbnail = new byte[length];
+
+            await stream.ReadAsync(_viewModel.Thumbnail);
+        }
+    }
+
+
+    private async Task LoadVideoFile(InputFileChangeEventArgs obj)
+    {
+        if (obj.FileCount is <= 1 and > 0)
+        {
+            var file = obj.File;
+            var maxLength = Math.Pow(10, 7);
+            await using var stream = file.OpenReadStream((long) maxLength);
+            var length = stream.Length;
+
+            _viewModel.Video = new byte[length];
+
+            await stream.ReadAsync(_viewModel.Video);
+        }
+    }
+
 }

@@ -1,0 +1,44 @@
+version: '3.5'
+
+services:
+  v9-authorization-db:
+    image: mcr.microsoft.com/mssql/server
+    restart: always
+    environment:
+      SA_PASSWORD: sqladmin123!@#
+      ACCEPT_EULA: "Y"
+  v9-authorization-api:
+    image: ${DOCKER_REGISTRY-}v9-authorization-api
+    build:
+      context: ./
+      dockerfile: ./src/Services/Authorization/V9.Services.Authorization.Api/Dockerfile
+    ports:
+      - 5000:80
+      - 5001:443
+    depends_on:
+      - v9-authorization-db
+
+
+  v9-skeletal-db:
+    image: mcr.microsoft.com/mssql/server
+    restart: always
+    environment:
+      SA_PASSWORD: sqladmin123!@#
+      ACCEPT_EULA: "Y"
+  v9-skeletal-api:
+    image: ${DOCKER_REGISTRY-}v9-skeletal-api
+    build:
+      context: ./
+      dockerfile: ./src/Services/Skeletal/V9.Services.Skeletal.Api/Dockerfile
+    ports:
+      - 5002:80
+      - 5003:443
+    depends_on:
+      - v9-skeletal-db
+  v9-skeletal-serverless:
+    image: ${DOCKER_REGISTRY-}v9-skeletal-serverless
+    build:
+      context: ./
+      dockerfile: ./src/Services/Skeletal/V9.Services.Skeletal.Serverless/Dockerfile
+    depends_on:
+      - v9-skeletal-db

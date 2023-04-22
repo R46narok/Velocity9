@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using V9.Domain.Entities;
 
 namespace V9.Application.Interfaces;
-
 public interface IRepository<T, K> where T : IEntity<K>
 {
     public List<T> GetAll();
@@ -51,6 +51,9 @@ public class RepositoryBase<T, K, C> : IRepository<T, K>
 
     public async Task<K> CreateAsync(T entity)
     {
+        entity.CreatedOn = DateTime.Now;
+        entity.UpdatedOn = DateTime.Now;
+        
         var entry = await Context.Set<T>().AddAsync(entity);
         await Context.SaveChangesAsync();
 
@@ -65,6 +68,7 @@ public class RepositoryBase<T, K, C> : IRepository<T, K>
 
     public async Task UpdateAsync(T entity)
     {
+        entity.UpdatedOn = DateTime.Now;
         Context.Set<T>().Update(entity);
         await Context.SaveChangesAsync();
     }

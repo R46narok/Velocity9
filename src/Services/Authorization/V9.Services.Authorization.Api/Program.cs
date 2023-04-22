@@ -7,14 +7,19 @@ using V9.Application.Infrastructure.MessageBrokers;
 using V9.Infrastructure.MessageBrokers;
 using V9.Services.Authorization.Data.Entities;
 using V9.Services.Authorization.Data.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 var factory = new ConnectionFactory() {HostName = "localhost"};
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables();
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
+
 
 builder.Host.UseSerilog();
 
@@ -25,7 +30,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IConnection>(_ => factory.CreateConnection());
 builder.Services.AddSingleton<IMessagePublisher, MessagePublisher>();
 // Data layer
-builder.AddPersistence<UserDbContext>();
+
+if (builder.Environment.IsDevelopment())
+    builder.AddPersistence<UserDbContext>();
+else
+    builder.Services.AddDbContext<UserDbContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetValue<string>("EnvConnection")));
+
 
 // Mediator 
 builder.Services.AddMediatorAndFluentValidation(new[] {typeof(User).Assembly});

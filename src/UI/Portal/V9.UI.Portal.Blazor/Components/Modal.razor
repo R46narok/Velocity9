@@ -1,5 +1,26 @@
-﻿<h3>Modal</h3>
+﻿<button type="button" class="btn text-white" style="border-radius: 20px;background-color: #9757D7" data-bs-toggle="modal" data-bs-target="#@(Id)">
+    @TriggerName
+</button>
+
+<div class="modal fade" id="@(Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+     >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">@Title</h5>
+                <button type="button" class="close bg-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+            </div>
+            @ChildContent
+        </div>
+        
+    </div>
+</div>
 
 @code {
-    
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string TriggerName { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Id { get; set; }
 }

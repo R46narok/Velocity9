@@ -7,15 +7,7 @@ using V9.Services.Authorization.Dto;
 
 namespace V9.Services.Authorization.Queries.Users.GetUser;
 
-public class GetUserQuery : IRequest<ErrorOr<UserDto>>
-{
-    public string UserName { get; set; }
-    
-    public GetUserQuery(string userName)
-    {
-        UserName = userName;
-    }
-}
+public record GetUserQuery(string UserName) : IRequest<ErrorOr<UserDto>>;
 
 public class GetUserQueryHandler : IRequestHandler<GetUserQuery, ErrorOr<UserDto>>
 {

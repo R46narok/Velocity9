@@ -77,7 +77,6 @@
         var ms = new MemoryStream();
         await stream.CopyToAsync(ms);
         videoBytes = ms.ToArray();
-        var s = videoSrc;
         StateHasChanged();
     }
 

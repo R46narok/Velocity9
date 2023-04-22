@@ -3,6 +3,7 @@ using ErrorOr;
 using MediatR;
 using V9.Application.Infrastructure.MessageBrokers;
 using V9.Services.Skeletal.Data.Entities;
+using V9.Services.Skeletal.Data.Enums;
 using V9.Services.Skeletal.Data.Repositories;
 
 namespace V9.Services.Skeletal.Commands.Exercises.CreateExercise;
@@ -10,7 +11,11 @@ namespace V9.Services.Skeletal.Commands.Exercises.CreateExercise;
 public record CreateExerciseCommandResponse(int Id);
 
 public record CreateExerciseCommand
-    (string Name, string Description, List<string> TargetNames, string AuthorName) : IRequest<
+    (string Name, string Description, 
+        bool IsWeighted, ExerciseDifficulty ExerciseDifficulty,
+        string[] ExecutionSteps,
+        List<string> TargetNames, string AuthorName,
+        byte[]? Thumbnail, byte[] Video) : IRequest<
         ErrorOr<CreateExerciseCommandResponse>>;
 
 public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseCommand, ErrorOr<CreateExerciseCommandResponse>>

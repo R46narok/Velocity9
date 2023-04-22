@@ -26,8 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B40101
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{24110637-5C78-48E8-986A-1CBA03474AC3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{87D37C93-D04A-4F56-9735-EF106AA886B9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{1A2DDB44-40F3-4728-B231-662F5386A532}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mssqlserver", "mssqlserver", "{58A93DB1-E5BD-44EA-9FB2-ACCCD3C95AB1}"
@@ -56,11 +54,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rabbitmq", "rabbitmq", "{1C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{30C2A8C9-972E-41CD-995D-64366D6C31CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Tests.Integration.Authorization", "tests\Integration\ZeroGravity.Tests.Integration.Authorization\ZeroGravity.Tests.Integration.Authorization.csproj", "{4A660965-3AEF-4598-87DE-74B60189CBFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Tests.Integration.Authorization", "tests\Integration\V9.Tests.Integration.Authorization\V9.Tests.Integration.Authorization.csproj", "{4A660965-3AEF-4598-87DE-74B60189CBFB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{54D0350C-6EFE-4A58-B731-F45B9F63902A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Tests.Integration.Excersises", "tests\Integration\ZeroGravity.Tests.Integration.Excersises\ZeroGravity.Tests.Integration.Excersises.csproj", "{5B8209E5-2BF5-4F15-92BA-F48EDA621726}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Tests.Integration.Skeletal", "tests\Integration\V9.Tests.Integration.Skeletal\V9.Tests.Integration.Skeletal.csproj", "{5B8209E5-2BF5-4F15-92BA-F48EDA621726}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Skeletal", "Skeletal", "{06D68D73-1743-4A78-90CE-31DA6C27569A}"
 EndProject
@@ -80,7 +78,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{661C367B-A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.UI.Core", "src\UI\Core\V9.UI.Core\V9.UI.Core.csproj", "{8C76075F-6F69-4A0F-8214-0128888535D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGravity.Tests.Unit.Infrastructure", "tests\Unit\ZeroGravity.Tests.Unit.Infrastructure\ZeroGravity.Tests.Unit.Infrastructure.csproj", "{60974B0D-C8EB-447D-AE58-0635FAA5F7FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Tests.Unit.Infrastructure", "tests\Unit\V9.Tests.Unit.Infrastructure\V9.Tests.Unit.Infrastructure.csproj", "{60974B0D-C8EB-447D-AE58-0635FAA5F7FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workout", "Workout", "{E8340837-758F-4F98-B696-28BBDDFE0FD5}"
 EndProject
@@ -104,6 +102,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Services.Skeletal.Server
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Services.Workout.Serverless", "src\Services\Workout\V9.Services.Workout.Serverless\V9.Services.Workout.Serverless.csproj", "{4A48656F-7129-4FA1-8076-3C1015825525}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Tests.Integration.Workout", "tests\Integration\V9.Tests.Integration.Workout\V9.Tests.Integration.Workout.csproj", "{214B4832-34BD-4240-B8E2-6A0F1F6D48FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V9.Tests.Unit.Coach", "tests\Unit\V9.Tests.Unit.Coach\V9.Tests.Unit.Coach.csproj", "{4FCA1817-064D-4874-8E94-05C97CD7A880}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,7 +114,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B401010A-A658-4BD8-8E4B-884F3CE60FAB} = {0EBCB178-AE47-4353-AFB4-E274FAA5F1C7}
 		{24110637-5C78-48E8-986A-1CBA03474AC3} = {0EBCB178-AE47-4353-AFB4-E274FAA5F1C7}
-		{87D37C93-D04A-4F56-9735-EF106AA886B9} = {0EBCB178-AE47-4353-AFB4-E274FAA5F1C7}
 		{58A93DB1-E5BD-44EA-9FB2-ACCCD3C95AB1} = {1A2DDB44-40F3-4728-B231-662F5386A532}
 		{81D7CAC9-50FE-40AF-A42D-C18F9881A85B} = {B401010A-A658-4BD8-8E4B-884F3CE60FAB}
 		{5BEA760D-3E22-4E30-BFA0-396747059749} = {B401010A-A658-4BD8-8E4B-884F3CE60FAB}
@@ -147,6 +148,8 @@ Global
 		{0EE52B80-4EF7-4263-8494-8C5D1F739662} = {9225A424-10EF-4434-BE02-D30E4DDF1B7A}
 		{22188C53-9544-4C23-BCA9-5A0FEBE82D14} = {06D68D73-1743-4A78-90CE-31DA6C27569A}
 		{4A48656F-7129-4FA1-8076-3C1015825525} = {E8340837-758F-4F98-B696-28BBDDFE0FD5}
+		{214B4832-34BD-4240-B8E2-6A0F1F6D48FC} = {30C2A8C9-972E-41CD-995D-64366D6C31CA}
+		{4FCA1817-064D-4874-8E94-05C97CD7A880} = {54D0350C-6EFE-4A58-B731-F45B9F63902A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{81D7CAC9-50FE-40AF-A42D-C18F9881A85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -237,5 +240,13 @@ Global
 		{4A48656F-7129-4FA1-8076-3C1015825525}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A48656F-7129-4FA1-8076-3C1015825525}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A48656F-7129-4FA1-8076-3C1015825525}.Release|Any CPU.Build.0 = Release|Any CPU
+		{214B4832-34BD-4240-B8E2-6A0F1F6D48FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{214B4832-34BD-4240-B8E2-6A0F1F6D48FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{214B4832-34BD-4240-B8E2-6A0F1F6D48FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{214B4832-34BD-4240-B8E2-6A0F1F6D48FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FCA1817-064D-4874-8E94-05C97CD7A880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FCA1817-064D-4874-8E94-05C97CD7A880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FCA1817-064D-4874-8E94-05C97CD7A880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FCA1817-064D-4874-8E94-05C97CD7A880}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>latest</LangVersion>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,8 +16,6 @@
 
     <ItemGroup>
       <Folder Include="Pages\Exercise\Common" />
-      <Folder Include="Pages\Exercise\Explore" />
-      <Folder Include="Pages\Exercise\Index" />
       <Folder Include="Pages\Workout\Index\Common" />
       <Folder Include="Pages\Workout\Index\Extensions" />
       <Folder Include="Pages\Workout\Index\Services\Interfaces" />

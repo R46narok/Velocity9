@@ -4,6 +4,7 @@ using V9.Application;
 using V9.Services.Skeletal.Commands.Exercises.CreateExercise;
 using V9.Services.Skeletal.Commands.Exercises.DeleteExercise;
 using V9.Services.Skeletal.Commands.Exercises.UpdateExercise;
+using V9.Services.Skeletal.Queries;
 using V9.Services.Skeletal.Queries.GetAllExercises;
 
 namespace V9.Services.Skeletal.Api.Controllers;
@@ -23,6 +24,14 @@ public class ExerciseController : ApiController
     public async Task<IActionResult> GetAllExercisesAsync()
     {
         var query = new GetAllExercisesQuery();
+        var response = await _mediator.Send(query);
+        return response.Match(Ok, Problem);
+    }
+
+    [HttpGet("/api/exercise/details")]
+    public async Task<IActionResult> GetExerciseByNameAsync([FromQuery] string name)
+    {
+        var query = new GetExerciseQuery(name);
         var response = await _mediator.Send(query);
         return response.Match(Ok, Problem);
     }

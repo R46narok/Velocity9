@@ -9,10 +9,15 @@ using V9.Services.Skeletal.Data.Entities;
 using V9.Services.Skeletal.Data.Extensions;
 using V9.Services.Skeletal.Data.Persistence;
 using V9.Services.Skeletal.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 var factory = new ConnectionFactory() {HostName = "localhost"};
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddEnvironmentVariables();
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -38,7 +43,12 @@ builder.Services.AddTransient<IMuscleGroupRepository, MuscleGroupRepository>();
 builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
 
 // Data layer
-builder.AddPersistence<SkeletalDbContext>();
+if (builder.Environment.IsDevelopment())
+    builder.AddPersistence<SkeletalDbContext>();
+else
+    builder.Services.AddDbContext<SkeletalDbContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetValue<string>("EnvConnection")));
+
 
 // Mediator 
 builder.Services.AddMediatorAndFluentValidation(new[] {typeof(Muscle).Assembly});

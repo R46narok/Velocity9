@@ -4,6 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
 
@@ -21,6 +22,12 @@
     <ProjectReference Include="..\..\..\Common\V9.Application\V9.Application.csproj" />
     <ProjectReference Include="..\..\..\Common\V9.Infrastructure\V9.Infrastructure.csproj" />
     <ProjectReference Include="..\V9.Services.Skeletal\V9.Services.Skeletal.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

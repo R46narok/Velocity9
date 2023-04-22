@@ -10,10 +10,6 @@ provider "azurerm" {
   }
 }
 
-provider "kubernetes" {
-  config_path = "./kubeconfig"
-}
-
 module "cluster" {
   source               = "./modules/cluster/"
   serviceprinciple_id  = var.serviceprinciple_id
@@ -28,4 +24,7 @@ module "k8s" {
   client_certificate     = base64decode(module.cluster.client_certificate)
   client_key             = base64decode(module.cluster.client_key)
   cluster_ca_certificate = base64decode(module.cluster.cluster_ca_certificate)
+  authmssql = module.cluster.authmssql
+  skeletalmssql = module.cluster.skeletalmssql
+  workoutmssql = module.cluster.workoutmssql
 }
