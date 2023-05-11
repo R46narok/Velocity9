@@ -12,6 +12,8 @@ public class Muscle : EntityBase<int>
     public float TypeTwoFiberPercentage { get; set; }
     public float TypeThreeFiberPercentage { get; set; }
     
+    public byte[]? Image { get; set; }
+    
     [Ignore]
     public MuscleGroup Group { get; set; }
     

@@ -1,0 +1,36 @@
+﻿@using V9.UI.Core.Providers
+@using V9.UI.Core.Extensions
+@using System.Security.Claims
+@inject TokenAuthenticationStateProvider AuthenticationStateProvider
+
+<div class="card mb-4 profile-card position-sticky">
+    <div class="card-body text-center">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+             class="rounded-circle img-fluid" style="width: 150px;">
+        <h5 class="my-3 text-white">@($"@{_userName ?? "unknown"}")</h5>
+        <p class="text-muted mb-1">@(_roleClaim ?? "Unknown")</p>
+        <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+        <div class="d-flex justify-content-center mb-2">
+            <button type="button" class="btn btn-primary">Edit</button>
+            <button type="button" class="btn btn-outline-primary ms-1">Delete</button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private string? _userName;
+    private string? _roleClaim;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = state.User;
+
+        _userName = state.GetUserName();
+        _roleClaim = user.HasClaim(ClaimTypes.Role, "Admin") ? "Administrator" : "Athlete";
+        
+        StateHasChanged();
+    }
+
+}

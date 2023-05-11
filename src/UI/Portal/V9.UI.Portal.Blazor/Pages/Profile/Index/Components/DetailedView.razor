@@ -1,0 +1,76 @@
+﻿@using V9.UI.Core.Providers
+@using Microsoft.AspNetCore.Authentication
+@using V9.UI.Core.Extensions
+@using V9.UI.Portal.Services.Authorization.Contracts
+@using V9.UI.Portal.Services.Authorization.Views
+@inject TokenAuthenticationStateProvider AuthenticationStateProvider
+@inject IAuthenticationClient AuthenticationClient
+
+<div class="card mb-4 profile-card text-white">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-3" style="color: #777E90;">
+                <p class="mb-0">
+                    <span>
+                        <i class="fa-regular fa-user"></i>
+                    </span>
+                    User name
+                </p>
+            </div>
+            <div class="col-sm-9 text-white">
+                <p class="mb-0">@($"@{_view?.UserName}")</p>
+            </div>
+        </div>
+        <hr style="color: #777E90;"/>
+        <div class="row">
+            <div class="col-sm-3" style="color: #777E90;">
+                <p class="mb-0">
+                    <span>
+                        <i class="fa-regular fa-envelope"></i>
+                    </span>
+                    Email
+                </p>
+            </div>
+            <div class="col-sm-9 text-white">
+                <p class="mb-0">
+                    @_view?.Email
+                </p>
+            </div>
+        </div>
+        <hr style="color: #777E90;"/>
+        <div class="row">
+            <div class="col-sm-3" style="color: #777E90;">
+                <p class="mb-0">
+                    <span>
+                        <i class="fa-light fa-phone-arrow-up-right"></i>
+                    </span>
+                    Phone
+                </p>
+            </div>
+            <div class="col-sm-9 text-white">
+                <p class="mb-0">
+                    @(string.IsNullOrEmpty(_view?.Phone) ? "None" : _view.Phone)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private UserView? _view;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = state.GetUserName();
+
+        var response = await AuthenticationClient.GetUserAsync(userName!);
+        if (response.IsSuccessStatusCode)
+        {
+            _view = response.Content;
+            StateHasChanged();
+        }
+    }
+
+}

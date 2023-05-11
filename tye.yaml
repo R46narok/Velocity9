@@ -1,13 +1,7 @@
-# tye application configuration file
-# read all about it at https://github.com/dotnet/tye
-#
-# when you've given us a try, we'd love to know what you think:
-#    https://aka.ms/AA7q20u
-#
 name: v9
 services:
 - name: v9-services-authorization-api
-  project: src/Services/Authorization/V9.Services.Authorization.Api/V9.Services.Authorization.Api.csproj
+  project: src\Services\Authorization\V9.Services.Authorization.Api\V9.Services.Authorization.Api.csproj
   bindings:
     - port: 5000
 

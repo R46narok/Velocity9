@@ -1,0 +1,61 @@
+﻿@page "/profile"
+@using V9.UI.Portal.Services.Skeletal.Contracts
+@using V9.UI.Portal.Services.Workout.Contracts
+@using V9.UI.Portal.Blazor.Pages.Profile.Index.ImageProcessing
+@using V9.UI.Portal.Blazor.Pages.Profile.Index.Components
+
+@attribute [Authorize]
+
+@inject ISkeletalClient SkeletalClient
+@inject IWorkoutClient WorkoutClient
+
+
+<section >
+    <div class="container py-5">
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="sticky-lg-top" style="top: 2em">
+                    <Overview/>
+                    <Socials/>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <DetailedView/>
+                <div class="row">
+                    <AdherenceStatistics/>
+                    <AdherenceStatistics/>
+                </div>
+                
+                <div class="card mb-4 mt-4 mb-md-0 profile-card">
+                    <div class="card-body text-white text-center">
+                        <p>Targeted muscles during this week:</p>
+                        <img src="@_imageSrc"/>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+
+@code {
+    // data:image/png;base64,
+
+    private byte[]? _imageBytes;
+    private string _imageSrc => _imageBytes is not null ? $"data:img/png;base64,{Convert.ToBase64String(_imageBytes)}" : "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var biceps = await SkeletalClient.GetMuscleImageAsync("biceps");
+        var trapezius = await SkeletalClient.GetMuscleImageAsync("trapezius");
+
+        if (biceps.IsSuccessStatusCode && trapezius.IsSuccessStatusCode)
+        {
+            var image = ImageStack.FromRawImages(new[] {biceps.Content, trapezius.Content});
+            _imageBytes = image;
+            StateHasChanged();
+        }
+    }
+
+}

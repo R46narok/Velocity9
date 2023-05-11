@@ -1,44 +1,45 @@
-version: '3.5'
-
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: velocity9
 services:
-  v9-authorization-db:
-    image: mcr.microsoft.com/mssql/server
-    restart: always
-    environment:
-      SA_PASSWORD: sqladmin123!@#
-      ACCEPT_EULA: "Y"
-  v9-authorization-api:
-    image: ${DOCKER_REGISTRY-}v9-authorization-api
-    build:
-      context: ./
-      dockerfile: ./src/Services/Authorization/V9.Services.Authorization.Api/Dockerfile
-    ports:
-      - 5000:80
-      - 5001:443
-    depends_on:
-      - v9-authorization-db
-
-
-  v9-skeletal-db:
-    image: mcr.microsoft.com/mssql/server
-    restart: always
-    environment:
-      SA_PASSWORD: sqladmin123!@#
-      ACCEPT_EULA: "Y"
-  v9-skeletal-api:
-    image: ${DOCKER_REGISTRY-}v9-skeletal-api
-    build:
-      context: ./
-      dockerfile: ./src/Services/Skeletal/V9.Services.Skeletal.Api/Dockerfile
-    ports:
-      - 5002:80
-      - 5003:443
-    depends_on:
-      - v9-skeletal-db
-  v9-skeletal-serverless:
-    image: ${DOCKER_REGISTRY-}v9-skeletal-serverless
-    build:
-      context: ./
-      dockerfile: ./src/Services/Skeletal/V9.Services.Skeletal.Serverless/Dockerfile
-    depends_on:
-      - v9-skeletal-db
+- name: v9-authorization-db
+  image: mcr.microsoft.com/mssql/server
+  env:
+  - name: SA_PASSWORD
+    value: sqladmin123!@#
+  - name: ACCEPT_EULA
+    value: Y
+- name: v9-authorization-api
+  image: ${DOCKER_REGISTRY-}v9-authorization-api
+  dockerFile: ./src/Services/Authorization/V9.Services.Authorization.Api/Dockerfile
+  bindings:
+  - port: 5000
+    containerPort: 80
+    protocol: http
+  - port: 5001
+    containerPort: 443
+    protocol: http
+- name: v9-skeletal-db
+  image: mcr.microsoft.com/mssql/server
+  env:
+  - name: SA_PASSWORD
+    value: sqladmin123!@#
+  - name: ACCEPT_EULA
+    value: Y
+- name: v9-skeletal-api
+  image: ${DOCKER_REGISTRY-}v9-skeletal-api
+  dockerFile: ./src/Services/Skeletal/V9.Services.Skeletal.Api/Dockerfile
+  bindings:
+  - port: 5002
+    containerPort: 80
+    protocol: http
+  - port: 5003
+    containerPort: 443
+    protocol: http
+- name: v9-skeletal-serverless
+  image: ${DOCKER_REGISTRY-}v9-skeletal-serverless
+  dockerFile: ./src/Services/Skeletal/V9.Services.Skeletal.Serverless/Dockerfile

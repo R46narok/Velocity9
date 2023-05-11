@@ -11,5 +11,4 @@ public class MuscleDto
     public float TypeOneFiberPercentage { get; set; }
     public float TypeTwoFiberPercentage { get; set; } 
     public float TypeThreeFiberPercentage { get; set; }
-    
 }

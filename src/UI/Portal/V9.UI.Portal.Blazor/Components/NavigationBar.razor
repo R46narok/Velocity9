@@ -29,14 +29,12 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: #777E90;">Exercises</a>
+                    <NavLink class="nav-link" href="/exercise/explore" style="color: #777E90;">FAQ</NavLink>
                 </li>
                 
                 <AuthorizeView>
                     <Authorized>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" style="color: #777E90;">Profile</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" type="button" style="color: #777E90;" data-bs-toggle="collapse" aria-expanded="true" aria-controls="someId" href="#someId"
                                role="button">
@@ -48,7 +46,7 @@
             </ul>
             <AuthorizeView>
                 <Authorized>
-                    <button class="btn btn-primary bg-dark fw-bold" style="border-color: white;border-radius: 20px;border-width: 2px;">Dashboard</button>
+                    <button class="btn btn-primary bg-dark fw-bold" style="border-color: white;border-radius: 20px;border-width: 2px;" @onclick="OnProfileButtonClicked">Profile</button>
                 </Authorized>
                 <NotAuthorized>
                     <button class="btn btn-primary bg-dark fw-bold" style="border-color: white;border-radius: 20px;border-width: 2px;" @onclick="OnSignInButtonClicked">Sign in</button>
@@ -66,4 +64,8 @@
         _navigationManager.NavigateTo("/signin");
     }
 
+     private void OnProfileButtonClicked()
+        {
+            _navigationManager.NavigateTo("/profile");
+        }
 }

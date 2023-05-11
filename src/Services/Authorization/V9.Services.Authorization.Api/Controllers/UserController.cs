@@ -5,6 +5,7 @@ using V9.Application;
 using V9.Services.Authorization.Commands.Users.CreateUser;
 using V9.Services.Authorization.Commands.Users.DeleteUser;
 using V9.Services.Authorization.Commands.Users.ElevateUser;
+using V9.Services.Authorization.Commands.Users.UpdateUser;
 using V9.Services.Authorization.Queries.Users.GetAllUsers;
 using V9.Services.Authorization.Queries.Users.GetUser;
 
@@ -26,6 +27,15 @@ public class UserController : ApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RegisterAsync([FromBody] CreateUserCommand command)
+    {
+        var response = await _mediator.Send(command);
+        return response.Match(Ok, Problem);
+    }
+
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateAsync([FromBody] UpdateUserCommand command)
     {
         var response = await _mediator.Send(command);
         return response.Match(Ok, Problem);

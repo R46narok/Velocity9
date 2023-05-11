@@ -12,7 +12,7 @@ public record CreateMuscleCommandResponse(int Id);
 public record CreateMuscleCommand(
     string Name, string Description,
     float TypeOneFiberPercentage, float TypeTwoAFiberPercentage, float TypeTwoXFiberPercentage,
-    string Group
+    string Group, byte[] Image
     ) : IRequest<ErrorOr<CreateMuscleCommandResponse>>;
 
 public class CreateMuscleCommandHandler : IRequestHandler<CreateMuscleCommand, ErrorOr<CreateMuscleCommandResponse>>
