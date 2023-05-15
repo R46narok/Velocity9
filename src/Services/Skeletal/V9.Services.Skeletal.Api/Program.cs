@@ -49,6 +49,9 @@ else
     builder.Services.AddDbContext<SkeletalDbContext>(opt =>
         opt.UseSqlServer(builder.Configuration.GetValue<string>("EnvConnection")));
 
+builder.Services
+    .AddHealthChecks()
+    .AddDbContextCheck<SkeletalDbContext>();
 
 // Mediator 
 builder.Services.AddMediatorAndFluentValidation(new[] {typeof(Muscle).Assembly});
@@ -69,7 +72,7 @@ await app.InitializeDatabase();
 await app.SynchronizeDataFromRemotes();
 
 app.UseHttpsRedirection();
-
+app.MapHealthChecks("/health");
 app.UseAuthorization();
 app.UseEventHandlers();
 app.MapControllers();

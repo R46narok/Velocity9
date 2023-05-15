@@ -4,6 +4,7 @@ using V9.Application;
 using V9.Services.Skeletal.Commands.Exercises.CreateExercise;
 using V9.Services.Skeletal.Commands.Exercises.DeleteExercise;
 using V9.Services.Skeletal.Commands.Exercises.UpdateExercise;
+using V9.Services.Skeletal.Data.Repositories;
 using V9.Services.Skeletal.Queries;
 using V9.Services.Skeletal.Queries.GetAllExercises;
 
@@ -13,10 +14,12 @@ namespace V9.Services.Skeletal.Api.Controllers;
 public class ExerciseController : ApiController
 {
     private readonly IMediator _mediator;
+    private readonly IExerciseRepository _repository;
 
-    public ExerciseController(IMediator mediator)
+    public ExerciseController(IMediator mediator, IExerciseRepository repository)
     {
         _mediator = mediator;
+        _repository = repository;
     }
 
     [HttpGet]
@@ -36,15 +39,23 @@ public class ExerciseController : ApiController
         return response.Match(Ok, Problem);
     }
 
+    [HttpGet("/api/exercise/thumbnail")]
+    public async Task<IActionResult> GetExerciseThumbnailAsync([FromQuery] string name)
+    {
+        var entry = await _repository.GetByNameAsync(name, false);
+        return new FileContentResult(entry.Thumbnail, "image/jpeg");
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [RequestSizeLimit(100_000_000)]
     public async Task<IActionResult> CreateExerciseAsync([FromBody] CreateExerciseCommand command)
     {
         var response = await _mediator.Send(command);
         return response.Match(Ok, Problem);
     }
-    
+
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

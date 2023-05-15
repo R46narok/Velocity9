@@ -14,8 +14,18 @@
             }
 
             <h1>@_exercise?.Name</h1>
-            <p class="h4 pb-3 w-75" style="color: #777E90;">A 7-days training program designed to boost your strength &amp; endurance over the course of a week.<br><br></p><img src="../assets/img/card-pic-3.png" style="width: 80% !important;">
-            <video src="@BytesToBase64Video(_exercise?.Video)"/>
+            <p class="h4 pb-3 w-75" style="color: #777E90;">
+                Building your theoretical knowledge to prevent injuries to and boost overall performance<br><br>
+            </p>
+            @if (false)
+            {
+                <video src="@BytesToBase64Video(_exercise?.Video)"/>
+                
+            }
+            else
+            {
+                <p class="text-muted">Sorry for the inconvenience, our administrators have not yet uploaded a video for this exercise.</p>
+            }
         </div>
         <div class="col text-white d-flex flex-column justify-content-evenly">
             <div class="table-responsive">

@@ -6,6 +6,7 @@
 @using V9.UI.Portal.Services.Skeletal.Views
 @using System.Runtime.InteropServices
 @using System.Runtime.CompilerServices
+@using V9.UI.Portal.Services.Skeletal.Enums
 
 @inject ISkeletalClient Skeletal
 @inject NavigationManager NavigationManager
@@ -40,18 +41,25 @@
     <div class="row pb-2">
         <div class="col">
             <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle w-50 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="border-radius: 10px;border: 2px solid #353945;">Newest</button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a>
+                <button class="btn btn-primary dropdown-toggle w-50 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="border-radius: 10px;border: 2px solid #353945;">@_orderByDate</button>
+                <div class="dropdown-menu bg-dark">
+                    <p class="dropdown-item text-white" @onclick="OnNewestClicked">Newest</p>
+                    <p class="dropdown-item text-white" @onclick="OnOldestClicked">Oldest</p>
                 </div>
             </div>
         </div>
         <div class="col d-flex align-items-start">
-            <button class="btn btn-primary bg-white fw-bold py-1 px-3" type="button" style="color: var(--bs-body-color);border-radius: 20px;border-color: white;">Button</button><button class="btn btn-primary bg-dark fw-bold py-1 px-3 mx-3" type="button" style="color: #777E90;border-radius: 20px;border: none;">Button</button><button class="btn btn-primary bg-dark fw-bold py-1 px-3" type="button" style="color: #777E90;border-radius: 20px;border: none;">Button</button>
+            <button class="btn btn-primary bg-dark fw-bold py-1 px-3 " type="button" style="color: #777E90;border-radius: 20px;border: none;" disabled>Previous</button>
+            <button class="btn btn-primary bg-white fw-bold py-1 px-3 mx-3" type="button" style="color: var(--bs-body-color);border-radius: 20px;border-color: white;">1</button>
+            <button class="btn btn-primary bg-dark fw-bold py-1 px-3" type="button" style="color: #777E90;border-radius: 20px;border: none;" disabled>Next</button>
         </div>
         <div class="col-3 d-flex justify-content-end">
-            <CreateExerciseModal/>
-            <button class="ms-2 btn btn-primary px-3" type="button" style="border-radius: 20px;">
+            <AuthorizeView Policy="Administrator">
+                <Authorized>
+                    <CreateExerciseModal/>
+                </Authorized>
+            </AuthorizeView>
+            <button class="ms-2 btn btn-primary px-3" type="button" style="border-radius: 20px;" @onclick="OnFilterButtonClicked">
                 Filter&nbsp;
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -65,19 +73,22 @@
     <div class="row">
         <div class="col">
             <p class="fw-bold m-0 mb-1" style="color: #777E90;">STYLE</p>
-            <div class="dropdown" style="width: 95%;">
-                <button class="btn btn-primary dropdown-toggle bg-dark text-start w-100" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="border-radius: 10px;border: 2px solid #353945;">Weighted</button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a>
+            <div class="dropdown bg-dark" style="width: 95%;">
+                <button class="btn btn-primary dropdown-toggle bg-dark text-start w-100" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="border-radius: 10px;border: 2px solid #353945;">@_filterStyle</button>
+                <div class="dropdown-menu bg-dark">
+                    <p class="dropdown-item text-white" @onclick="OnStyleWeightedClicked">Weighted</p>
+                    <p class="dropdown-item text-white" @onclick="OnStyleBodyweightClicked">Bodyweight</p>
                 </div>
             </div>
         </div>
         <div class="col">
             <p class="fw-bold m-0 mb-1" style="color: #777E90;">LEVEL</p>
-            <div class="dropdown" style="width: 95%;">
-                <button class="btn btn-primary dropdown-toggle w-100 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="/*width: inherit;*/border-radius: 10px;border: 2px solid #353945;">Weighted</button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a>
+            <div class="dropdown bg-dark" style="width: 95%;">
+                <button class="btn btn-primary dropdown-toggle w-100 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="/*width: inherit;*/border-radius: 10px;border: 2px solid #353945;">@_filterLevel</button>
+                <div class="dropdown-menu bg-dark">
+                    <p class="dropdown-item text-white" @onclick="OnLevelBeginnerClicked">Beginner</p>
+                    <p class="dropdown-item text-white" @onclick="OnLevelIntermediateClicked">Intermediate</p>
+                    <p class="dropdown-item text-white" @onclick="OnLevelAdvancedClicked">Advanced</p>
                 </div>
             </div>
         </div>
@@ -108,8 +119,17 @@
 
 @code {
     private ExerciseView[]? _exercises;
+    private string _orderByDate = "Newest";
+    private string _filterStyle = "None";
+    private string _filterLevel = "None";
+    private string _filterTargetMuscles = "Newest";
 
     protected override async Task OnInitializedAsync()
+    {
+        await Reset();
+    }
+
+    private async Task Reset()
     {
         var response = await Skeletal.GetAllExercisesAsync();
         if (response.IsSuccessStatusCode)
@@ -118,8 +138,85 @@
             StateHasChanged();
         }
     }
-    
-    
+
+
     private string BytesToBase64Image(byte[]? imageBytes) => imageBytes is not null ? $"data:img/jpg;base64,{Convert.ToBase64String(imageBytes)}" : "";
+
+    private void OnNewestClicked()
+    {
+        _orderByDate = "Newest";
+        _exercises = _exercises
+            .OrderBy(x => x.CreatedOn)
+            .ToArray();
+        StateHasChanged();
+    }
+
+    private void OnOldestClicked()
+    {
+        _orderByDate = "Oldest";
+        _exercises = _exercises
+            .OrderByDescending(x => x.CreatedOn)
+            .ToArray();
+        StateHasChanged();
+    }
+
+    private void OnFilterButtonClicked()
+    {
+        NavigationManager.NavigateTo("exercise/explore", true);
+    }
+
+
+    private async Task OnStyleWeightedClicked()
+    {
+        _filterStyle = "Weighted";
+
+        _exercises = _exercises
+            .Where(x => x.IsWeighted)
+            .ToArray();
+
+        StateHasChanged();
+    }
+
+
+    private async Task OnStyleBodyweightClicked()
+    {
+        _filterStyle = "Bodyweight";
+        _exercises = _exercises
+            .Where(x => !x.IsWeighted)
+            .ToArray();
+
+        StateHasChanged();
+    }
+
+    private void OnLevelBeginnerClicked()
+    {
+        _filterLevel = "Beginner";
+        _exercises = _exercises
+            .Where(x => x.Difficulty == ExerciseDifficulty.Beginner)
+            .ToArray();
+
+        StateHasChanged();
+    }
+
+    private void OnLevelIntermediateClicked()
+    {
+        _filterLevel = "Intermediate";
+        _exercises = _exercises
+            .Where(x => x.Difficulty == ExerciseDifficulty.Intermediate)
+            .ToArray();
+
+        StateHasChanged();
+    }
+
+
+    private void OnLevelAdvancedClicked()
+    {
+        _filterLevel = "Advanced";
+        _exercises = _exercises
+            .Where(x => x.Difficulty == ExerciseDifficulty.Advanced)
+            .ToArray();
+
+        StateHasChanged();
+    }
 
 }

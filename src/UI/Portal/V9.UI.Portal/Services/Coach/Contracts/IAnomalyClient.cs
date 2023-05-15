@@ -8,4 +8,8 @@ public interface IAnomalyClient
     [Multipart]
     [Post(Endpoints.Anomaly)]
     public Task<IApiResponse<Stream>> PredictAsync([AliasAs("file")] StreamPart streamPart);
+    
+    
+    [Get("/health")]
+    public Task<IApiResponse> HealthAsync();
 }

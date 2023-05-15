@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager _navigationManager
 @inject IJSRuntime _js
 
-<div id="someId" class="collapse bg-dark" style="position: fixed;border-radius: 20px;border: 1px solid #353945;left: 50%;transform: translate(-50%, 0);z-index: 2;width: 70vw;">
+<div id="someId" class="collapse bg-dark" style="z-index: 1000; position: absolute;border-radius: 20px;border: 1px solid #353945;left: 50%;transform: translate(-50%, 0);width: 70vw;">
     <div class="row text-white">
         <div class="col-auto p-4" style="height: inherit;border-right: 1px solid #353945;">
             <h3 class="mx-3 fw-bold">
@@ -37,8 +37,8 @@
                         </div>
                     </div>
                     <div class="px-4">
-                        <h4 class="text-white mt-2" style="width: 90%;">Workout Name<span class="px-2 fw-bold mt-1" style="float: right;border-radius: 5px;font-size: 15px;color: #45B26B;border: 2px solid #45B26B;">BEGINNER</span></h4>
-                        <p class="pb-3" style="color: #777E90;">Some long workout description which provides information about the workout and some other stuff</p>
+                        <h4 class="text-white mt-2" style="width: 90%;">Generated workout<span class="px-2 fw-bold mt-1" style="float: right;border-radius: 5px;font-size: 15px;color: #45B26B;border: 2px solid #45B26B;">BEGINNER</span></h4>
+                        <p class="pb-3" style="color: #777E90;">A long description which you gave to your workout</p>
                     </div>
                 </div>
                 <div class="col" style="height: 100%;">
@@ -61,13 +61,13 @@
                                     </div>
                                     <div class="mx-3">
                                         <p class="fw-bold m-0 p-0">Workout</p>
-                                        <p class="m-0 p-0" style="color: #777E90;">Some notes</p>
+                                        <p class="m-0 p-0" style="color: #777E90;">Generation</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3 overflow-hidden g-0" style="height: 30%;">
+                    <div class="row mt-3 overflow-hidden g-0" style="height: 30%; cursor: pointer;" @onclick="OnVisionClicked">
                         <div class="col h-100 d-flex justify-content-end">
                             <div style="width: 80%;">
                                 <img src="img/Computer_vision.png" style="height: 85%;width: inherit;border-radius: 5px;">
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="mx-3">
                                         <p class="fw-bold m-0 p-0">Vision</p>
-                                        <p class="m-0 p-0" style="color: #777E90;">Some notes</p>
+                                        <p class="m-0 p-0" style="color: #777E90;">Form correction</p>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="mx-3">
                                         <p class="fw-bold m-0 p-0">Project</p>
-                                        <p class="m-0 p-0" style="color: #777E90;">Some notes</p>
+                                        <p class="m-0 p-0" style="color: #777E90;">Open source</p>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +124,12 @@
 </div>
 
 @code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        // await _js.InvokeVoidAsync("initDetailedWindowScroll");
+    }
+
 
     private void OnHistoryButtonClicked()
     {
@@ -143,6 +149,11 @@
     private void OnExerciseButtonClicked()
     {
         _navigationManager.NavigateTo("/exercise/explore");
+    }
+
+    private void OnVisionClicked()
+    {
+        _navigationManager.NavigateTo("/coach");
     }
 
 }

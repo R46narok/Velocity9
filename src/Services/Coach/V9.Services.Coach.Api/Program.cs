@@ -35,6 +35,7 @@ builder.Services.AddTransient<IMovenetInference, MovenetInference>(
 builder.Services.AddTransient<IAnomalyInference, AnomalyInference>(
     opt => new AnomalyInference("anomaly.onnx"));
 builder.Services.AddTransient<IPredictionPipeline, CoachPredictionPipeline>();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -49,6 +50,7 @@ app.UseHttpsRedirection();
 
 app.UseJwtAuthentication();
 
+app.MapHealthChecks("/health");
 app.MapControllers();
 
 app.Run();

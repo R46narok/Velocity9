@@ -44,8 +44,9 @@ public class UserController : ApiController
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> DeleteAsync([FromBody] DeleteUserCommand command)
+    public async Task<IActionResult> DeleteAsync([FromQuery] string name)
     {
+        var command = new DeleteUserCommand(null, name);
         var response = await _mediator.Send(command);
         return response.Match(Ok, Problem);
     }
@@ -70,9 +71,9 @@ public class UserController : ApiController
     }
 
     [HttpPut]
-    public async Task<IActionResult> ElevateAsync([FromQuery] string? id, [FromQuery] string? username)
+    public async Task<IActionResult> ElevateAsync([FromQuery] string? id, [FromQuery] string? username, [FromQuery] string role)
     {
-        var command = new ElevateUserCommand(id, username);
+        var command = new ElevateUserCommand(role: role, id: id, userName: username);
         var response = await _mediator.Send(command);
         return response.Match(Ok, Problem);
     }

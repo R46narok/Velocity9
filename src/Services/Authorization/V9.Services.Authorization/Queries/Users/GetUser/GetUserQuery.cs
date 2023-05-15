@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,10 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, ErrorOr<UserDto
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
         var dto = _mapper.Map<UserDto>(user);
+
+        var claim = (await _userManager.GetClaimsAsync(user))
+            .SingleOrDefault(x => x.Type == ClaimTypes.Role);
+        dto.Role = claim.Value;
 
         return dto;
     }

@@ -46,6 +46,10 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddDefaultTokenProviders();
 builder.AddJwtAuthentication();
 
+builder.Services
+    .AddHealthChecks()
+    .AddDbContextCheck<UserDbContext>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -62,6 +66,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapHealthChecks("/health");
 app.Run();
 
 public partial class Program

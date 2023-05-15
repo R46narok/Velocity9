@@ -7,6 +7,9 @@ namespace V9.UI.Portal.Services.Workout.Contracts;
 
 public interface IWorkoutClient
 {
+    [Get("/health")]
+    public Task<IApiResponse> HealthAsync();
+
     [Get("/api/workout")]
     public Task<IApiResponse<WorkoutView>> GetWorkoutAsync(
         [Query] GetWorkoutRequest request,

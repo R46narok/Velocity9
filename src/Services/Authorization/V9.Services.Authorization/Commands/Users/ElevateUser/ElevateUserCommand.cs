@@ -11,11 +11,13 @@ public class ElevateUserCommand : IRequest<ErrorOr<string>>
 {
     public string? Id { get; set; }
     public string? UserName { get; set; }
+    public string Role { get; set; }
 
-    public ElevateUserCommand(string? id = null, string? userName = null)
+    public ElevateUserCommand(string role, string? id = null, string? userName = null)
     {
         Id = id;
         UserName = userName;
+        Role = role;
     }
 }
 
@@ -31,10 +33,12 @@ public class ElevateUserCommandHandler : IRequestHandler<ElevateUserCommand, Err
     public async Task<ErrorOr<string>> Handle(ElevateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await FindUserByNameOrId(request);
-        
-        await _userManager.ReplaceClaimAsync(user, 
-            new Claim(ClaimTypes.Role, "User"),
-            new Claim(ClaimTypes.Role, "Admin"));
+
+        var claims = await _userManager.GetClaimsAsync(user);
+        var roleClaim = claims.SingleOrDefault(x => x.Type == ClaimTypes.Role);
+
+        await _userManager.RemoveClaimAsync(user, roleClaim);
+        await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, request.Role));
         return request.UserName;
     }
     

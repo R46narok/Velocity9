@@ -1,4 +1,6 @@
-﻿@inject NavigationManager _navigationManager
+﻿@using V9.UI.Core.Providers
+@inject NavigationManager _navigationManager
+@inject TokenAuthenticationStateProvider AuthenticationStateProvider
 
 <nav class="navbar navbar-light navbar-expand-md p-4 my-lg-4 mx-lg-5">
     <div class="container">
@@ -19,22 +21,18 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#" style="color: #777E90;">Home</a>
                 </li>
-                
+
                 <li class="nav-item">
                     <a class="nav-link" href="#" style="color: #777E90;">About</a>
                 </li>
-                
+
                 <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: #777E90;">Features</a>
+                    <a class="nav-link" href="#" style="color: #777E90;">FAQ</a>
                 </li>
-                
-                <li class="nav-item">
-                    <NavLink class="nav-link" href="/exercise/explore" style="color: #777E90;">FAQ</NavLink>
-                </li>
-                
+
                 <AuthorizeView>
                     <Authorized>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" type="button" style="color: #777E90;" data-bs-toggle="collapse" aria-expanded="true" aria-controls="someId" href="#someId"
                                role="button">
@@ -43,15 +41,39 @@
                         </li>
                     </Authorized>
                 </AuthorizeView>
+
+                <AuthorizeView Policy="Administrator">
+                    <Authorized>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users" style="color: #777E90;">
+                                Users
+                            </a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+
+                <AuthorizeView Policy="Developer">
+                    <Authorized>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/health" style="color: #777E90;">
+                                Health
+                            </a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
             </ul>
             <AuthorizeView>
                 <Authorized>
                     <button class="btn btn-primary bg-dark fw-bold" style="border-color: white;border-radius: 20px;border-width: 2px;" @onclick="OnProfileButtonClicked">Profile</button>
+                    <button class="btn btn-primary bg-light fw-bold ms-2 text-black" style="border-color: white;border-radius: 20px;border-width: 2px;" @onclick="OnHealthButtonClicked">Log out</button>
                 </Authorized>
                 <NotAuthorized>
                     <button class="btn btn-primary bg-dark fw-bold" style="border-color: white;border-radius: 20px;border-width: 2px;" @onclick="OnSignInButtonClicked">Sign in</button>
                 </NotAuthorized>
             </AuthorizeView>
+
         </div>
     </div>
 </nav>
@@ -64,8 +86,16 @@
         _navigationManager.NavigateTo("/signin");
     }
 
-     private void OnProfileButtonClicked()
-        {
-            _navigationManager.NavigateTo("/profile");
-        }
+    private void OnProfileButtonClicked()
+    {
+        _navigationManager.NavigateTo("/profile");
+    }
+
+
+    private async Task OnHealthButtonClicked()
+    {
+        await AuthenticationStateProvider.SetAuthenticationStateAsync(null);
+        _navigationManager.NavigateTo("/", true);
+    }
+
 }

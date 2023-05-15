@@ -15,8 +15,8 @@
 
         <div class="row">
             <div class="col-lg-4">
-                <div class="sticky-lg-top" style="top: 2em">
-                    <Overview/>
+                <div class="sticky-lg-top" style="top: 2em; z-index: 0;">
+                    <Overview />
                     <Socials/>
                 </div>
             </div>
@@ -24,16 +24,16 @@
                 <DetailedView/>
                 <div class="row">
                     <AdherenceStatistics/>
-                    <AdherenceStatistics/>
+                    <FormCheckStatistics/>
                 </div>
-                
+
                 <div class="card mb-4 mt-4 mb-md-0 profile-card">
                     <div class="card-body text-white text-center">
-                        <p>Targeted muscles during this week:</p>
+                        <p>Muscles targeted this week:</p>
                         <img src="@_imageSrc"/>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -57,5 +57,6 @@
             StateHasChanged();
         }
     }
+
 
 }

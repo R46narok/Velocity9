@@ -1,0 +1,156 @@
+﻿@page "/health"
+
+@attribute [Authorize(Policy = "Developer")]
+
+@using V9.UI.Portal.Services.Authorization.Contracts
+@using V9.UI.Portal.Services.Coach.Contracts
+@using V9.UI.Portal.Services.Skeletal.Contracts
+@using V9.UI.Portal.Services.Workout.Contracts
+
+@inject IAuthenticationClient AuthenticationClient
+@inject IWorkoutClient WorkoutClient
+@inject ISkeletalClient SkeletalClient
+@inject IAnomalyClient AnomalyClient
+
+<div class="container px-5">
+
+    <table class="table align-middle mb-0 bg-dark text-white">
+        <thead class="bg-dark" style="border-color:#777E90;">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="border-color:#777E90;">
+            <td>
+                <div class="d-flex align-items-center">
+                    <p class="fw-bold mb-1">Authorization</p>
+                </div>
+            </td>
+            <td>
+                <p class="fw-normal mb-1">Microservice</p>
+                <p class="text-muted mb-0">Manages user identity</p>
+            </td>
+            <td>
+                <span class="badge fw-bold @(_isAuthorizationHealthy ? "text-success" : "") rounded-pill d-inline">
+                    @(_isAuthorizationHealthy ? "Active" : "NotActive")
+                </span>
+            </td>
+            <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded">
+                    RAW
+                </button>
+            </td>
+        </tr>
+
+        <tr style="border-color:#777E90;">
+            <td>
+                <div class="d-flex align-items-center">
+                    <p class="fw-bold mb-1">Skeletal</p>
+                </div>
+            </td>
+            <td>
+                <p class="fw-normal mb-1">Microservice</p>
+                <p class="text-muted mb-0">Manages muscles and exercises</p>
+            </td>
+            <td>
+                <span class="badge fw-bold @(_isSkeletalHealthy ? "text-success" : "") rounded-pill d-inline">
+                    @(_isSkeletalHealthy ? "Active" : "NotActive")
+                </span>
+            </td>
+            <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded">
+                    RAW
+                </button>
+            </td>
+        </tr>
+
+        <tr style="border-color:#777E90;">
+            <td>
+                <div class="d-flex align-items-center">
+                    <p class="fw-bold mb-1">Workout</p>
+                </div>
+            </td>
+            <td>
+                <p class="fw-normal mb-1">Microservice</p>
+                <p class="text-muted mb-0">Manages workouts</p>
+            </td>
+            <td>
+                <span class="badge fw-bold @(_isWorkoutHealthy ? "text-success" : "") rounded-pill d-inline">
+                    @(_isWorkoutHealthy ? "Active" : "NotActive")
+                </span>
+            </td>
+            <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded">
+                    RAW
+                </button>
+            </td>
+        </tr>
+
+        <tr style="border-color:#777E90;">
+            <td>
+                <div class="d-flex align-items-center">
+                    <p class="fw-bold mb-1">Coach</p>
+                </div>
+            </td>
+            <td>
+                <p class="fw-normal mb-1">Microservice</p>
+                <p class="text-muted mb-0">Detects anomalies</p>
+            </td>
+            <td>
+                <span class="badge fw-bold @(_isAnomalyHealthy ? "text-success" : "") rounded-pill d-inline">
+                    @(_isAnomalyHealthy ? "Active" : "NotActive")
+                </span>
+            </td>
+            <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded">
+                    RAW
+                </button>
+            </td>
+        </tr>
+        
+        <tr style="border-color:#777E90;">
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <p class="fw-bold mb-1">AZ Service Bus</p>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="fw-normal mb-1">Message broker</p>
+                        <p class="text-muted mb-0">Async communication</p>
+                    </td>
+                    <td>
+                        <span class="badge fw-bold text-success rounded-pill d-inline">
+                            Active
+                        </span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-sm btn-rounded">
+                            RAW
+                        </button>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+@code {
+    private bool _isAuthorizationHealthy;
+    private bool _isSkeletalHealthy;
+    private bool _isAnomalyHealthy;
+    private bool _isWorkoutHealthy;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _isAuthorizationHealthy = (await AuthenticationClient.HealthAsync()).IsSuccessStatusCode;
+        _isSkeletalHealthy = (await SkeletalClient.HealthAsync()).IsSuccessStatusCode;
+        _isWorkoutHealthy = (await WorkoutClient.HealthAsync()).IsSuccessStatusCode;
+        _isAnomalyHealthy = (await AnomalyClient.HealthAsync()).IsSuccessStatusCode;
+    }
+
+}

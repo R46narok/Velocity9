@@ -48,7 +48,9 @@
             </div>
         </div>
         <div class="col d-flex align-items-start">
-            <button class="btn btn-primary bg-white fw-bold py-1 px-3" type="button" style="color: var(--bs-body-color);border-radius: 20px;border-color: white;">Button</button><button class="btn btn-primary bg-dark fw-bold py-1 px-3 mx-3" type="button" style="color: #777E90;border-radius: 20px;border: none;">Button</button><button class="btn btn-primary bg-dark fw-bold py-1 px-3" type="button" style="color: #777E90;border-radius: 20px;border: none;">Button</button>
+            <button class="btn btn-primary bg-dark fw-bold py-1 px-3 " type="button" style="color: #777E90;border-radius: 20px;border: none;" disabled>Previous</button>
+            <button class="btn btn-primary bg-white fw-bold py-1 px-3 mx-3" type="button" style="color: var(--bs-body-color);border-radius: 20px;border-color: white;">1</button>
+            <button class="btn btn-primary bg-dark fw-bold py-1 px-3" type="button" style="color: #777E90;border-radius: 20px;border: none;" disabled>Next</button>
         </div>
         <div class="col-3 d-flex justify-content-end">
             <button class="btn btn-primary px-3" type="button" style="border-radius: 20px;">
@@ -75,7 +77,7 @@
         <div class="col">
             <p class="fw-bold m-0 mb-1" style="color: #777E90;">TIME OF DAY</p>
             <div class="dropdown" style="width: 95%;">
-                <button class="btn btn-primary dropdown-toggle w-100 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="/*width: inherit;*/border-radius: 10px;border: 2px solid #353945;">Weighted</button>
+                <button class="btn btn-primary dropdown-toggle w-100 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="/*width: inherit;*/border-radius: 10px;border: 2px solid #353945;">Morning</button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a>
                 </div>
@@ -84,7 +86,7 @@
         <div class="col">
             <p class="fw-bold m-0 mb-1" style="color: #777E90;">INTENSITY</p>
             <div class="dropdown" style="width: 95%;">
-                <button class="btn btn-primary dropdown-toggle w-100 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="/*width: inherit;*/border-radius: 10px;border: 2px solid #353945;">Weighted</button>
+                <button class="btn btn-primary dropdown-toggle w-100 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="/*width: inherit;*/border-radius: 10px;border: 2px solid #353945;">Low</button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a>
                 </div>
@@ -93,7 +95,7 @@
         <div class="col">
             <p class="fw-bold m-0 mb-1" style="color: #777E90;">VOLUME</p>
             <div class="dropdown" style="width: 95%;">
-                <button class="btn btn-primary dropdown-toggle w-100 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="/*width: inherit;*/border-radius: 10px;border: 2px solid #353945;">Weighted</button>
+                <button class="btn btn-primary dropdown-toggle w-100 bg-dark text-start" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="/*width: inherit;*/border-radius: 10px;border: 2px solid #353945;">High</button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a>
                 </div>
@@ -107,7 +109,7 @@
         {
             foreach (var workoutView in _workouts)
             {
-                <Workout Name="@workoutView.Name" Notes="@workoutView.Notes" CompletedOn="@workoutView.CompletedOn"/>
+                <Workout Name="@workoutView.Name" Notes="@workoutView.Notes" CompletedOn="@workoutView.CompletedOn" />
             }
         }
     </div>

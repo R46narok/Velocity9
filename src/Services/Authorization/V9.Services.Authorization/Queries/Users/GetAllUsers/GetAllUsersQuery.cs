@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +27,14 @@ public record GetAllUsersQuery : IRequest<ErrorOr<List<UserDto>>>;
         var dtos = users
             .Select(x => _mapper.Map<UserDto>(x))
             .ToList();
+
+        for (int i = 0; i < users.Count; ++i)
+        {
+            var claim = (await _userManager.GetClaimsAsync(users[i]))
+                .SingleOrDefault(x => x.Type is ClaimTypes.Role);
+
+            dtos[i].Role = claim.Value;
+        }
 
         return dtos;
     }

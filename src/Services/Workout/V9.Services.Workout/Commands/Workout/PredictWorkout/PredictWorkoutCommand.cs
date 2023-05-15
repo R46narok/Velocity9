@@ -28,19 +28,33 @@ public class PredictWorkoutCommandHandler : IRequestHandler<PredictWorkoutComman
         _repository = repository;
     }
 
-    public async Task<ErrorOr<WorkoutModelOutput>> Handle(PredictWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<WorkoutModelOutput>> Handle(PredictWorkoutCommand request,
+        CancellationToken cancellationToken)
     {
         var last = await _repository.GetLastAsync(request.UserName);
-        var exercises = last.Sets
-            .Select(x => x.Exercise.Name)
-            .ToList();
-        var reps = last.Sets
-            .Select(x => x.TargetReps)
-            .ToList();
+
+        var exercises = new List<string>();
+        var reps = new List<int>();
+
+        if (last is null)
+        {
+            exercises = new List<string>(){ "HSPU", "HSPU" };
+            reps = new List<int>(){ 8, 8};
+        }
+        else
+        {
+            exercises = last.Sets
+                .Select(x => x.Exercise.Name)
+                .ToList();
+            reps = last.Sets
+                .Select(x => x.TargetReps)
+                .ToList();
+        }
+
 
         var input = new WorkoutModelInput(exercises, reps);
         var output = _model.Predict(input);
-        
+
         return output;
     }
 }

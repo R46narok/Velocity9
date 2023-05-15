@@ -61,6 +61,10 @@ builder.Services.AddTransient<IInferenceModel<WorkoutModelInput, WorkoutModelOut
         "Bench press,Incline bench press,Triceps iso,Shoulder raise,Paused dips,Chest flies,Weighted dips,Rings,Shoulder press,HSPU,Decline bench press"
             .Split(',').ToList()));
 
+builder.Services
+    .AddHealthChecks()
+    .AddDbContextCheck<WorkoutDbContext>();
+
 var app = builder.Build();
 app.UsePersistence<WorkoutDbContext>();
 await app.SynchronizeDataFromRemotes();
@@ -75,6 +79,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 
+app.MapHealthChecks("/health");
 app.Run();
 
 public partial class Program

@@ -11,7 +11,9 @@
         <p class="text-muted mb-1">@(_roleClaim ?? "Unknown")</p>
         <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
         <div class="d-flex justify-content-center mb-2">
-            <button type="button" class="btn btn-primary">Edit</button>
+            <button type="button" class="btn btn-primary">
+                @(_editing ? "Save" : "Edit")
+            </button>
             <button type="button" class="btn btn-outline-primary ms-1">Delete</button>
         </div>
     </div>
@@ -21,7 +23,9 @@
 @code {
     private string? _userName;
     private string? _roleClaim;
+    private bool _editing = false;
     
+
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();

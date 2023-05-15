@@ -7,6 +7,9 @@ namespace V9.UI.Portal.Services.Skeletal.Contracts;
 
 public interface ISkeletalClient
 {
+    [Get("/health")]
+    public Task<IApiResponse> HealthAsync();
+    
     [Get(Endpoints.ExerciseBase)]
     public Task<IApiResponse<List<ExerciseView>>> GetAllExercisesAsync();
 

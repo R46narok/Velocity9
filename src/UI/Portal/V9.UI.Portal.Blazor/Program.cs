@@ -23,7 +23,11 @@ builder.Services.AddDataProtection();
 builder.AddApplication();
 
 builder.Services.AddAuthenticationCore();
-builder.Services.AddAuthorizationCore();
+builder.Services.AddAuthorizationCore(opt =>
+{
+    opt.AddPolicy("Developer", b => b.RequireClaim(ClaimTypes.Role, "Developer", "Admin"));
+    opt.AddPolicy("Administrator", b => b.RequireClaim(ClaimTypes.Role, "Admin"));
+});
 
 var app = builder.Build();
 

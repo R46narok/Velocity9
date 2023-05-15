@@ -1,0 +1,145 @@
+﻿@page "/users"
+@using V9.UI.Portal.Services.Authorization.Views
+@using V9.UI.Portal.Services.Authorization.Contracts
+@using System.Net
+
+@inject IAuthenticationClient AuthenticationClient
+
+@attribute [Authorize(Policy = "Administrator")]
+
+
+<div class="container px-5">
+
+    <table class="table align-middle mb-0 bg-dark text-white">
+        <thead class="bg-dark" style="border-color:#777E90;">
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in _users)
+        {
+            <tr style="border-color:#777E90;">
+                <td>
+                    <div class="d-flex align-items-center">
+                        <p class="fw-bold text-muted mb-1">@user.Id</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center text-success">
+                        <p class="fw-bold mb-1">@user.UserName</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <p class="fw-bold mb-1">@user.Email</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <p class="fw-bold mb-1">@user.Role</p>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn bg-dark" style="border: 1px solid #EF466F; color: #EF466F;"
+                            @onclick="() => OnDeleteButtonClicked(user.UserName)">
+                        Delete
+                    </button>
+
+                    @if (user.Role != "Admin")
+                    {
+                        <button class="btn btn-primary mx-2"
+                                @onclick="() => OnElevateButtonClicked(user.UserName, user.Role)">
+                            Elevate
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary mx-2"
+                                @onclick="() => OnElevateButtonClicked(user.UserName, user.Role)" disabled>
+                            Elevate
+                        </button>
+                    }
+
+                    @if (user.Role != "User")
+                    {
+                        <button class="btn btn-primary m-auto"
+                                @onclick="() => OnRestrictButtonClicked(user.UserName, user.Role)">
+                            Restrict
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary m-auto"
+                                @onclick="() => OnRestrictButtonClicked(user.UserName, user.Role)" disabled>
+                            Restrict
+                        </button>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
+
+@code {
+
+    private List<UserView> _users = new();
+
+    private async Task Reset()
+    {
+        var response = await AuthenticationClient.GetAllAsync();
+        if (response.IsSuccessStatusCode)
+        {
+            _users = response.Content!;
+            StateHasChanged();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Reset();
+    }
+
+    private async Task OnDeleteButtonClicked(string userName)
+    {
+        await AuthenticationClient.DeleteUserAsync(userName);
+        await Reset();
+    }
+
+    private async Task OnElevateButtonClicked(string userName, string role)
+    {
+        var newRole = role switch {
+            "User" => "Developer",
+            "Developer" => "Admin",
+            _ => "None"
+            };
+
+        if (newRole != "None")
+        {
+            await AuthenticationClient.ElevateUserAsync(userName, newRole, null);
+            await Reset();
+        }
+    }
+
+    private async Task OnRestrictButtonClicked(string userName, string role)
+    {
+        var newRole = role switch {
+            "Admin" => "Developer",
+            "Developer" => "User",
+            _ => "None"
+            };
+
+        if (newRole != "None")
+        {
+            await AuthenticationClient.ElevateUserAsync(userName, newRole, null);
+            await Reset();
+        }
+    }
+
+}
